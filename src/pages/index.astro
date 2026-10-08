@@ -14,9 +14,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="CYL Neumáticos. Neumáticos para automóvil, camioneta, transporte y agro/vial en Neuquén y Añelo." />
-    <meta name="theme-color" content="#e83421" />
+    <meta name="theme-color" content="#090a0c" />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <title>CYL Neumáticos — Tu camino empieza acá</title>
+    <title>CYL Neumáticos — El camino no se detiene</title>
   </head>
   <body>
     <Header />
@@ -29,17 +29,34 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <script>
       import gsap from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
-      import { initTireScene } from '../three/TireScene';
 
       gsap.registerPlugin(ScrollTrigger);
-      const canvas = document.querySelector('#tire-canvas');
-      const track = document.querySelector('#hero-track');
-      const progress = document.querySelector('#hero-progress');
+      const track = document.querySelector<HTMLElement>('#hero-track');
+      const progress = document.querySelector<HTMLElement>('#hero-progress');
+      const step = document.querySelector<HTMLElement>('#hero-step');
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      if (canvas instanceof HTMLCanvasElement && track instanceof HTMLElement) {
-        initTireScene(canvas, track, progress instanceof HTMLElement ? progress : null, reduced);
-      }
+      const clamp = (v: number, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+      const smooth = (v: number) => v * v * (3 - 2 * v);
+      const updateHero = () => {
+        if (!track) return;
+        const distance = Math.max(1, track.offsetHeight - window.innerHeight);
+        const p = reduced ? 0 : clamp(-track.getBoundingClientRect().top / distance);
+        const approach = smooth(clamp((p - .18) / .25));
+        const explodeIn = smooth(clamp((p - .48) / .18));
+        const returnOut = smooth(clamp((p - .78) / .18));
+        const focus = approach * (1 - returnOut);
+        const explode = explodeIn * (1 - returnOut);
+        track.style.setProperty('--hero-p', String(p));
+        track.style.setProperty('--wheel-focus', String(focus));
+        track.style.setProperty('--wheel-explode', String(explode));
+        if (progress) progress.style.transform = `scaleX(${p})`;
+        if (step) step.textContent = `${String(Math.min(4, Math.floor(p * 5))).padStart(2, '0')} / 04`;
+      };
+
+      updateHero();
+      window.addEventListener('scroll', updateHero, { passive: true });
+      window.addEventListener('resize', updateHero, { passive: true });
 
       if (!reduced) {
         gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {

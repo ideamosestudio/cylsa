@@ -3,25 +3,31 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 ---
 <section class="hero-track" id="hero-track" aria-labelledby="hero-title">
   <div class="hero-sticky" id="inicio">
-    <div class="hero-panel" aria-hidden="true"></div>
-    <div class="hero-ruler hero-ruler-top" aria-hidden="true"></div>
-    <div class="hero-ruler hero-ruler-side" aria-hidden="true"></div>
-    <canvas id="tire-canvas" aria-label="Neumático tridimensional que revela su estructura al desplazarse"></canvas>
+    <div class="car-scene" aria-hidden="true">
+      <img src={`${base}images/hero-suv.png`} alt="" width="1792" height="1024" fetchpriority="high" />
+    </div>
+    <div class="cinematic-shade" aria-hidden="true"></div>
+    <div class="wheel-focus" aria-hidden="true">
+      <div class="wheel-crop"><img src={`${base}images/hero-suv.png`} alt="" width="1792" height="1024" /></div>
+      <i class="engineering-ring ring-a"></i>
+      <i class="engineering-ring ring-b"></i>
+      <i class="engineering-ring ring-c"></i>
+      <i class="engineering-axis"></i>
+    </div>
     <div class="hero-copy">
-      <p class="kicker"><span>Desde 1998</span><i></i><span>Neuquén</span></p>
-      <h1 id="hero-title">Tu camino<br /><em>empieza</em> acá.</h1>
-      <div class="hero-bottom">
-        <p>Neumáticos y asesoramiento para seguir avanzando, sin importar el terreno.</p>
-        <div class="hero-actions">
-          <a class="action action-dark" href="#universos">Encontrá tu línea <b>↓</b></a>
-          <a class="action action-light" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Cotizá ahora <b>↗</b></a>
-        </div>
+      <p class="hero-eyebrow">CYL NEUMÁTICOS / NEUQUÉN</p>
+      <h1 id="hero-title">EL CAMINO<br />NO SE DETIENE.</h1>
+      <p class="hero-intro">Soluciones en neumáticos para cada camino, cada terreno y cada desafío.</p>
+      <div class="hero-actions">
+        <a class="hero-cta hero-cta-primary" href="#universos">EXPLORAR NUESTRAS LÍNEAS <b>↓</b></a>
+        <a class="hero-cta hero-cta-secondary" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">PEDÍ TU COTIZACIÓN <b>↗</b></a>
       </div>
     </div>
-    <div class="hero-data hero-data-a" aria-hidden="true"><span>01</span><p>Ingeniería<br />en movimiento</p></div>
-    <div class="hero-data hero-data-b" aria-hidden="true"><span id="hero-step">00 / 04</span><p>Scroll para<br />explorar</p></div>
+    <div class="hero-status" aria-hidden="true">
+      <span id="hero-step">00 / 04</span>
+      <p>SECUENCIA TÉCNICA<br />RUEDA DELANTERA</p>
+    </div>
     <div class="hero-progress" aria-hidden="true"><i id="hero-progress"></i></div>
-    <div class="hero-word" aria-hidden="true">PATAGONIA</div>
-    <div class="webgl-fallback" aria-hidden="true">CYL</div>
+    <p class="hero-claim">CONFIANZA EN CADA KILÓMETRO.</p>
   </div>
 </section>

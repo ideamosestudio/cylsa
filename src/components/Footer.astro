@@ -1,20 +1,29 @@
 ---
 const locations = [
   { n: '01', address: 'Eugenio Perticone 1203', city: 'Neuquén', phones: [['(0299) 5470052', '+542995470052'], ['(0299) 6324963', '+542996324963']] },
-  { n: '02', address: 'Ingeniero Huergo 2554', city: 'Pin Oeste, Neuquén', phones: [['(0299) 5470059', '+542995470059'], ['(0299) 6562386', '+542996562386']] },
-  { n: '03', address: 'Lote 11 – Frac. C, Manzana 35', city: 'Añelo, Neuquén', phones: [['(0299) 5483985', '+542995483985'], ['(0299) 540047', '+54299540047']] },
+  { n: '02', address: 'Ingeniero Huergo 2554', city: 'PIN Oeste · Neuquén', phones: [['(0299) 5470059', '+542995470059'], ['(0299) 6562386', '+542996562386']] },
+  { n: '03', address: 'Lote 11 · Frac. C · Mza. 35', city: 'Añelo · Neuquén', phones: [['(0299) 5483985', '+542995483985'], ['(0299) 540047', '+54299540047']] },
 ];
 ---
 <footer class="site-footer" id="sucursales">
-  <div class="footer-heading" data-reveal><p class="eyebrow">CYL Neumáticos</p><h2>Seguí en<br />movimiento.</h2><p class="footer-claim">Confianza en cada kilómetro.</p></div>
+  <div class="footer-top" data-reveal>
+    <p>¿Listo para seguir?</p>
+    <h2>Hablemos<br />de tu <em>camino.</em></h2>
+    <a href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Pedí tu cotización <b>↗</b></a>
+  </div>
   <div class="location-grid">
     {locations.map((location) => (
-      <address class="location" data-reveal><span>Sucursal {location.n}</span><h3>{location.address}</h3><p>{location.city}</p><div class="location-phones">{location.phones.map(([label, phone]) => <a href={`tel:${phone}`}>{label}</a>)}</div></address>
+      <address class="location" data-reveal>
+        <span>{location.n} / Sucursal</span>
+        <h3>{location.address}</h3>
+        <p>{location.city}</p>
+        <div>{location.phones.map(([label, phone]) => <a href={`tel:${phone}`}>{label}</a>)}</div>
+      </address>
     ))}
   </div>
   <div class="footer-bottom">
-    <div><span>Horario</span><p>Lunes a viernes, 8:30 a 17:30.<br />Sábados, 8:30 a 13:00.</p></div>
-    <a class="footer-quote" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Pedí tu cotización</a>
-    <div class="footer-meta"><a href="#inicio">Volver arriba</a><a href="https://www.ideamos.com.ar/" target="_blank" rel="noreferrer">Diseño y desarrollo: Estudio Ideamos</a></div>
+    <p><span>Horarios</span>Lun–Vie 8:30–17:30 · Sáb 8:30–13:00</p>
+    <a href="#inicio">Volver arriba ↑</a>
+    <p class="credit">Diseño y desarrollo <a href="https://www.ideamos.com.ar/" target="_blank" rel="noreferrer">Estudio Ideamos</a></p>
   </div>
 </footer>

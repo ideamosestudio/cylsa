@@ -3,7 +3,6 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import HeroExperience from '../components/HeroExperience.astro';
 import MotionUniverses from '../components/MotionUniverses.astro';
-import BrandMarquee from '../components/BrandMarquee.astro';
 import Footer from '../components/Footer.astro';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -14,17 +13,16 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="CYL Neumáticos. Soluciones para automóvil, camioneta, transporte y agro/vial en Neuquén y Añelo." />
-    <meta name="theme-color" content="#080808" />
+    <meta name="description" content="CYL Neumáticos. Neumáticos para automóvil, camioneta, transporte y agro/vial en Neuquén y Añelo." />
+    <meta name="theme-color" content="#e83421" />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <title>CYL Neumáticos — Confianza en cada kilómetro</title>
+    <title>CYL Neumáticos — Tu camino empieza acá</title>
   </head>
   <body>
     <Header />
     <main>
       <HeroExperience />
       <MotionUniverses />
-      <BrandMarquee />
     </main>
     <Footer />
 
@@ -45,14 +43,17 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
       if (!reduced) {
         gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
-          gsap.fromTo(element, { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } });
+          gsap.fromTo(element, { y: 54, opacity: 0 }, { y: 0, opacity: 1, duration: 1.05, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } });
         });
-        gsap.utils.toArray<HTMLElement>('.universe-card').forEach((card) => {
-          const image = card.querySelector('img');
-          if (!image) return;
-          gsap.fromTo(image, { scale: 1.1 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.7 } });
+        gsap.utils.toArray<HTMLElement>('.route-image img').forEach((image) => {
+          gsap.fromTo(image, { scale: 1.14 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: image, start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
         });
       }
+
+      const header = document.querySelector('.site-header');
+      const setHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 32);
+      window.addEventListener('scroll', setHeader, { passive: true });
+      setHeader();
 
       document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
         link.addEventListener('click', (event) => {

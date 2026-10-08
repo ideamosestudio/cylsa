@@ -1,24 +1,33 @@
 ---
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const categories = [
-  { n: '01', title: 'Automóvil', feeling: 'Precisión y confort', image: 'automovil.webp' },
-  { n: '02', title: 'Camioneta', feeling: 'Tracción y libertad', image: 'camioneta.webp' },
-  { n: '03', title: 'Transporte', feeling: 'Resistencia continua', image: 'transporte.webp' },
-  { n: '04', title: 'Agro / Vial', feeling: 'Potencia y trabajo', image: 'agro-vial.webp' },
+  { n: '01', title: 'Automóvil', feeling: 'Control urbano', copy: 'Confort, respuesta y seguridad para moverte todos los días.', image: 'automovil.webp' },
+  { n: '02', title: 'Camioneta', feeling: 'Todo terreno', copy: 'Tracción y firmeza para convertir cualquier desvío en camino.', image: 'camioneta.webp' },
+  { n: '03', title: 'Transporte', feeling: 'Larga distancia', copy: 'Rendimiento constante para los kilómetros que hacen avanzar.', image: 'transporte.webp' },
+  { n: '04', title: 'Agro / Vial', feeling: 'Fuerza productiva', copy: 'Potencia, durabilidad y agarre donde el trabajo no se detiene.', image: 'agro-vial.webp' },
 ];
 ---
 <section class="universes" id="universos" aria-labelledby="universes-title">
-  <div class="section-intro" data-reveal>
-    <p class="eyebrow">04 universos / infinitos caminos</p>
-    <div class="section-title-row"><h2 id="universes-title">No todos los caminos<br />son iguales.</h2><p>De la ciudad a los terrenos más exigentes. Soluciones para cada forma de moverse.</p></div>
-  </div>
-  <div class="universe-grid">
+  <header class="universe-head" data-reveal>
+    <p class="section-code">CYL / 04 LÍNEAS</p>
+    <h2 id="universes-title">Un neumático.<br /><em>Cada desafío.</em></h2>
+    <p class="section-copy">Elegí cómo te movés. Nosotros encontramos la solución que mejor se adapta a tu vehículo, tu trabajo y tu camino.</p>
+  </header>
+  <div class="route-list">
     {categories.map((item) => (
-      <article class="universe-card" data-reveal>
-        <img src={`${base}images/${item.image}`} alt={`Escena de ${item.title.toLowerCase()} en movimiento`} loading="lazy" width="1536" height="1024" />
-        <div class="card-shade"></div><div class="card-number">{item.n}</div>
-        <div class="card-copy"><p>{item.feeling}</p><h3>{item.title}</h3><a href="#sucursales" aria-label={`Consultar neumáticos para ${item.title}`}>Consultar línea</a></div>
+      <article class="route" data-reveal>
+        <div class="route-meta"><span>{item.n}</span><p>{item.feeling}</p></div>
+        <div class="route-image"><img src={`${base}images/${item.image}`} alt={`Neumáticos para ${item.title.toLowerCase()}`} loading="lazy" width="1536" height="1024" /></div>
+        <div class="route-copy">
+          <h3>{item.title}</h3>
+          <p>{item.copy}</p>
+          <a href="#sucursales" aria-label={`Consultar neumáticos para ${item.title}`}>Consultar línea <b>↗</b></a>
+        </div>
       </article>
     ))}
+  </div>
+  <div class="manifesto" data-reveal>
+    <p>Ciudad <i>→</i> Ruta <i>→</i> Campo <i>→</i> Obra</p>
+    <strong>Donde vayas,<br />vamos con vos.</strong>
   </div>
 </section>

@@ -3,22 +3,25 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 ---
 <section class="hero-track" id="hero-track" aria-labelledby="hero-title">
   <div class="hero-sticky" id="inicio">
-    <div class="hero-background" style={`--hero-image: url('${base}images/automovil.webp')`}></div>
-    <canvas id="tire-canvas" aria-label="Visualización tridimensional de un neumático técnico desmontable"></canvas>
-    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-panel" aria-hidden="true"></div>
+    <div class="hero-ruler hero-ruler-top" aria-hidden="true"></div>
+    <div class="hero-ruler hero-ruler-side" aria-hidden="true"></div>
+    <canvas id="tire-canvas" aria-label="Neumático tridimensional que revela su estructura al desplazarse"></canvas>
     <div class="hero-copy">
-      <p class="eyebrow">CYL NEUMÁTICOS / NEUQUÉN</p>
-      <h1 id="hero-title"><span>El camino</span><span>no se detiene.</span></h1>
-      <p class="hero-intro">Soluciones en neumáticos para cada camino, cada terreno y cada desafío.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#universos">Explorar nuestras líneas</a>
-        <a class="button button-secondary" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Pedí tu cotización</a>
+      <p class="kicker"><span>Desde 1998</span><i></i><span>Neuquén</span></p>
+      <h1 id="hero-title">Tu camino<br /><em>empieza</em> acá.</h1>
+      <div class="hero-bottom">
+        <p>Neumáticos y asesoramiento para seguir avanzando, sin importar el terreno.</p>
+        <div class="hero-actions">
+          <a class="action action-dark" href="#universos">Encontrá tu línea <b>↓</b></a>
+          <a class="action action-light" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Cotizá ahora <b>↗</b></a>
+        </div>
       </div>
     </div>
-    <div class="hero-tech hero-tech-left" aria-hidden="true"><span>Secuencia</span><strong id="hero-step">00 / 04</strong></div>
-    <div class="hero-tech hero-tech-right" aria-hidden="true"><span>Compuesto</span><strong>Rubber / PBR</strong></div>
-    <div class="hero-progress-wrap" aria-hidden="true"><span>Deslizá para descubrir</span><div class="hero-progress-line"><i id="hero-progress"></i></div></div>
-    <p class="hero-claim">Confianza en cada kilómetro.</p>
+    <div class="hero-data hero-data-a" aria-hidden="true"><span>01</span><p>Ingeniería<br />en movimiento</p></div>
+    <div class="hero-data hero-data-b" aria-hidden="true"><span id="hero-step">00 / 04</span><p>Scroll para<br />explorar</p></div>
+    <div class="hero-progress" aria-hidden="true"><i id="hero-progress"></i></div>
+    <div class="hero-word" aria-hidden="true">PATAGONIA</div>
     <div class="webgl-fallback" aria-hidden="true">CYL</div>
   </div>
 </section>

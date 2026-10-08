@@ -2,10 +2,13 @@
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 <header class="site-header" aria-label="Navegación principal">
-  <a class="site-logo" href={`${base}#inicio`} aria-label="CYL Neumáticos, inicio"><img src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" /></a>
+  <a class="site-logo" href={`${base}#inicio`} aria-label="CYL Neumáticos, inicio">
+    <img src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" />
+  </a>
+  <div class="header-center" aria-hidden="true"><i></i><span>Neuquén · Patagonia</span></div>
   <nav class="site-nav" aria-label="Secciones">
-    <a href="#universos">Productos</a><a href="#sucursales">Sucursales</a>
-    <a class="nav-quote" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Cotización</a>
+    <a class="nav-link" href="#universos">Líneas</a>
+    <a class="nav-link" href="#sucursales">Sucursales</a>
+    <a class="nav-quote" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer"><span>Cotizar</span><b>↗</b></a>
   </nav>
-  <span class="header-index" aria-hidden="true">NQN — 38.95° S</span>
 </header>

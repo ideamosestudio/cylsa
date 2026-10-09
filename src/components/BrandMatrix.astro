@@ -1,14 +1,11 @@
 ---
 import BrandWheelScene from './BrandWheelScene.astro';
 import BrandTicker from './BrandTicker.astro';
-
-const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <section class="brand-matrix" id="marcas" aria-labelledby="brands-title">
   <div class="brand-matrix__glow" aria-hidden="true"></div>
-  <header class="premium-heading" data-reveal>
-    <p class="premium-kicker"><span>04</span> MULTIMARCA / UNA SOLUCIÓN PARA CADA CAMINO</p>
+  <header class="premium-heading brand-matrix__heading" data-reveal>
     <div>
       <h2 id="brands-title" class="animated-title">LA MARCA CORRECTA.<br />PARA TU FORMA DE AVANZAR.</h2>
       <p>Trabajamos con múltiples marcas y líneas para recomendar por uso, terreno, vehículo y presupuesto. La elección empieza por entender tu camino.</p>
@@ -19,11 +16,5 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
   <div class="brand-matrix__ticker">
     <BrandTicker />
-  </div>
-
-  <div class="brand-proof" data-reveal>
-    <img src={`${base}images/brands/representadas.png`} alt="FATE, representante oficial" loading="lazy" />
-    <div><span>Selección técnica</span><strong>No elegimos por vos.<br />Elegimos con vos.</strong></div>
-    <a class="button button--glass" href="#contacto">Encontrá tu neumático</a>
   </div>
 </section>

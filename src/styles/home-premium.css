@@ -27,8 +27,9 @@
 .brand-matrix { position: relative; isolation: isolate; overflow: hidden; padding: clamp(110px,12vw,190px) 0 clamp(90px,10vw,160px); background: #08090b; color: #fff; }
 .brand-matrix::before { position: absolute; inset: 0; opacity: .12; background-image: linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px); background-size: 86px 86px; content: ''; mask-image: radial-gradient(circle at 70% 48%,#000,transparent 78%); }
 .brand-matrix__glow { position: absolute; right: -20%; top: -28%; width: 80vw; height: 80vw; border-radius: 50%; background: radial-gradient(circle,rgba(211,12,31,.25),rgba(95,0,12,.08) 38%,transparent 70%); filter: blur(44px); }
-.brand-matrix .premium-heading,.brand-proof { margin-inline: clamp(22px,6vw,104px); }
-.brand-wheel-scene { position: absolute; z-index: 3; left: clamp(32px,4.5vw,86px); top: clamp(235px,18vw,310px); width: min(32vw,590px); aspect-ratio: 1.18; opacity: 1; cursor: crosshair; }
+.brand-matrix .premium-heading { margin-inline: clamp(22px,6vw,104px); }
+.brand-matrix__heading > div { grid-column: 2; }
+.brand-wheel-scene { position: absolute; z-index: 3; left: clamp(22px,5vw,96px); top: clamp(110px,12vw,190px); width: min(36vw,670px); aspect-ratio: 1.18; opacity: 1; cursor: crosshair; }
 .brand-wheel-scene::before { position: absolute; inset: 12% 4% 5%; border: 1px solid rgba(255,255,255,.075); border-radius: 50%; box-shadow: inset 0 0 55px rgba(255,255,255,.025),0 0 70px rgba(218,8,31,.08); content: ''; transform: perspective(700px) rotateX(69deg); }
 .brand-wheel-scene__glow { position: absolute; z-index: 0; inset: 5% -3% -7%; border-radius: 50%; background: radial-gradient(circle at 48% 55%,rgba(255,42,66,.52) 0%,rgba(177,4,29,.28) 27%,rgba(75,0,13,.16) 45%,rgba(14,15,18,0) 72%); filter: blur(31px); opacity: .95; transform: scale(.92); transition: opacity .8s ease,transform 1.1s cubic-bezier(.2,.8,.2,1); }
 .brand-wheel-scene__orbit { position: absolute; z-index: 1; inset: 6%; border: 1px solid rgba(255,255,255,.09); border-radius: 50%; opacity: .66; animation: brandWheelOrbit 24s linear infinite; }
@@ -58,10 +59,6 @@
 .brand-chip strong { font: 600 clamp(27px,3vw,52px)/1 'Instrument Sans',sans-serif; letter-spacing: -.04em; }
 .brand-chip i { height: 1px; background: linear-gradient(90deg,#ef2034,transparent); }
 .brand-chip--outline strong { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.52); }
-.brand-proof { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(240px,400px) 1fr auto; gap: clamp(28px,5vw,76px); align-items: center; margin-top: 90px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.12); }
-.brand-proof img { width: min(100%,400px); filter: invert(1) grayscale(1); }
-.brand-proof div span { color: #ef2034; font: 600 8px/1 'IBM Plex Mono',monospace; letter-spacing: .14em; }
-.brand-proof div strong { display: block; margin-top: 10px; font: 500 clamp(19px,2vw,31px)/1.1 'Instrument Sans',sans-serif; }
 
 .home-details { position: relative; isolation: isolate; overflow: hidden; padding: clamp(110px,12vw,190px) clamp(22px,6vw,104px); background: #e7e8e9; color: #111318; }
 .home-details__grid { position: absolute; inset: 0; opacity: .48; background-image: linear-gradient(rgba(12,13,16,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(12,13,16,.06) 1px,transparent 1px); background-size: 82px 82px; mask-image: linear-gradient(90deg,transparent,#000 30%,#000 85%,transparent); }
@@ -115,17 +112,15 @@
 .footer-nav-group span { margin-bottom: 12px; color: #ef2034; font: 600 8px/1 'IBM Plex Mono',monospace; letter-spacing: .15em; }
 .footer-nav-group a { width: fit-content; color: rgba(255,255,255,.72); font: 500 14px/1.2 'Instrument Sans',sans-serif; text-decoration: none; transition: color .25s ease,transform .25s ease; }
 .footer-nav-group a:hover { color: #fff; transform: translateX(5px); }
-.footer-wordmark { margin: 0 -.03em -.09em; color: rgba(255,255,255,.035); font: 400 min(42vw,680px)/.78 'Upbolters','Arial Black',sans-serif; letter-spacing: -.05em; pointer-events: none; }
 .footer-bottom--premium { display: grid; grid-template-columns: 1fr auto auto; gap: 28px; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); }
 .footer-bottom--premium p,.footer-bottom--premium a { margin: 0; color: rgba(255,255,255,.4); font: 500 8px/1 'IBM Plex Mono',monospace; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
 .footer-bottom--premium a:hover { color: #fff; }
 
 @media (max-width: 900px) {
+  .brand-matrix__heading > div { grid-column: 1; }
   .brand-wheel-scene { display: none; }
   .premium-heading,.premium-heading--compact { grid-template-columns: 1fr; gap: 34px; }
   .premium-heading h2 { font-size: clamp(54px,11vw,84px); }
-  .brand-proof { grid-template-columns: 1fr 1fr; }
-  .brand-proof .button { grid-column: 1/-1; }
   .detail-cards { grid-template-columns: 1fr; }
   .glass-card { min-height: 260px; }
   .glass-card h3 { margin-top: 70px; }
@@ -141,8 +136,6 @@
   .premium-heading > div > p { width: 100%; max-width: 100%; }
   .brand-rails { margin-top: 60px; }
   .brand-chip { min-width: 260px; padding: 20px 24px; }
-  .brand-proof { grid-template-columns: 1fr; margin-top: 64px; }
-  .brand-proof img { width: 270px; }
   .detail-cards { margin-top: 60px; }
   .premium-form { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }

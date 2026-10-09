@@ -22,7 +22,7 @@ export function initBrandWheelScene(container: HTMLElement) {
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.12;
+  renderer.toneMappingExposure = 1.08;
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 
   const scene = new THREE.Scene();
@@ -37,24 +37,33 @@ export function initBrandWheelScene(container: HTMLElement) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   const environment = pmrem.fromScene(new RoomEnvironment(), .04);
   scene.environment = environment.texture;
-  scene.environmentIntensity = 1.3;
+  scene.environmentIntensity = 1.08;
   pmrem.dispose();
 
-  scene.add(new THREE.HemisphereLight(0xdce6f3, 0x100106, 1.8));
-  const key = new THREE.RectAreaLight(0xffffff, 8.2, 5.5, 4.5);
-  key.position.set(-4.4, 4.7, 5.6);
+  scene.add(new THREE.HemisphereLight(0xcfd8e6, 0x120106, 1.35));
+  const key = new THREE.RectAreaLight(0xffffff, 6.2, 6.5, 4.2);
+  key.position.set(-4.8, 5.5, 6.4);
   key.lookAt(0, 0, 0);
   scene.add(key);
-  const rim = new THREE.RectAreaLight(0xff1833, 10.5, 3.2, 5.8);
-  rim.position.set(4.6, -.6, 2.8);
-  rim.lookAt(0, 0, 0);
-  scene.add(rim);
-  const edge = new THREE.PointLight(0xffffff, 22, 18, 1.6);
-  edge.position.set(1.8, 3.4, 5.2);
-  scene.add(edge);
-  const redFloor = new THREE.PointLight(0xff1028, 28, 15, 1.8);
-  redFloor.position.set(-2.8, -3.1, 3.2);
-  scene.add(redFloor);
+  const front = new THREE.RectAreaLight(0xbcc7d5, 2.2, 4.8, 5.4);
+  front.position.set(1.1, .4, 7.5);
+  front.lookAt(0, 0, 0);
+  scene.add(front);
+  const whiteRim = new THREE.RectAreaLight(0xffffff, 5.6, 2.2, 7.4);
+  whiteRim.position.set(5.8, 4.1, -4.8);
+  whiteRim.lookAt(0, 0, 0);
+  scene.add(whiteRim);
+  const redRim = new THREE.SpotLight(0xff112b, 112, 24, Math.PI / 3.5, .74, 1.25);
+  redRim.position.set(5.5, -1.2, 2.7);
+  redRim.target.position.set(0, 0, 0);
+  scene.add(redRim, redRim.target);
+  const ember = new THREE.PointLight(0xff5b24, 22, 14, 1.5);
+  ember.position.set(-3.8, -3.2, 2.5);
+  scene.add(ember);
+  const redFill = new THREE.RectAreaLight(0xff0b2d, 5.8, 4.6, 3.6);
+  redFill.position.set(-3.6, -1.5, 4.4);
+  redFill.lookAt(0, 0, 0);
+  scene.add(redFill);
 
   let ready = false;
   let visible = true;
@@ -96,10 +105,20 @@ export function initBrandWheelScene(container: HTMLElement) {
       if (!(object instanceof THREE.Mesh)) return;
       object.castShadow = false;
       object.receiveShadow = false;
+      const tire = /tire|rubber/i.test(`${object.name} ${Array.isArray(object.material) ? object.material.map((item) => item.name).join(' ') : object.material?.name ?? ''}`);
       const materials = Array.isArray(object.material) ? object.material : [object.material];
       materials.forEach((material) => {
         if (material instanceof THREE.MeshStandardMaterial) {
-          material.envMapIntensity = 1.55;
+          if (tire) {
+            material.color.set(0x0b0c0e);
+            material.metalness = .02;
+            material.roughness = .62;
+            material.envMapIntensity = .72;
+          } else {
+            material.metalness = .92;
+            material.roughness = .2;
+            material.envMapIntensity = 1.9;
+          }
           material.needsUpdate = true;
         }
       });
@@ -107,8 +126,9 @@ export function initBrandWheelScene(container: HTMLElement) {
     const bounds = new THREE.Box3().setFromObject(model);
     const size = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
-    model.position.copy(center).multiplyScalar(-1);
-    model.scale.setScalar(5.7 / Math.max(size.x, size.y, size.z));
+    const scale = 4.15 / Math.max(size.x, size.y, size.z);
+    model.scale.setScalar(scale);
+    model.position.copy(center).multiplyScalar(-scale);
     modelHolder.add(model);
     ready = true;
     container.classList.add('is-ready');

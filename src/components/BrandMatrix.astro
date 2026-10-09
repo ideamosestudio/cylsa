@@ -1,8 +1,7 @@
 ---
 import BrandWheelScene from './BrandWheelScene.astro';
+import BrandTicker from './BrandTicker.astro';
 
-const brands = ['FATE', 'PIRELLI', 'GOODYEAR', 'BRIDGESTONE', 'MICHELIN', 'FIRESTONE'];
-const repeated = [...brands, ...brands];
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
@@ -18,17 +17,8 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
   <BrandWheelScene />
 
-  <div class="brand-rails" aria-label="Marcas comercializadas por CYL Neumáticos">
-    <div class="brand-rail brand-rail--forward">
-      <div class="brand-rail__track">
-        {repeated.map((brand, index) => <div class="brand-chip" aria-hidden={index >= brands.length}><span>{String((index % brands.length) + 1).padStart(2, '0')}</span><strong>{brand}</strong><i></i></div>)}
-      </div>
-    </div>
-    <div class="brand-rail brand-rail--reverse" aria-hidden="true">
-      <div class="brand-rail__track">
-        {repeated.map((brand, index) => <div class="brand-chip brand-chip--outline"><span>CYL</span><strong>{brand}</strong><i></i></div>)}
-      </div>
-    </div>
+  <div class="brand-matrix__ticker">
+    <BrandTicker />
   </div>
 
   <div class="brand-proof" data-reveal>

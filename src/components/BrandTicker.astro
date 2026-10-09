@@ -1,0 +1,38 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const brands = [
+  ['Pirelli', 'pirelli.png'],
+  ['Michelin', 'michelin.png'],
+  ['Bridgestone', 'bridgestone.png'],
+  ['Firestone', 'firestone.png'],
+  ['Goodyear', 'goodyear.png'],
+  ['Fate', 'fate.png'],
+  ['Continental', 'continental.png'],
+  ['Dunlop', 'dunlop.png'],
+  ['Yokohama', 'yokohama.png'],
+  ['BFGoodrich', 'bfgoodrich.png'],
+  ['Hankook', 'hankook.png'],
+  ['Kumho', 'kumho.png'],
+];
+---
+
+<section class="brand-ticker" aria-label="Marcas de neumáticos disponibles">
+  <div class="brand-ticker__meta" aria-hidden="true">
+    <span>CYL / MULTIMARCA</span>
+    <i></i>
+    <span>12 MARCAS</span>
+  </div>
+  <div class="brand-ticker__viewport">
+    <div class="brand-ticker__track">
+      {[0, 1].map((copy) => (
+        <div class="brand-ticker__group" aria-hidden={copy === 1}>
+          {brands.map(([name, file]) => (
+            <div class="brand-ticker__item">
+              <img src={`${base}images/brand-ticker/${file}`} alt={copy === 0 ? name : ''} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

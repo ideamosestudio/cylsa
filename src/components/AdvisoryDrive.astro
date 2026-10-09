@@ -65,9 +65,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
       if (bg) bg.style.transform = `translate3d(${p * -1.8}%,${p * -2.4}%,0) scale(${1.07 + p * 0.035})`;
       if (car) {
-        const x = (1 - enter) * (mobile ? 110 : 92) - exit * (mobile ? 180 : 152);
+        const x = (1 - enter) * (mobile ? 110 : 72) + exit * (mobile ? 125 : 68);
         const y = (1 - enter) * 8 + Math.sin(p * Math.PI * 5) * (mobile ? 0.5 : 0.25) - settle * 1.5;
-        const scale = (mobile ? 0.82 : 0.9) + enter * (mobile ? 0.14 : 0.12) + settle * 0.025 - exit * 0.08;
+        const scale = (mobile ? 0.82 : 0.88) + enter * (mobile ? 0.14 : 0.08) + settle * 0.02 - exit * 0.06;
         car.style.transform = `translate3d(${x}vw,${y}vh,0) scale(${scale})`;
         car.style.opacity = String(smooth(range(enter, 0.02, 0.22)) * (1 - exit * 0.65));
       }

@@ -2,7 +2,7 @@
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
-<section class="advisory-drive" data-advisory-drive aria-labelledby="advisory-title">
+<section class="advisory-drive" id="asesoramiento" data-advisory-drive aria-labelledby="advisory-title">
   <div class="advisory-stage">
     <div class="advisory-bg" data-advisory-bg style={`background-image:url('${base}images/advisory/cyl-garage-bg.jpg')`}></div>
     <div class="advisory-shade"></div>
@@ -56,28 +56,28 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
     const apply = (p: number) => {
       const mobile = window.innerWidth < 700;
-      const enter = smooth(range(p, 0.03, mobile ? 0.34 : 0.4));
-      const settle = smooth(range(p, 0.35, 0.63));
-      const exit = smooth(range(p, 0.76, 1));
-      const copyIn = smooth(range(p, 0.13, 0.34));
-      const copyOut = smooth(range(p, 0.68, 0.8));
+      const enter = smooth(range(p, 0.02, mobile ? 0.34 : 0.3));
+      const settle = smooth(range(p, 0.3, 0.7));
+      const exit = smooth(range(p, 0.88, 1));
+      const copyIn = smooth(range(p, 0.08, 0.28));
+      const copyOut = smooth(range(p, 0.82, 0.94));
       const copyOpacity = copyIn * (1 - copyOut);
 
       if (bg) bg.style.transform = `translate3d(${p * -1.8}%,${p * -2.4}%,0) scale(${1.07 + p * 0.035})`;
       if (car) {
-        const x = (1 - enter) * (mobile ? 110 : 72) + exit * (mobile ? 125 : 68);
-        const y = (1 - enter) * 8 + Math.sin(p * Math.PI * 5) * (mobile ? 0.5 : 0.25) - settle * 1.5;
-        const scale = (mobile ? 0.82 : 0.88) + enter * (mobile ? 0.14 : 0.08) + settle * 0.02 - exit * 0.06;
+        const x = (1 - enter) * (mobile ? 34 : 10) + exit * (mobile ? 34 : 12);
+        const y = (1 - enter) * 2.5 + Math.sin(p * Math.PI * 2) * (mobile ? 0.22 : 0.12) - settle * 0.7;
+        const scale = (mobile ? 0.9 : 0.94) + enter * (mobile ? 0.06 : 0.035) + settle * 0.01 - exit * 0.025;
         car.style.transform = `translate3d(${x}vw,${y}vh,0) scale(${scale})`;
-        car.style.opacity = String(smooth(range(enter, 0.02, 0.22)) * (1 - exit * 0.65));
+        car.style.opacity = String(smooth(range(enter, 0, 0.16)) * (1 - exit * 0.72));
       }
       if (copy) {
         copy.style.opacity = String(copyOpacity);
         copy.style.transform = `translate3d(0,${(1-copyIn)*34 - copyOut*26}px,0)`;
       }
       if (speed) {
-        speed.style.opacity = String((enter * (1-settle*.6) + exit) * 0.7);
-        speed.style.transform = `translate3d(${(1-enter)*55 - exit*45}vw,0,0)`;
+        speed.style.opacity = String((enter * (1-settle*.72) + exit * .3) * 0.38);
+        speed.style.transform = `translate3d(${(1-enter)*20 - exit*14}vw,0,0)`;
       }
       if (redline) redline.style.transform = `scaleX(${Math.min(1, enter * 1.15) * (1-exit*.35)})`;
       if (counter) counter.textContent = String(Math.round(p * 100)).padStart(2, '0');

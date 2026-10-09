@@ -173,18 +173,19 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     scale *= 1 + macro * (mobile ? .28 : .3);
     scale *= 1 - hero * .12 - exit * .22;
 
-    root.position.set(x, y, 0);
+    const pointerStrength = mobile ? .08 : .2;
+    root.position.set(x + pointerX * pointerStrength, y - pointerY * pointerStrength * .55, 0);
     root.scale.setScalar(scale);
     root.rotation.set(
-      mix(-.12, .08, orbit) + macro * .16 + pointerY * .035,
-      mix(.66, -.28, orbit) + macro * 1.16 - hero * .36 + pointerX * .045,
-      mix(-.08, .035, orbit) - hero * .04,
+      mix(-.12, .08, orbit) + macro * .16 + pointerY * (mobile ? .045 : .14),
+      mix(.66, -.28, orbit) + macro * 1.16 - hero * .36 + pointerX * (mobile ? .06 : .2),
+      mix(-.08, .035, orbit) - hero * .04 - pointerX * pointerY * .035,
     );
     wheel.rotation.z = -.08 - (orbit * .75 + macroIn * .38 + hero * .42 + exit * .25) * Math.PI;
 
     const cameraAngle = mix(-.08, .14, orbit) + macro * .17 - hero * .16;
     const distance = 10.2 - orbit * .25 - macro * .34 + hero * .45 + exit * 1.1;
-    camera.position.set(Math.sin(cameraAngle) * distance, .08 + macro * .32, Math.cos(cameraAngle) * distance);
+    camera.position.set(Math.sin(cameraAngle + pointerX * .018) * distance, .08 + macro * .32 - pointerY * .055, Math.cos(cameraAngle + pointerX * .018) * distance);
     camera.lookAt(mobile ? .05 : .7, mobile ? -.62 : 0, 0);
 
     renderer.toneMappingExposure = 1.05 + orbit * .08 + macro * .12 - exit * .08;
@@ -202,8 +203,8 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     if (!visible) return;
     const delta = targetProgress - currentProgress;
     currentProgress += delta * (reduced ? 1 : .15);
-    pointerX += (pointerTargetX - pointerX) * .085;
-    pointerY += (pointerTargetY - pointerY) * .085;
+    pointerX += (pointerTargetX - pointerX) * .065;
+    pointerY += (pointerTargetY - pointerY) * .065;
     apply(currentProgress);
     if (modelReady) renderer.render(scene, camera);
     if (Math.abs(delta) > .0003 || Math.abs(pointerTargetX - pointerX) > .001 || Math.abs(pointerTargetY - pointerY) > .001) requestRender();
@@ -222,11 +223,14 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     requestRender();
   };
   const pointer = (event: PointerEvent) => {
+    if (reduced || event.pointerType === 'touch') return;
     pointerTargetX = event.clientX / innerWidth - .5;
     pointerTargetY = event.clientY / innerHeight - .5;
     requestRender();
   };
+  const pointerLeave = () => { pointerTargetX = 0; pointerTargetY = 0; requestRender(); };
   addEventListener('pointermove', pointer, { passive: true });
+  track.addEventListener('pointerleave', pointerLeave, { passive: true });
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
   const visibilityObserver = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting && !document.hidden; if (visible) requestRender(); }, { rootMargin: '180px' });
@@ -242,6 +246,7 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     resizeObserver.disconnect();
     visibilityObserver.disconnect();
     removeEventListener('pointermove', pointer);
+    track.removeEventListener('pointerleave', pointerLeave);
     environment.dispose();
     disposableMaterials.forEach((material) => material.dispose());
     renderer.dispose();

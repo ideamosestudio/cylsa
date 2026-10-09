@@ -1,0 +1,35 @@
+---
+import '../styles/hero-definitive.css';
+---
+
+<section class="hero-track" id="hero-track" data-hero-track aria-label="Presentación de CYL Neumáticos">
+  <div class="hero-stage" data-hero-stage>
+    <div class="hero-base" aria-hidden="true"></div>
+    <div class="hero-ambient" aria-hidden="true">
+      <span class="hero-glow hero-glow--red" data-glow-red></span>
+      <span class="hero-glow hero-glow--amber" data-glow-amber></span>
+      <span class="hero-glow hero-glow--gray" data-glow-gray></span>
+    </div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+    <canvas class="hero-canvas" id="tire-canvas" data-tire-canvas aria-label="Rueda 3D interactiva"></canvas>
+    <div class="hero-webgl-fallback" data-webgl-fallback hidden><span>Visualización 3D no disponible</span></div>
+
+    <div class="hero-copy" data-hero-copy>
+      <p class="hero-eyebrow">CYL NEUMÁTICOS / PATAGONIA</p>
+      <h1><span>El movimiento</span><span>es todo.</span></h1>
+      <p class="hero-intro">Cada camino es diferente. Encontrá el neumático para seguir avanzando.</p>
+      <div class="hero-actions">
+        <a class="button button--primary" href="#lineas">Explorar nuestras líneas</a>
+        <a class="button button--ghost" href="#contacto">Solicitar cotización</a>
+      </div>
+    </div>
+
+    <div class="hero-tech" aria-hidden="true">
+      <span class="hero-tech__index" data-step-index>00 / 05</span><span class="hero-tech__rule"></span><span class="hero-tech__name" data-step-name>Product reveal</span>
+    </div>
+    <div class="hero-progress" id="hero-progress" aria-hidden="true"></div>
+    <div class="part-label part-label--tire" data-label-tire aria-hidden="true"><span>01</span><b>NEUMÁTICO</b></div>
+    <div class="part-label part-label--rim" data-label-rim aria-hidden="true"><span>02</span><b>LLANTA</b></div>
+    <div class="hero-scroll" data-hero-scroll aria-hidden="true"><span>Scroll para explorar</span><i></i></div>
+  </div>
+</section>

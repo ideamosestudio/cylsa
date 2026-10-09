@@ -1,24 +1,81 @@
 ---
+import '../styles/product-selector.css';
+
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const categories = [
-  { n: '01', title: 'Automóvil', feeling: 'Precisión y confort', image: 'automovil.webp' },
-  { n: '02', title: 'Camioneta', feeling: 'Tracción y libertad', image: 'camioneta.webp' },
-  { n: '03', title: 'Transporte', feeling: 'Resistencia continua', image: 'transporte.webp' },
-  { n: '04', title: 'Agro / Vial', feeling: 'Potencia y trabajo', image: 'agro-vial.webp' },
+  { n: '01', title: 'Automóvil', eyebrow: 'Precisión y confort', use: 'Urbano / Ruta', image: 'automovil.png', alt: 'Neumáticos para automóvil con llantas deportivas' },
+  { n: '02', title: 'Camioneta', eyebrow: 'Tracción y libertad', use: 'On road / Off road', image: 'camioneta.png', alt: 'Neumáticos para camioneta de uso mixto y todo terreno' },
+  { n: '03', title: 'Transporte', eyebrow: 'Resistencia continua', use: 'Media / Larga distancia', image: 'transporte.png', alt: 'Neumáticos de carga para transporte' },
+  { n: '04', title: 'Agro / Vial', eyebrow: 'Potencia y trabajo', use: 'Tracción / Carga', image: 'agro-vial.png', alt: 'Neumáticos de gran tracción para aplicaciones agro y viales' },
 ];
 ---
-<section class="universes" id="universos" aria-labelledby="universes-title">
-  <div class="section-intro" data-reveal>
-    <p class="eyebrow">04 universos / infinitos caminos</p>
-    <div class="section-title-row"><h2 id="universes-title">NO TODOS LOS <span class="title-accent title-accent--light">CAMINOS</span><br />SON IGUALES.</h2><p>De la ciudad a los terrenos más exigentes. Soluciones para cada forma de moverse.</p></div>
-  </div>
-  <div class="universe-grid">
-    {categories.map((item) => (
-      <article class="universe-card" data-reveal>
-        <img src={`${base}images/${item.image}`} alt={`Escena de ${item.title.toLowerCase()} en movimiento`} loading="lazy" width="1536" height="1024" />
-        <div class="card-shade"></div><div class="card-number">{item.n}</div>
-        <div class="card-copy"><p>{item.feeling}</p><h3>{item.title}</h3><a href="#sucursales" aria-label={`Consultar neumáticos para ${item.title}`}>Consultar línea</a></div>
-      </article>
+
+<section class="product-selector" id="universos" aria-labelledby="product-selector-title">
+  <header class="product-selector__header" data-reveal>
+    <div>
+      <p class="product-selector__eyebrow"><span>02</span> PRODUCTOS / APLICACIÓN</p>
+      <h2 id="product-selector-title">ELEGÍ TU <em>LÍNEA.</em></h2>
+    </div>
+    <p class="product-selector__intro">Una solución específica para cada forma de moverse, producir y avanzar.</p>
+  </header>
+
+  <div class="product-grid" aria-label="Tipos de neumáticos">
+    {categories.map((item, index) => (
+      <div class="product-card-wrap" data-reveal style={`--card-order:${index}`}>
+        <article class="product-card" data-product-card>
+          <span class="product-card__topline" aria-hidden="true"></span>
+          <span class="product-card__glare" aria-hidden="true"></span>
+          <span class="product-card__halo" aria-hidden="true"></span>
+          <div class="product-card__head">
+            <p><span>{item.n}</span> {item.eyebrow}</p>
+            <h3>{item.title}</h3>
+            <a class="product-card__cta" href="#contacto" aria-label={`Consultar línea de neumáticos para ${item.title}`}>
+              <span>Ver línea</span><i aria-hidden="true">↗</i>
+            </a>
+          </div>
+          <div class="product-card__image-shell" aria-hidden="true">
+            <img class="product-card__image" src={`${base}images/products/${item.image}`} alt="" loading="lazy" width="460" height="259" />
+          </div>
+          <footer class="product-card__meta">
+            <span>APLICACIÓN</span><b>{item.use}</b><i>CYL / {item.n}</i>
+          </footer>
+          <span class="sr-only">{item.alt}</span>
+        </article>
+      </div>
     ))}
   </div>
+
+  <div class="product-selector__footer" aria-hidden="true">
+    <span>DESLIZÁ PARA EXPLORAR</span><i></i><b>04 LÍNEAS</b>
+  </div>
 </section>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reducedMotion) {
+    document.querySelectorAll<HTMLElement>('[data-product-card]').forEach((card) => {
+      const updatePointer = (event: PointerEvent) => {
+        if (event.pointerType === 'touch') return;
+        const bounds = card.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - 0.5) * 2));
+        const y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - 0.5) * 2));
+        card.style.setProperty('--rotate-x', `${-y * 1.7}deg`);
+        card.style.setProperty('--rotate-y', `${x * 1.9}deg`);
+        card.style.setProperty('--image-x', `${x * 12}px`);
+        card.style.setProperty('--image-y', `${y * 8}px`);
+        card.style.setProperty('--glare-x', `${(x + 1) * 50}%`);
+        card.style.setProperty('--glare-y', `${(y + 1) * 50}%`);
+      };
+      const resetPointer = () => {
+        card.style.setProperty('--rotate-x', '0deg');
+        card.style.setProperty('--rotate-y', '0deg');
+        card.style.setProperty('--image-x', '0px');
+        card.style.setProperty('--image-y', '0px');
+        card.style.setProperty('--glare-x', '50%');
+        card.style.setProperty('--glare-y', '42%');
+      };
+      card.addEventListener('pointermove', updatePointer, { passive: true });
+      card.addEventListener('pointerleave', resetPointer, { passive: true });
+    });
+  }
+</script>

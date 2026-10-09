@@ -12,7 +12,17 @@ const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, v
 const range = (value: number, start: number, end: number) => clamp((value - start) / (end - start));
 const ease = (value: number) => value * value * (3 - 2 * value);
 const mix = (a: number, b: number, value: number) => a + (b - a) * value;
-const acts = ['REVEAL', 'ORBIT', 'TREAD / MACRO', 'HERO ANGLE', 'NEXT TERRAIN'];
+const acts = ['PORTADA', 'CAMINOS', 'PRECISIÓN', 'TRACCIÓN', 'RESISTENCIA', 'POTENCIA', 'EXPLORAR'];
+
+const keyMix = (progress: number, points: Array<[number, number]>) => {
+  if (progress <= points[0][0]) return points[0][1];
+  for (let index = 1; index < points.length; index += 1) {
+    const [end, value] = points[index];
+    const [start, previous] = points[index - 1];
+    if (progress <= end) return mix(previous, value, ease(range(progress, start, end)));
+  }
+  return points[points.length - 1][1];
+};
 
 export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, progressBar: HTMLElement | null, reduced: boolean) {
   let renderer: THREE.WebGLRenderer;
@@ -70,6 +80,8 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   const scan = track.querySelector<HTMLElement>('[data-sport-scan]');
   const orbitGraphic = track.querySelector<HTMLElement>('[data-sport-orbit]');
   const note = track.querySelector<HTMLElement>('[data-wheel-note]');
+  const exitPanel = track.querySelector<HTMLElement>('[data-exit-panel]');
+  const storySteps = Array.from(track.querySelectorAll<HTMLElement>('[data-story-start][data-story-end]'));
   const stepIndex = track.querySelector<HTMLElement>('[data-step-index]');
   const stepName = track.querySelector<HTMLElement>('[data-step-name]');
   const fallback = track.querySelector<HTMLElement>('[data-webgl-fallback]');
@@ -122,16 +134,13 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   const apply = (progress: number) => {
     const mobile = innerWidth < 650;
     const tablet = innerWidth < 960;
-    const orbit = ease(range(progress, .1, .38));
-    const macroIn = ease(range(progress, .34, .56));
-    const macroOut = ease(range(progress, .6, .76));
-    const macro = macroIn * (1 - macroOut);
-    const hero = ease(range(progress, .66, .84));
-    const exit = ease(range(progress, .9, 1));
-    const copyOut = ease(range(progress, .08, .22));
-    const stage = progress < .12 ? 0 : progress < .38 ? 1 : progress < .65 ? 2 : progress < .9 ? 3 : 4;
+    const journey = ease(range(progress, .12, .88));
+    const macro = ease(range(progress, .44, .59)) * (1 - ease(range(progress, .62, .72)));
+    const exit = ease(range(progress, .94, 1));
+    const copyOut = ease(range(progress, .1, .19));
+    const stage = progress < .16 ? 0 : progress < .30 ? 1 : progress < .43 ? 2 : progress < .56 ? 3 : progress < .69 ? 4 : progress < .82 ? 5 : 6;
 
-    if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 04`;
+    if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 06`;
     if (stepName) stepName.textContent = acts[stage];
     if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
     if (copy) {
@@ -139,61 +148,62 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
       copy.style.transform = mobile ? `translate3d(0,${-24 * copyOut}px,0)` : `translate3d(0,calc(-48% + ${-34 * copyOut}px),0)`;
       copy.style.pointerEvents = copyOut > .9 ? 'none' : 'auto';
     }
+    if (exitPanel) exitPanel.style.transform = `translate3d(0,${101 - exit * 101}%,0)`;
+    storySteps.forEach((element) => {
+      const start = Number(element.dataset.storyStart);
+      const end = Number(element.dataset.storyEnd);
+      const fade = Math.min(.035, (end - start) * .28);
+      const opacity = ease(range(progress, start, start + fade)) * (1 - ease(range(progress, end - fade, end)));
+      const travel = mix(18, -12, ease(range(progress, start, end)));
+      element.style.opacity = String(opacity);
+      element.style.setProperty('--story-travel', `${travel}px`);
+    });
     if (flare) {
-      flare.style.opacity = String((.64 + orbit * .13 + macro * .16) * (1 - exit * .7));
-      flare.style.transform = `translate3d(${-7 * orbit + 5 * hero}%,${4 * macro}%,0) scale(${1 + .2 * macro})`;
+      flare.style.opacity = String((.64 + journey * .13 + macro * .16) * (1 - exit * .7));
+      flare.style.transform = `translate3d(${-7 * journey + 5 * exit + pointerX * 2.8}%,${4 * macro + pointerY * 2.2}%,0) scale(${1 + .2 * macro})`;
     }
     if (hot) {
-      hot.style.opacity = String((.2 + macro * .34 + hero * .1) * (1 - exit));
-      hot.style.transform = `translate3d(${-15 * macro + 7 * hero}%,${-8 * orbit}%,0) scale(${1 + .28 * macro})`;
+      hot.style.opacity = String((.2 + macro * .34 + journey * .1) * (1 - exit));
+      hot.style.transform = `translate3d(${-15 * macro + 7 * journey - pointerX * 3.4}%,${-8 * journey - pointerY * 2.6}%,0) scale(${1 + .28 * macro})`;
     }
-    if (scan) scan.style.transform = `translate3d(${(progress - .5) * 55}vw,0,0)`;
+    if (scan) scan.style.transform = `translate3d(${(progress - .5) * 55 + pointerX * 1.8}vw,0,0)`;
     if (orbitGraphic) {
-      orbitGraphic.style.opacity = String((.5 + orbit * .3) * (1 - exit));
-      orbitGraphic.style.transform = `rotate(${progress * 92}deg) scale(${1 + macro * .16})`;
+      orbitGraphic.style.opacity = String((.5 + journey * .3) * (1 - exit));
+      orbitGraphic.style.transform = `rotate(${progress * 118}deg) scale(${1 + macro * .16})`;
     }
     if (note) {
-      note.style.opacity = String(ease(range(progress, .16, .3)) * (1 - ease(range(progress, .8, .92))));
-      note.style.transform = `translate3d(${(1 - orbit) * 22}px,0,0)`;
+      note.style.opacity = String(ease(range(progress, .16, .26)) * (1 - ease(range(progress, .78, .88))));
+      note.style.transform = `translate3d(${(1 - journey) * 22}px,0,0)`;
     }
 
-    const startX = mobile ? .15 : tablet ? .65 : 2.85;
-    const orbitX = mobile ? -.25 : tablet ? .15 : 1.05;
-    const macroX = mobile ? .72 : tablet ? 1.2 : 2.2;
-    const heroX = mobile ? .1 : tablet ? .35 : 1.45;
-    let x = mix(startX, orbitX, orbit);
-    x = mix(x, macroX, macro);
-    x = mix(x, heroX, hero);
-    x += exit * (mobile ? 2.4 : 3.8);
-    const startY = mobile ? -1.62 : tablet ? -.85 : -.05;
-    const orbitY = mobile ? -.82 : tablet ? -.38 : .02;
-    let y = mix(startY, orbitY, orbit) + macro * (mobile ? .1 : .24) - hero * .05 + exit * .2;
-    let scale = mobile ? .53 : tablet ? .64 : .82;
-    scale *= mix(1, 1.08, orbit);
-    scale *= 1 + macro * (mobile ? .28 : .3);
-    scale *= 1 - hero * .12 - exit * .22;
+    const xFactor = mobile ? .22 : tablet ? .5 : 1;
+    const x = keyMix(progress, [[0, 2.85], [.18, 1.95], [.31, -1.5], [.44, 1.55], [.57, -1.38], [.70, 1.35], [.83, .18], [.94, 0]]) * xFactor;
+    const y = keyMix(progress, [[0, -.05], [.18, -.02], [.31, .04], [.44, -.08], [.57, .03], [.70, -.06], [.83, .02], [.94, 0]]) + (mobile ? -1.25 : tablet ? -.58 : 0);
+    let scale = (mobile ? .53 : tablet ? .64 : .82) * keyMix(progress, [[0, 1], [.31, .88], [.44, .98], [.57, 1.06], [.70, .92], [.83, .84], [.94, .9]]);
+    scale *= 1 + exit * 1.75;
 
-    const pointerStrength = mobile ? .08 : .2;
-    root.position.set(x + pointerX * pointerStrength, y - pointerY * pointerStrength * .55, 0);
+    const pointerLife = 1 - journey * .52;
+    const pointerStrength = mobile ? .06 : .13;
+    root.position.set(x + pointerX * pointerStrength * pointerLife, y - pointerY * pointerStrength * .45 * pointerLife, 0);
     root.scale.setScalar(scale);
     root.rotation.set(
-      mix(-.12, .08, orbit) + macro * .16 + pointerY * (mobile ? .045 : .14),
-      mix(.66, -.28, orbit) + macro * 1.16 - hero * .36 + pointerX * (mobile ? .06 : .2),
-      mix(-.08, .035, orbit) - hero * .04 - pointerX * pointerY * .035,
+      keyMix(progress, [[0, -.12], [.31, .08], [.44, -.04], [.57, .14], [.70, -.08], [.83, .03]]) + pointerY * (mobile ? .04 : .105) * pointerLife,
+      keyMix(progress, [[0, .66], [.31, -.25], [.44, .42], [.57, -.38], [.70, .28], [.83, -.04], [.94, .12]]) + pointerX * (mobile ? .05 : .13) * pointerLife,
+      keyMix(progress, [[0, -.08], [.31, .035], [.44, -.025], [.57, .04], [.70, -.035], [.83, 0]]) - pointerX * pointerY * .025,
     );
-    wheel.rotation.z = -.08 - (orbit * .75 + macroIn * .38 + hero * .42 + exit * .25) * Math.PI;
+    wheel.rotation.z = -.08 - keyMix(progress, [[0, 0], [.31, .62], [.44, .92], [.57, 1.22], [.70, 1.52], [.83, 1.72], [1, 1.98]]) * Math.PI;
 
-    const cameraAngle = mix(-.08, .14, orbit) + macro * .17 - hero * .16;
-    const distance = 10.2 - orbit * .25 - macro * .34 + hero * .45 + exit * 1.1;
-    camera.position.set(Math.sin(cameraAngle + pointerX * .018) * distance, .08 + macro * .32 - pointerY * .055, Math.cos(cameraAngle + pointerX * .018) * distance);
+    const cameraAngle = keyMix(progress, [[0, -.08], [.31, .10], [.44, -.08], [.57, .13], [.70, -.10], [.83, .02]]) + macro * .08;
+    const distance = 10.2 - journey * .12 - macro * .28 + exit * .55;
+    camera.position.set(Math.sin(cameraAngle + pointerX * .022 * pointerLife) * distance, .08 + macro * .26 - pointerY * .04 * pointerLife, Math.cos(cameraAngle + pointerX * .022 * pointerLife) * distance);
     camera.lookAt(mobile ? .05 : .7, mobile ? -.62 : 0, 0);
 
-    renderer.toneMappingExposure = 1.05 + orbit * .08 + macro * .12 - exit * .08;
-    scene.environmentIntensity = 1.02 + orbit * .15 + macro * .24;
-    key.intensity = 6.1 + orbit * .8 + macro * 1.2;
+    renderer.toneMappingExposure = 1.05 + journey * .08 + macro * .12 - exit * .08;
+    scene.environmentIntensity = 1.02 + journey * .15 + macro * .24;
+    key.intensity = 6.1 + journey * .8 + macro * 1.2;
     front.intensity = 2.1 + macro * .6;
-    whiteRim.intensity = 5.4 + orbit * 1.1 + macro * 1.5;
-    redRim.intensity = 62 + orbit * 14 + macro * 12 + hero * 10;
+    whiteRim.intensity = 5.4 + journey * 1.1 + macro * 1.5;
+    redRim.intensity = 62 + journey * 20 + macro * 12;
     redRim.position.x = 5.5 - macro * 2.2;
     ember.intensity = 18 + macro * 17;
   };
@@ -203,8 +213,8 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     if (!visible) return;
     const delta = targetProgress - currentProgress;
     currentProgress += delta * (reduced ? 1 : .15);
-    pointerX += (pointerTargetX - pointerX) * .065;
-    pointerY += (pointerTargetY - pointerY) * .065;
+    pointerX += (pointerTargetX - pointerX) * .085;
+    pointerY += (pointerTargetY - pointerY) * .085;
     apply(currentProgress);
     if (modelReady) renderer.render(scene, camera);
     if (Math.abs(delta) > .0003 || Math.abs(pointerTargetX - pointerX) > .001 || Math.abs(pointerTargetY - pointerY) > .001) requestRender();
@@ -224,8 +234,9 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   };
   const pointer = (event: PointerEvent) => {
     if (reduced || event.pointerType === 'touch') return;
-    pointerTargetX = event.clientX / innerWidth - .5;
-    pointerTargetY = event.clientY / innerHeight - .5;
+    const amplify = (value: number) => Math.sign(value) * Math.pow(Math.abs(value), .72);
+    pointerTargetX = amplify(clamp((event.clientX / innerWidth - .5) * 2, -1, 1));
+    pointerTargetY = amplify(clamp((event.clientY / innerHeight - .5) * 2, -1, 1));
     requestRender();
   };
   const pointerLeave = () => { pointerTargetX = 0; pointerTargetY = 0; requestRender(); };

@@ -1,0 +1,15 @@
+<div class="brand-wheel-scene" data-brand-wheel aria-label="Llanta deportiva Nismo LMGT4 interactiva">
+  <div class="brand-wheel-scene__glow" aria-hidden="true"></div>
+  <div class="brand-wheel-scene__orbit" aria-hidden="true"><i></i><i></i><span>MOVE / EXPLORE</span></div>
+  <canvas data-brand-wheel-canvas></canvas>
+  <p class="brand-wheel-scene__label" aria-hidden="true"><span>3D / LMGT4</span><b>MOVÉ EL CURSOR</b></p>
+  <span class="brand-wheel-scene__fallback" data-brand-wheel-fallback hidden>MODELO 3D NO DISPONIBLE</span>
+</div>
+
+<script>
+  import { initBrandWheelScene } from '../three/BrandWheelScene';
+
+  document.querySelectorAll<HTMLElement>('[data-brand-wheel]').forEach((element) => {
+    initBrandWheelScene(element);
+  });
+</script>

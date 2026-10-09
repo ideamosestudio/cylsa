@@ -1,0 +1,52 @@
+---
+import '../styles/hero-sport.css';
+---
+
+<section class="sport-hero" id="hero-track" aria-label="Presentación de CYL Neumáticos">
+  <div class="sport-stage">
+    <div class="sport-bg" aria-hidden="true">
+      <span class="sport-bg__flare sport-bg__flare--main" data-sport-flare></span>
+      <span class="sport-bg__flare sport-bg__flare--hot" data-sport-hot></span>
+      <span class="sport-bg__noise"></span>
+      <span class="sport-bg__grid"></span>
+      <span class="sport-bg__scan" data-sport-scan></span>
+    </div>
+
+    <div class="sport-orbit" data-sport-orbit aria-hidden="true">
+      <i></i><i></i><i></i><i></i>
+      <span>CYL / MOTION SYSTEM</span>
+    </div>
+
+    <canvas id="tire-canvas" class="sport-canvas" aria-label="Rueda deportiva 3D CYL"></canvas>
+    <div class="sport-fallback" data-webgl-fallback hidden>VISUALIZACIÓN 3D NO DISPONIBLE</div>
+
+    <div class="sport-frame" aria-hidden="true">
+      <i class="sport-frame__tl"></i><i class="sport-frame__tr"></i><i class="sport-frame__bl"></i><i class="sport-frame__br"></i>
+    </div>
+
+    <div class="sport-copy" data-sport-copy>
+      <div class="sport-kicker"><span>01</span> CYL NEUMÁTICOS / PATAGONIA</div>
+      <h1><span>EL MOVIMIENTO</span><span>ES TODO.</span></h1>
+      <p>Cada camino es diferente. Encontrá el neumático para seguir avanzando.</p>
+      <div class="sport-actions">
+        <a class="button button--primary" href="#lineas">Explorar nuestras líneas</a>
+        <a class="button button--ghost" href="#contacto">Solicitar cotización</a>
+      </div>
+    </div>
+
+    <div class="sport-specs" aria-hidden="true">
+      <div><small>COMPOUND</small><b>PERFORMANCE / 01</b></div>
+      <div><small>TRACTION</small><b>WET + DRY</b></div>
+      <div><small>CONTROL</small><b>PRECISION GRIP</b></div>
+    </div>
+
+    <div class="sport-side-code" aria-hidden="true">CYL—NQN&nbsp;&nbsp; / &nbsp;&nbsp;38.95°S&nbsp;&nbsp; / &nbsp;&nbsp;068.06°W</div>
+    <div class="sport-readout" aria-hidden="true">
+      <span data-step-index>00 / 04</span><i></i><b data-step-name>IGNITION</b>
+    </div>
+    <div class="sport-wheel-note" data-wheel-note aria-hidden="true">
+      <span>HIGH PERFORMANCE</span><b>SPORT / ROAD</b><i></i>
+    </div>
+    <div class="sport-scroll" aria-hidden="true"><span>SCROLL TO DRIVE</span><i><b id="hero-progress"></b></i></div>
+  </div>
+</section>

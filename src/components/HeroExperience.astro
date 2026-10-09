@@ -1,6 +1,16 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
 <section class="hero-track" id="hero-track" aria-labelledby="hero-title">
   <div class="hero-sticky" id="inicio">
-    <div class="hero-atmosphere" aria-hidden="true"></div>
+    <div class="hero-base" aria-hidden="true"></div>
+    <div class="hero-photo" data-hero-photo style={`--studio-image: url('${base}images/cyl-estudio-hero.webp')`} aria-hidden="true"></div>
+    <div class="hero-dimmer" data-hero-dimmer aria-hidden="true"></div>
+    <div class="hero-glows" aria-hidden="true">
+      <i class="hero-glow hero-glow-red" data-glow="red"></i>
+      <i class="hero-glow hero-glow-amber" data-glow="amber"></i>
+      <i class="hero-glow hero-glow-gray" data-glow="gray"></i>
+    </div>
     <canvas id="tire-canvas" aria-label="Rueda tridimensional CYL con neumático y llanta separables"></canvas>
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="model-loader" data-model-loader aria-live="polite"><span>Cargando experiencia 3D</span><strong data-model-progress>0%</strong></div>

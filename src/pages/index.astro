@@ -44,9 +44,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       }
 
       if (!reduced) {
-        gsap.fromTo('.hero-copy h1 span', { yPercent: 112, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.15, stagger: 0.1, ease: 'power4.out', delay: 0.18 });
-        gsap.fromTo('.hero-copy .eyebrow, .hero-intro, .hero-actions', { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.85, stagger: 0.08, ease: 'power3.out', delay: 0.36 });
-        gsap.to('.hero-copy', { opacity: 0, y: -24, ease: 'none', scrollTrigger: { trigger: track, start: '10% top', end: '34% top', scrub: true } });
         gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
           gsap.fromTo(element, { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } });
         });

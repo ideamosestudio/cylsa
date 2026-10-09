@@ -4,13 +4,13 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
 <section class="advisory-drive" id="asesoramiento" data-advisory-drive aria-labelledby="advisory-title">
   <div class="advisory-stage">
-    <div class="advisory-bg" data-advisory-bg style={`background-image:url('${base}images/advisory/cyl-garage-bg.jpg')`}></div>
+    <div class="advisory-bg" data-advisory-bg style={`background-image:url('${base}images/advisory/cyl-garage-bg-v2.jpg')`}></div>
     <div class="advisory-shade"></div>
     <div class="advisory-speed" data-advisory-speed aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <div class="advisory-redline" data-advisory-redline aria-hidden="true"></div>
 
     <div class="advisory-copy" data-advisory-copy>
-      <p class="advisory-eyebrow"><span>02</span> ASESORAMIENTO PERSONALIZADO / CYL</p>
+      <p class="advisory-eyebrow"><span>03</span> ASESORAMIENTO PERSONALIZADO / CYL</p>
       <h2 id="advisory-title"><span>ESTAMOS PARA</span><span class="title-accent">ASESORARTE.</span></h2>
       <p class="advisory-lead">Contanos qué manejás, cómo y por dónde. Nuestro equipo te ayuda a elegir el neumático correcto para tu vehículo, tu recorrido y tu forma de avanzar.</p>
       <div class="advisory-actions">
@@ -21,8 +21,8 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
     <div class="advisory-car" data-advisory-car>
       <div class="advisory-car__glow"></div>
-      <img src={`${base}images/advisory/cyl-race-car.png`} alt="Automóvil deportivo CYL Neumáticos" loading="lazy" decoding="async" />
-      <img class="advisory-car__reflection" src={`${base}images/advisory/cyl-race-car.png`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <img src={`${base}images/advisory/cyl-race-car-v2.png`} alt="Automóvil deportivo CYL Neumáticos" loading="lazy" decoding="async" />
+      <img class="advisory-car__reflection" src={`${base}images/advisory/cyl-race-car-v2.png`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
     </div>
 
     <div class="advisory-data" aria-hidden="true">
@@ -56,28 +56,28 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
     const apply = (p: number) => {
       const mobile = window.innerWidth < 700;
-      const enter = smooth(range(p, 0.02, mobile ? 0.34 : 0.3));
-      const settle = smooth(range(p, 0.3, 0.7));
-      const exit = smooth(range(p, 0.88, 1));
-      const copyIn = smooth(range(p, 0.08, 0.28));
-      const copyOut = smooth(range(p, 0.82, 0.94));
+      const enter = smooth(range(p, 0.02, mobile ? 0.3 : 0.24));
+      const settle = smooth(range(p, 0.28, 0.72));
+      const exit = smooth(range(p, 0.9, 1));
+      const copyIn = smooth(range(p, 0.05, 0.22));
+      const copyOut = smooth(range(p, 0.88, 0.98));
       const copyOpacity = copyIn * (1 - copyOut);
 
-      if (bg) bg.style.transform = `translate3d(${p * -1.8}%,${p * -2.4}%,0) scale(${1.07 + p * 0.035})`;
+      if (bg) bg.style.transform = `translate3d(${p * -0.55}%,${p * -0.8}%,0) scale(${1.035 + p * 0.012})`;
       if (car) {
-        const x = (1 - enter) * (mobile ? 34 : 10) + exit * (mobile ? 34 : 12);
-        const y = (1 - enter) * 2.5 + Math.sin(p * Math.PI * 2) * (mobile ? 0.22 : 0.12) - settle * 0.7;
-        const scale = (mobile ? 0.9 : 0.94) + enter * (mobile ? 0.06 : 0.035) + settle * 0.01 - exit * 0.025;
+        const x = (1 - enter) * (mobile ? 18 : 4.5) + exit * (mobile ? 14 : 3.5);
+        const y = (1 - enter) * 1.4 + Math.sin(p * Math.PI * 2) * (mobile ? 0.28 : 0.18) - settle * 0.35;
+        const scale = (mobile ? 0.91 : 0.965) + enter * (mobile ? 0.07 : 0.025) + settle * 0.008 - exit * 0.012;
         car.style.transform = `translate3d(${x}vw,${y}vh,0) scale(${scale})`;
         car.style.opacity = String(smooth(range(enter, 0, 0.16)) * (1 - exit * 0.72));
       }
       if (copy) {
         copy.style.opacity = String(copyOpacity);
-        copy.style.transform = `translate3d(0,${(1-copyIn)*34 - copyOut*26}px,0)`;
+        copy.style.transform = `translate3d(0,${(1-copyIn)*24 - copyOut*18}px,0)`;
       }
       if (speed) {
-        speed.style.opacity = String((enter * (1-settle*.72) + exit * .3) * 0.38);
-        speed.style.transform = `translate3d(${(1-enter)*20 - exit*14}vw,0,0)`;
+        speed.style.opacity = String((enter * (1-settle*.78) + exit * .25) * 0.26);
+        speed.style.transform = `translate3d(${(1-enter)*12 - exit*7}vw,0,0)`;
       }
       if (redline) redline.style.transform = `scaleX(${Math.min(1, enter * 1.15) * (1-exit*.35)})`;
       if (counter) counter.textContent = String(Math.round(p * 100)).padStart(2, '0');

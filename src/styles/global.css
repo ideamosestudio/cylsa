@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Roboto:wght@300;400&family=Space+Grotesk:wght@600;700&display=swap');
 
 :root { --red: #d10f1b; --ink: #060607; --paper: #f4f4f2; --line: rgba(255,255,255,.14); color-scheme: dark; font-family: 'Instrument Sans',Arial,sans-serif; background: var(--ink); color: var(--paper); }
 * { box-sizing: border-box; }

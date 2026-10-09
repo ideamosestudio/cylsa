@@ -1,0 +1,35 @@
+---
+const brands = ['FATE', 'PIRELLI', 'GOODYEAR', 'BRIDGESTONE', 'MICHELIN', 'FIRESTONE'];
+const repeated = [...brands, ...brands];
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<section class="brand-matrix" id="marcas" aria-labelledby="brands-title">
+  <div class="brand-matrix__glow" aria-hidden="true"></div>
+  <header class="premium-heading" data-reveal>
+    <p class="premium-kicker"><span>03</span> MULTIMARCA / UNA SOLUCIÓN PARA CADA CAMINO</p>
+    <div>
+      <h2 id="brands-title" class="animated-title">LA MARCA CORRECTA.<br />PARA TU FORMA DE AVANZAR.</h2>
+      <p>Trabajamos con múltiples marcas y líneas para recomendar por uso, terreno, vehículo y presupuesto. La elección empieza por entender tu camino.</p>
+    </div>
+  </header>
+
+  <div class="brand-rails" aria-label="Marcas comercializadas por CYL Neumáticos">
+    <div class="brand-rail brand-rail--forward">
+      <div class="brand-rail__track">
+        {repeated.map((brand, index) => <div class="brand-chip" aria-hidden={index >= brands.length}><span>{String((index % brands.length) + 1).padStart(2, '0')}</span><strong>{brand}</strong><i></i></div>)}
+      </div>
+    </div>
+    <div class="brand-rail brand-rail--reverse" aria-hidden="true">
+      <div class="brand-rail__track">
+        {repeated.map((brand, index) => <div class="brand-chip brand-chip--outline"><span>CYL</span><strong>{brand}</strong><i></i></div>)}
+      </div>
+    </div>
+  </div>
+
+  <div class="brand-proof" data-reveal>
+    <img src={`${base}images/brands/representadas.png`} alt="FATE, representante oficial" loading="lazy" />
+    <div><span>Selección técnica</span><strong>No elegimos por vos.<br />Elegimos con vos.</strong></div>
+    <a class="button button--glass" href="#contacto">Encontrá tu neumático</a>
+  </div>
+</section>

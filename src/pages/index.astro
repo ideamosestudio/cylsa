@@ -4,8 +4,11 @@ import Header from '../components/Header.astro';
 import HeroExperience from '../components/HeroSport.astro';
 import MotionUniverses from '../components/MotionUniverses.astro';
 import AdvisoryDrive from '../components/AdvisoryDrive.astro';
-import BrandMarquee from '../components/BrandMarquee.astro';
+import BrandMatrix from '../components/BrandMatrix.astro';
+import HomeDetails from '../components/HomeDetails.astro';
+import ContactSuite from '../components/ContactSuite.astro';
 import '../styles/advisory-drive.css';
+import '../styles/home-premium.css';
 import Footer from '../components/Footer.astro';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -26,19 +29,21 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <main>
       <HeroExperience />
       <MotionUniverses />
+      <BrandMatrix />
+      <HomeDetails />
       <AdvisoryDrive />
-      <BrandMarquee />
+      <ContactSuite />
     </main>
     <Footer />
 
     <script>
       import gsap from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
-      import { initTireScene } from '../three/SportWheelScene';
+      import { initTireScene } from '../three/PremiumWheelScene';
 
       gsap.registerPlugin(ScrollTrigger);
       const canvas = document.querySelector('#tire-canvas');
-      const track = document.querySelector('#hero-track');
+      const track = document.querySelector('[data-hero-track]');
       const progress = document.querySelector('#hero-progress');
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

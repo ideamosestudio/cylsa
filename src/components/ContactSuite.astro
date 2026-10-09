@@ -1,0 +1,44 @@
+---
+const quoteUrl = 'https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal';
+const locations = [
+  { n: '01', name: 'Perticone', address: 'Eugenio Perticone 1203', city: 'Neuquén', phones: [['(0299) 5470052', '+542995470052'], ['(0299) 6324963', '+542996324963']] },
+  { n: '02', name: 'Pin Oeste', address: 'Ingeniero Huergo 2554', city: 'Neuquén', phones: [['(0299) 5470059', '+542995470059'], ['(0299) 6562386', '+542996562386']] },
+  { n: '03', name: 'Añelo', address: 'Lote 11 – Frac. C, Manzana 35', city: 'Añelo / Neuquén', phones: [['(0299) 5483985', '+542995483985'], ['(0299) 540047', '+54299540047']] },
+];
+---
+
+<section class="contact-suite" id="contacto" aria-labelledby="contact-title">
+  <div class="contact-suite__flare" aria-hidden="true"></div>
+  <header class="premium-heading premium-heading--compact" data-reveal>
+    <p class="premium-kicker"><span>05</span> CONTACTO / RESPUESTA DIRECTA</p>
+    <div><h2 id="contact-title" class="animated-title">CONTANOS<br />QUÉ NECESITÁS.</h2><p>Dejanos tus datos y continuá la solicitud en el canal oficial de cotizaciones de CYL.</p></div>
+  </header>
+
+  <div class="contact-layout">
+    <form class="premium-form glass-panel" action={quoteUrl} method="get" target="_blank" data-reveal>
+      <div class="form-intro"><span>FORM / 01</span><p>Los campos nos ayudan a orientarte mejor.</p></div>
+      <label><span>Nombre y apellido</span><input type="text" name="nombre" autocomplete="name" placeholder="Tu nombre" required /></label>
+      <div class="form-row">
+        <label><span>Teléfono</span><input type="tel" name="telefono" autocomplete="tel" placeholder="0299..." required /></label>
+        <label><span>Email</span><input type="email" name="email" autocomplete="email" placeholder="nombre@email.com" /></label>
+      </div>
+      <div class="form-row">
+        <label><span>Tipo de vehículo</span><select name="vehiculo"><option>Automóvil</option><option>Camioneta</option><option>Transporte</option><option>Agro / Vial</option></select></label>
+        <label><span>Sucursal preferida</span><select name="sucursal"><option>Neuquén / Perticone</option><option>Neuquén / Pin Oeste</option><option>Añelo</option></select></label>
+      </div>
+      <label><span>¿Cómo podemos ayudarte?</span><textarea name="mensaje" rows="4" placeholder="Contanos medida, vehículo o tipo de uso"></textarea></label>
+      <button class="button button--primary button--magnetic" type="submit"><span>Continuar cotización</span><i aria-hidden="true">↗</i></button>
+      <p class="form-legal">Se abrirá el formulario oficial de cotización de CYL Neumáticos.</p>
+    </form>
+
+    <div class="contact-locations" id="sucursales">
+      {locations.map((location) => (
+        <address class="contact-location glass-panel" data-reveal>
+          <span>{location.n} / {location.name}</span><h3>{location.address}</h3><p>{location.city}</p>
+          <div>{location.phones.map(([label, phone]) => <a href={`tel:${phone}`}>{label}</a>)}</div>
+        </address>
+      ))}
+      <div class="contact-hours glass-panel" data-reveal><span>HORARIOS</span><p>Lunes a viernes · 8:30 a 17:30<br />Sábados · 8:30 a 13:00</p></div>
+    </div>
+  </div>
+</section>

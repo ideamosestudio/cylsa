@@ -305,12 +305,12 @@
 
 @media (max-width: 900px) {
   .advisory-drive {
-    height: 180vh;
-    min-height: 1200px;
+    height: 170vh;
+    min-height: 1120px;
   }
 
   .advisory-copy {
-    top: 13%;
+    top: 15%;
     left: 30px;
     width: calc(100% - 60px);
     padding-right: 0;
@@ -346,8 +346,8 @@
 
 @media (max-width: 600px) {
   .advisory-drive {
-    height: 165vh;
-    min-height: 1080px;
+    height: 155vh;
+    min-height: 1000px;
   }
 
   .advisory-stage {
@@ -355,7 +355,7 @@
   }
 
   .advisory-copy {
-    top: 12%;
+    top: 14%;
     left: 20px;
     width: calc(100% - 40px);
   }

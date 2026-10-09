@@ -1,5 +1,6 @@
 ---
-const quoteUrl = 'https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const quoteUrl = base;
 const locations = [
   { n: '01', name: 'Perticone', address: 'Eugenio Perticone 1203', city: 'Neuquén', phones: [['(0299) 5470052', '+542995470052'], ['(0299) 6324963', '+542996324963']] },
   { n: '02', name: 'Pin Oeste', address: 'Ingeniero Huergo 2554', city: 'Neuquén', phones: [['(0299) 5470059', '+542995470059'], ['(0299) 6562386', '+542996562386']] },
@@ -15,7 +16,7 @@ const locations = [
   </header>
 
   <div class="contact-layout">
-    <form class="premium-form glass-panel" action={quoteUrl} method="get" target="_blank" data-reveal>
+    <form class="premium-form glass-panel" action={quoteUrl} method="get" data-reveal>
       <div class="form-intro"><span>FORM / 01</span><p>Los campos nos ayudan a orientarte mejor.</p></div>
       <label><span>Nombre y apellido</span><input type="text" name="nombre" autocomplete="name" placeholder="Tu nombre" required /></label>
       <div class="form-row">

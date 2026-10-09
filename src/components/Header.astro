@@ -1,11 +1,45 @@
 ---
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
-<header class="site-header" aria-label="Navegación principal">
-  <a class="site-logo" href={`${base}#inicio`} aria-label="CYL Neumáticos, inicio"><img src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" /></a>
-  <nav class="site-nav" aria-label="Secciones">
-    <a href="#universos">Productos</a><a href="#marcas">Marcas</a><a href="#contacto">Contacto</a>
-    <a class="nav-quote" href="https://crm.autopartespro.com/BudgetRequest/taller/cyl-neumaticos/normal" target="_blank" rel="noreferrer">Cotización</a>
+<header class="site-header" aria-label="Navegación principal" data-site-header>
+  <div class="site-header__shell">
+    <a class="site-logo" href={base} aria-label="CYL Neumáticos, inicio">
+      <img src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" />
+      <span aria-hidden="true"><i></i> PATAGONIA / ARG</span>
+    </a>
+    <nav class="site-nav" aria-label="Secciones">
+      <a href={base}><small>01</small><span>Productos</span></a>
+      <a href={base}><small>02</small><span>Marcas</span></a>
+      <a href={base}><small>03</small><span>Contacto</span></a>
+      <a class="nav-quote" href={base}><small>04</small><span>Cotización</span><b aria-hidden="true">↗</b></a>
+    </nav>
+    <span class="header-index" aria-hidden="true"><i></i><span>NQN</span><b>38.95° S</b></span>
+    <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation">
+      <span>MENÚ</span><i></i><i></i>
+    </button>
+  </div>
+  <nav class="site-mobile-nav" id="mobile-navigation" aria-label="Navegación móvil" aria-hidden="true" inert>
+    <span class="site-mobile-nav__meta">CYL / NQN / 38.95° S</span>
+    <a href={base}><small>01</small><span>Productos</span><b>↗</b></a>
+    <a href={base}><small>02</small><span>Marcas</span><b>↗</b></a>
+    <a href={base}><small>03</small><span>Contacto</span><b>↗</b></a>
+    <a class="site-mobile-nav__primary" href={base}><small>04</small><span>Solicitar cotización</span><b>↗</b></a>
   </nav>
-  <span class="header-index" aria-hidden="true">NQN — 38.95° S</span>
 </header>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-site-header]').forEach((header) => {
+    const toggle = header.querySelector<HTMLButtonElement>('.site-nav-toggle');
+    const menu = header.querySelector<HTMLElement>('.site-mobile-nav');
+    if (!toggle || !menu) return;
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('is-menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-hidden', String(!open));
+      menu.toggleAttribute('inert', !open);
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+  });
+</script>

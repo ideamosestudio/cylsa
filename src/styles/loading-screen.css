@@ -1,0 +1,183 @@
+.is-loading,
+.is-loading body {
+  overflow: hidden;
+}
+
+.site-loader {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #030303;
+  color: #fff;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .65s cubic-bezier(.22,.61,.36,1), visibility 0s linear .65s;
+}
+
+.site-loader.is-complete {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.site-loader::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 25%, rgba(255,255,255,.025) 48%, transparent 70%),
+    radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,.68) 100%);
+  content: '';
+  pointer-events: none;
+}
+
+.site-loader__glows,
+.site-loader__glows i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.site-loader__glows {
+  inset: 0;
+  filter: saturate(1.15);
+}
+
+.site-loader__glows i:nth-child(1) {
+  width: min(78vw, 1100px);
+  height: min(78vw, 1100px);
+  top: -42%;
+  right: -16%;
+  background: radial-gradient(circle, rgba(224,17,39,.35), rgba(126,0,16,.13) 42%, transparent 72%);
+  filter: blur(28px);
+  animation: loader-glow-a 5.8s ease-in-out infinite alternate;
+}
+
+.site-loader__glows i:nth-child(2) {
+  width: min(62vw, 880px);
+  height: min(62vw, 880px);
+  bottom: -39%;
+  left: -13%;
+  background: radial-gradient(circle, rgba(176,0,22,.3), rgba(92,0,12,.1) 45%, transparent 73%);
+  filter: blur(34px);
+  animation: loader-glow-b 6.6s ease-in-out infinite alternate;
+}
+
+.site-loader__glows i:nth-child(3) {
+  width: min(30vw, 430px);
+  height: min(30vw, 430px);
+  top: 35%;
+  left: 42%;
+  background: radial-gradient(circle, rgba(255,42,57,.18), transparent 68%);
+  filter: blur(42px);
+  animation: loader-glow-c 4.4s ease-in-out infinite alternate;
+}
+
+.site-loader__content {
+  position: relative;
+  z-index: 1;
+  width: min(76vw, 490px);
+  text-align: center;
+}
+
+.site-loader__content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto clamp(38px, 6vh, 66px);
+  filter: drop-shadow(0 0 28px rgba(255,255,255,.08));
+}
+
+.site-loader__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: rgba(255,255,255,.7);
+  font: 600 10px/1 'IBM Plex Mono', monospace;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.site-loader__status b {
+  color: #e51c2c;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+.site-loader__dots::after {
+  display: inline-block;
+  width: 2em;
+  overflow: hidden;
+  vertical-align: bottom;
+  content: '...';
+  animation: loader-dots 1.25s steps(4,end) infinite;
+}
+
+.site-loader__track {
+  position: relative;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255,255,255,.12);
+}
+
+.site-loader__track::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+  content: '';
+  transform: translateX(-100%);
+  animation: loader-sheen 1.8s ease-in-out infinite;
+}
+
+.site-loader__track i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #7c0010, #e51c2c 76%, #ff6b73);
+  box-shadow: 0 0 18px rgba(229,28,44,.8);
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+
+@keyframes loader-glow-a {
+  to { transform: translate3d(-9%, 10%, 0) scale(1.12); opacity: .72; }
+}
+
+@keyframes loader-glow-b {
+  to { transform: translate3d(12%, -8%, 0) scale(1.16); opacity: .76; }
+}
+
+@keyframes loader-glow-c {
+  to { transform: translate3d(-14%, 9%, 0) scale(.84); opacity: .55; }
+}
+
+@keyframes loader-dots {
+  0% { width: 0; }
+  100% { width: 2em; }
+}
+
+@keyframes loader-sheen {
+  55%, 100% { transform: translateX(100%); }
+}
+
+@media (max-width: 600px) {
+  .site-loader__content { width: min(82vw, 390px); }
+  .site-loader__content img { margin-bottom: 38px; }
+  .site-loader__glows i:nth-child(1) { width: 130vw; height: 130vw; top: -20%; right: -58%; }
+  .site-loader__glows i:nth-child(2) { width: 120vw; height: 120vw; bottom: -32%; left: -58%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loader,
+  .site-loader__glows i,
+  .site-loader__dots::after,
+  .site-loader__track::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+}

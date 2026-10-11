@@ -30,6 +30,7 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
   } catch {
     track.querySelector<HTMLElement>('[data-webgl-fallback]')?.removeAttribute('hidden');
+    window.dispatchEvent(new CustomEvent('cyl:model-error'));
     return;
   }
 
@@ -95,6 +96,7 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   let pointerX = 0;
   let pointerY = 0;
   let modelReady = false;
+  let readyAnnounced = false;
   let visible = true;
   let frame = 0;
 
@@ -126,9 +128,13 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     modelReady = true;
     track.classList.add('model-ready');
     requestRender();
-  }, undefined, (error) => {
+  }, (event) => {
+    const progress = event.total > 0 ? Math.min(event.loaded / event.total, 1) : null;
+    window.dispatchEvent(new CustomEvent('cyl:model-progress', { detail: { progress } }));
+  }, (error) => {
     console.error('CYL premium wheel failed to load', error);
     fallback?.removeAttribute('hidden');
+    window.dispatchEvent(new CustomEvent('cyl:model-error'));
   });
 
   const apply = (progress: number) => {
@@ -216,7 +222,13 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     pointerX += (pointerTargetX - pointerX) * .085;
     pointerY += (pointerTargetY - pointerY) * .085;
     apply(currentProgress);
-    if (modelReady) renderer.render(scene, camera);
+    if (modelReady) {
+      renderer.render(scene, camera);
+      if (!readyAnnounced) {
+        readyAnnounced = true;
+        window.dispatchEvent(new CustomEvent('cyl:model-ready'));
+      }
+    }
     if (Math.abs(delta) > .0003 || Math.abs(pointerTargetX - pointerX) > .001 || Math.abs(pointerTargetY - pointerY) > .001) requestRender();
   };
 

@@ -10,14 +10,14 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     </div>
     <div class="footer-nav-group">
       <span>EXPLORAR</span>
-      <a href={base}>Productos</a><a href={base}>Marcas</a><a href={base}>Contacto</a><a href={base}>Sucursales</a>
+      <a href={`${base}quienes-somos/`}>Quiénes somos</a><a href={`${base}nuestra-politica/`}>Nuestra política</a><a href={`${base}forma-parte-de-nuestro-equipo/`}>Trabajá con nosotros</a><a href={`${base}contacto/`}>Contacto y sucursales</a>
     </div>
     <div class="footer-nav-group">
       <span>ACCIÓN</span>
-      <a href={base}>Pedir cotización ↗</a>
-      <a href={base}>Llamar ahora ↗</a>
-      <a href={base}>Sitio institucional ↗</a>
+      <a href={`${base}cotizacion/`}>Pedir cotización ↗</a>
+      <a href="tel:+542994400914">Llamar ahora ↗</a>
+      <a href={`${base}contacto/`}>Ver sucursales ↗</a>
     </div>
   </div>
-  <div class="footer-bottom footer-bottom--premium"><p>© {new Date().getFullYear()} CYL S.A. Neumáticos</p><a href={base}>Volver arriba ↑</a><a href="https://www.ideamos.com.ar/" target="_blank" rel="noreferrer">Diseño y desarrollo / Estudio Ideamos</a></div>
+  <div class="footer-bottom footer-bottom--premium"><p>© {new Date().getFullYear()} CYL S.A. Neumáticos</p><a href="#">Volver arriba ↑</a><a href="https://www.ideamos.com.ar/" target="_blank" rel="noreferrer">Diseño y desarrollo / Estudio Ideamos</a></div>
 </footer>

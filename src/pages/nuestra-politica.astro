@@ -1,0 +1,33 @@
+---
+import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const principles = [
+  ['Responsabilidad compartida', 'La calidad y su mejora continua son responsabilidad de todas las personas que integran la organización.'],
+  ['Gestión consciente', 'Planificamos, ejecutamos, revisamos y mejoramos nuestro sistema considerando el contexto interno y externo de CYL.'],
+  ['Satisfacción del cliente', 'Trabajamos para cumplir las necesidades de clientes y partes interesadas, junto con los requisitos legales, reglamentarios y de producto.'],
+  ['Mejora continua', 'Perfeccionamos los procesos y la prestación del servicio, con la prevención de errores como parte fundamental del sistema.'],
+  ['Evolución y participación', 'Prestamos atención a la evolución tecnológica y promovemos la participación de todo el equipo en nuestra política de calidad.'],
+];
+---
+
+<InternalPageLayout
+  title="Nuestra política"
+  description="Política de calidad y mejora continua de CYL S.A., basada en la norma ISO 9001:2015."
+  eyebrow="CALIDAD / COMPROMISO"
+  heading="NUESTRA"
+  accent="POLÍTICA."
+  intro="Organizamos nuestro trabajo alrededor de la calidad, la satisfacción de quienes nos eligen y la mejora continua de cada proceso."
+>
+  <section class="page-section page-section--dark">
+    <div class="page-shell">
+      <div class="policy-intro" data-page-reveal>
+        <div><p class="page-label">01 / SISTEMA DE GESTIÓN</p><h2 class="page-display">CALIDAD<br /><em>EN ACCIÓN.</em></h2><div class="page-copy"><p>CYL S.A., dedicada a la venta, distribución y servicio de neumáticos y afines, implementó un Sistema de Gestión de la Calidad basado en la norma ISO 9001:2015 para mejorar el servicio, responder a las demandas del mercado y brindar una atención óptima.</p><p>Buscamos crecer de manera continua en la región, atender cada necesidad con el mejor desempeño y fomentar valores como el respeto y la ética en las relaciones laborales y con nuestros clientes.</p></div></div>
+        <aside class="policy-badge"><span>STANDARD / QUALITY</span><strong>ISO<br />9001</strong><small>SISTEMA BASADO EN<br />NORMA 2015</small></aside>
+      </div>
+      <div class="principles">
+        {principles.map(([title, copy], index) => <article class="principle" data-page-reveal><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{copy}</p></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="page-section page-section--red"><div class="page-shell page-cta" data-page-reveal><h2>CALIDAD QUE SE SIENTE EN EL CAMINO.</h2><a href={`${base}contacto/`}>Hablar con CYL ↗</a></div></section>
+</InternalPageLayout>

@@ -1,0 +1,36 @@
+---
+import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+---
+
+<InternalPageLayout
+  title="Solicitar cotización"
+  description="Solicitá una cotización de neumáticos para automóvil, camioneta, transporte o agro/vial en CYL S.A."
+  eyebrow="COTIZACIÓN / ASESORAMIENTO"
+  heading="ENCONTRÁ TU"
+  accent="NEUMÁTICO."
+  intro="Contanos qué vehículo usás y qué necesitás. Con esos datos podemos orientarte mejor sobre medida, disponibilidad y servicio."
+>
+  <section class="page-section form-section">
+    <div class="page-shell form-layout">
+      <div class="form-side" data-page-reveal><p class="page-label">01 / TU SOLICITUD</p><h2>DATOS PRECISOS.<br /><em>MEJOR RESPUESTA.</em></h2><p>Si no conocés la medida, podés verla en el lateral del neumático. Suele expresarse como 205/55 R16. También podés indicarnos marca, modelo y año del vehículo.</p><div class="form-direct"><a href="tel:+542995470052">Perticone · (0299) 5470052</a><a href="tel:+542995470059">Pin Oeste · (0299) 5470059</a><a href="tel:+542995483985">Añelo · (0299) 5483985</a></div></div>
+      <form class="internal-form" data-whatsapp-form data-message-heading="Hola, quiero solicitar una cotización de neumáticos en CYL." data-page-reveal>
+        <div class="internal-form__top"><span>FORM / COTIZACIÓN</span><b>Los campos con * son obligatorios</b></div>
+        <label>Nombre y apellido *<input type="text" name="nombre" autocomplete="name" required data-message-label="Nombre y apellido" /></label>
+        <label>Teléfono *<input type="tel" name="telefono" autocomplete="tel" required data-message-label="Teléfono" /></label>
+        <label>Email<input type="email" name="email" autocomplete="email" data-message-label="Email" /></label>
+        <label>Tipo de vehículo *<select name="tipo" required data-message-label="Tipo de vehículo"><option value="">Seleccionar</option><option>Automóvil</option><option>Camioneta / SUV</option><option>Transporte</option><option>Agro / Vial</option><option>Otro</option></select></label>
+        <label>Marca y modelo *<input type="text" name="vehiculo" required placeholder="Ej. Toyota Hilux" data-message-label="Vehículo" /></label>
+        <label>Año<input type="number" name="anio" min="1950" max="2030" inputmode="numeric" placeholder="Ej. 2022" data-message-label="Año" /></label>
+        <label>Medida del neumático<input type="text" name="medida" placeholder="Ej. 205/55 R16" data-message-label="Medida" /></label>
+        <label>Cantidad *<select name="cantidad" required data-message-label="Cantidad"><option>1 neumático</option><option>2 neumáticos</option><option>4 neumáticos</option><option>Más de 4 / Flota</option></select></label>
+        <label>Uso principal<select name="uso" data-message-label="Uso principal"><option>Ciudad</option><option>Ruta</option><option>Mixto</option><option>Off road / Ripio</option><option>Carga / Trabajo</option><option>Agro / Vial</option></select></label>
+        <label>Servicio adicional<select name="servicio" data-message-label="Servicio adicional"><option>Sólo neumáticos</option><option>Colocación</option><option>Balanceo</option><option>Alineación</option><option>Servicio completo</option><option>Necesito asesoramiento</option></select></label>
+        <label>Sucursal preferida *<select name="sucursal" required data-message-label="Sucursal"><option value="perticone">Neuquén / Perticone</option><option value="pin">Neuquén / Pin Oeste</option><option value="anelo">Añelo</option></select></label>
+        <label>¿Cuándo lo necesitás?<select name="plazo" data-message-label="Plazo"><option>Lo antes posible</option><option>Esta semana</option><option>Este mes</option><option>Estoy averiguando</option></select></label>
+        <label class="internal-form__full">Información adicional<textarea name="mensaje" placeholder="Marca preferida, presupuesto, tipo de terreno o cualquier dato útil" data-message-label="Información adicional"></textarea></label>
+        <button type="submit"><span>Solicitar cotización</span><span aria-hidden="true">↗</span></button>
+        <p class="internal-form__note">Al continuar se abrirá WhatsApp con toda la información lista para enviar a la sucursal elegida.</p>
+      </form>
+    </div>
+  </section>
+</InternalPageLayout>

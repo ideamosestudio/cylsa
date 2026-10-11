@@ -1,0 +1,42 @@
+---
+import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<InternalPageLayout
+  title="Quiénes somos"
+  description="Conocé a CYL S.A., empresa neuquina especializada en venta, distribución e instalación de neumáticos."
+  eyebrow="EMPRESA / IDENTIDAD"
+  heading="QUIÉNES"
+  accent="SOMOS."
+  intro="Somos una empresa neuquina dedicada a la venta, distribución e instalación de neumáticos, con atención cercana para particulares y empresas."
+>
+  <section class="page-section page-section--light">
+    <div class="page-shell page-lead-grid" data-page-reveal>
+      <p class="page-label">01 / NUESTRA HISTORIA</p>
+      <div>
+        <h2 class="page-display">SOLUCIONES QUE<br /><em>MUEVEN.</em></h2>
+        <div class="page-copy">
+          <p>CYL S.A. brinda soluciones integrales para las necesidades de sus clientes. Nuestro portafolio reúne una amplia gama de neumáticos, con foco en la calidad y la funcionalidad de cada producto.</p>
+          <p>Desde la sede central hasta nuestras sucursales en la provincia de Neuquén, ofrecemos colocación, balanceo, alineación de precisión y servicios vinculados al rendimiento del vehículo.</p>
+          <p>Atendemos a empresas y particulares con un servicio personalizado. También acompañamos a clientes del interior mediante envíos, sosteniendo la misma atención y compromiso en cada operación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section page-section--dark">
+    <div class="page-shell">
+      <div class="page-lead-grid" data-page-reveal><p class="page-label">02 / LO QUE NOS GUÍA</p><h2 class="page-display">UNA PROMESA.<br /><em>CADA KILÓMETRO.</em></h2></div>
+      <div class="statement-grid">
+        <article class="statement-card" data-page-reveal><span>01 / VISIÓN</span><h3>SER REFERENTES.</h3><p>Consolidarnos como un referente del mercado de neumáticos por la calidad, la atención, la seguridad vial, la innovación y una expansión estratégica.</p></article>
+        <article class="statement-card" data-page-reveal><span>02 / MISIÓN</span><h3>MEJORAR CADA VIAJE.</h3><p>Ofrecer productos y servicios de primera calidad que mejoren la seguridad y el rendimiento, con asesoramiento personalizado y soluciones a medida.</p></article>
+        <article class="statement-card" data-page-reveal><span>03 / VALORES</span><h3>COMPROMISO REAL.</h3><p>Trabajamos con pasión, respeto y dedicación, comprometidos con la satisfacción del cliente, la comunidad y la responsabilidad social.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section page-section--red">
+    <div class="page-shell page-cta" data-page-reveal><h2>ENCONTRÁ TU PRÓXIMO NEUMÁTICO.</h2><a href={`${base}cotizacion/`}>Solicitar cotización ↗</a></div>
+  </section>
+</InternalPageLayout>

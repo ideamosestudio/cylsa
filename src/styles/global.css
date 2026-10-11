@@ -41,6 +41,13 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
 .site-mobile-nav a b { color: rgba(255,255,255,.35); font-size: 15px; font-weight: 400; }
 .site-mobile-nav .site-mobile-nav__primary { margin-top: 10px; border: 1px solid rgba(237,28,46,.55); border-radius: 11px; background: linear-gradient(135deg,rgba(237,28,46,.22),rgba(137,2,20,.1)); }
 
+@media (max-width:1180px) and (min-width:901px) {
+  .site-header__shell { grid-template-columns: minmax(125px,.7fr) auto minmax(90px,.45fr); gap: 10px; }
+  .site-logo > span,.header-index b { display: none; }
+  .site-nav a { padding-inline: 9px; font-size: .62rem; }
+  .site-nav .nav-quote { margin-left: 2px; }
+}
+
 .hero-track { --hero-progress: 0; position: relative; height: 420vh; background: var(--ink); }
 .hero-sticky { position: sticky; top: 0; height: 100svh; min-height: 680px; overflow: hidden; isolation: isolate; background: #040405; }
 .hero-base,.hero-photo,.hero-dimmer,.hero-glows { position: absolute; inset: 0; pointer-events: none; }

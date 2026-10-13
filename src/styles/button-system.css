@@ -19,10 +19,10 @@
   min-height:56px;
   align-items:center;
   justify-content:center;
-  padding:0 52px;
+  padding:0 30px;
   overflow:hidden;
   border:1px solid transparent;
-  border-radius:999px;
+  border-radius:0;
   background:var(--cyl-button-fill) padding-box,linear-gradient(115deg,#6f0010,#ff263e,#ff7650,#870015,#ef2034) border-box;
   background-size:100% 100%,260% 100%;
   box-shadow:0 0 0 rgba(237,29,49,0),0 0 18px rgba(237,29,49,.13),inset 0 1px rgba(255,255,255,.08);
@@ -67,7 +67,11 @@
 
 :is(.button-primary,.button--primary,.premium-form button,.internal-form button,.site-mobile-nav__primary):hover{
   --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
-  color:#111318;
+  color:#111318!important;
+}
+
+:is(.button-primary,.button--primary,.premium-form button,.internal-form button,.site-mobile-nav__primary):hover > *{
+  color:#111318!important;
 }
 
 .product-inline-cta--light:hover{
@@ -84,6 +88,25 @@
   font-style:normal;
   font-weight:400;
   line-height:1;
+}
+
+:is(
+  .product-inline-cta,
+  .product-care a,
+  .page-cta a,
+  .footer-action,
+  .product-card__cta,
+  .premium-form button,
+  .internal-form button,
+  .site-nav .nav-quote,
+  .site-mobile-nav__primary
+) > :is(i,b,span[aria-hidden="true"]){
+  display:none;
+}
+
+.product-inline-cta>span,
+.product-care a>span{
+  display:none;
 }
 
 :is(.premium-form button,.internal-form button) > span:first-child,
@@ -105,17 +128,17 @@
 .product-card__cta:hover>span{background:transparent;transform:none}
 .product-card__cta:hover i{border:0;background:transparent;color:currentColor;transform:none}
 .premium-form button,.internal-form button{width:100%;justify-content:center;border:1px solid transparent}
-.site-nav .nav-quote{min-height:46px;margin-left:7px;padding:0 44px;border-radius:999px;font-size:11px}
+.site-nav .nav-quote{min-height:46px;margin-left:7px;padding:0 34px;border-radius:0;font-size:11px}
 .site-nav .nav-quote small{position:absolute;left:18px}
 .site-nav .nav-quote b{position:absolute;right:17px}
-.site-mobile-nav .site-mobile-nav__primary{display:flex;width:100%;min-height:52px;padding:0 46px}
+.site-mobile-nav .site-mobile-nav__primary{display:flex;width:100%;min-height:52px;padding:0 34px;border-radius:0}
 .site-mobile-nav__primary small{position:absolute;left:18px}.site-mobile-nav__primary b{position:absolute;right:18px}
 
 @keyframes cylButtonBorder{to{background-position:230% 50%,260% 50%}}
 @keyframes cylButtonGlow{0%,100%{box-shadow:0 0 10px rgba(237,29,49,.1),0 0 20px rgba(237,29,49,.08),inset 0 1px rgba(255,255,255,.08)}50%{box-shadow:0 0 17px rgba(237,29,49,.27),0 0 34px rgba(237,29,49,.13),inset 0 1px rgba(255,255,255,.14)}}
 
 @media(max-width:600px){
-  :is(.button,.product-inline-cta,.product-care a,.page-cta a,.premium-form button,.internal-form button){width:100%;min-height:50px;padding-right:46px;padding-left:46px}
+  :is(.button,.product-inline-cta,.product-care a,.page-cta a,.premium-form button,.internal-form button){width:100%;min-height:50px;padding-right:28px;padding-left:28px}
   .footer-nav-group .footer-action{width:100%}
   .page-cta a{min-width:0}
 }

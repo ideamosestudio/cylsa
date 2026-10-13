@@ -28,6 +28,7 @@ export interface AutomovilProduct {
   surface?: string;
   maxSpeed: string;
   heroImage: string;
+  cardImage?: string;
   heroImageAlt: string;
   gallery: ProductGalleryImage[];
   performance: string[];

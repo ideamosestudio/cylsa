@@ -125,3 +125,11 @@
 @media(prefers-reduced-motion:reduce){
   :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary){animation:none!important;transition:none!important}
 }
+
+/* Outlined CTA for bone/light sections. */
+.button--light-outline{--cyl-button-bg:transparent;--cyl-button-color:#111318;--cyl-button-border:#d7192d;box-shadow:0 7px 18px rgba(92,0,14,.1)!important}
+.button--light-outline:is(:hover,:focus-visible){--cyl-button-bg:#08090b;--cyl-button-color:#fff;--cyl-button-border:#08090b}
+
+/* Global CTA count rule. */
+@media(min-width:601px){:is(.hero-actions,.sport-actions,.product-cover__actions,.internal-hero__actions,.section-actions,.page-cta__actions)>:nth-child(n+3){display:none!important}}
+@media(max-width:600px){:is(.hero-actions,.sport-actions,.product-cover__actions,.internal-hero__actions,.section-actions,.page-cta__actions)>:nth-child(n+2){display:none!important}}

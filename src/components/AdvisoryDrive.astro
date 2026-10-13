@@ -84,6 +84,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     };
 
     apply(reduced ? 0.45 : 0);
-    if (!reduced) ScrollTrigger.create({ trigger: section, start: 'top top', end: 'bottom bottom', onUpdate: (self) => apply(self.progress) });
+    if (!reduced) ScrollTrigger.create({ trigger: section, start: 'top 50%', end: 'bottom bottom', onUpdate: (self) => apply(self.progress) });
   });
 </script>

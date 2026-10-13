@@ -16,6 +16,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <p class="page-label">01 / NUESTRA HISTORIA</p>
       <div>
         <h2 class="page-display">SOLUCIONES QUE<br /><em>MUEVEN.</em></h2>
+        <div class="section-actions">
+          <a class="button button--primary" href={`${base}nuestros-neumaticos/`}>Ver nuestros neumáticos</a>
+          <a class="button button--light-outline" href={`${base}contacto/`}>Ver sucursales</a>
+        </div>
         <div class="page-copy">
           <p>CYL S.A. brinda soluciones integrales para las necesidades de sus clientes. Nuestro portafolio reúne una amplia gama de neumáticos, con foco en la calidad y la funcionalidad de cada producto.</p>
           <p>Desde la sede central hasta nuestras sucursales en la provincia de Neuquén, ofrecemos colocación, balanceo, alineación de precisión y servicios vinculados al rendimiento del vehículo.</p>
@@ -37,6 +41,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   </section>
 
   <section class="page-section page-section--red">
-    <div class="page-shell page-cta" data-page-reveal><h2>ENCONTRÁ TU PRÓXIMO NEUMÁTICO.</h2><a href={`${base}cotizacion/`}><span>Solicitar cotización</span></a></div>
+    <div class="page-shell page-cta" data-page-reveal><h2>ENCONTRÁ TU PRÓXIMO NEUMÁTICO.</h2><div class="page-cta__actions"><a href={`${base}cotizacion/`}><span>Solicitar cotización</span></a><a href={`${base}contacto/`}><span>Ver sucursales</span></a></div></div>
   </section>
 </InternalPageLayout>

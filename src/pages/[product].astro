@@ -2,6 +2,7 @@
 import ProductPageLayout from '../layouts/ProductPageLayout.astro';
 import { additionalAutomovilProducts, type AutomovilProduct } from '../data/automovil-products';
 import { camionetaProducts } from '../data/camioneta-products';
+import { transporteProducts } from '../data/transporte-products';
 
 export function getStaticPaths() {
   return [
@@ -12,6 +13,10 @@ export function getStaticPaths() {
     ...camionetaProducts.map((product) => ({
       params: { product: product.slug },
       props: { product, category: 'CAMIONETA', categoryHref: 'camioneta/' },
+    })),
+    ...transporteProducts.map((product) => ({
+      params: { product: product.slug },
+      props: { product, category: 'TRANSPORTE', categoryHref: 'transporte/' },
     })),
   ];
 }

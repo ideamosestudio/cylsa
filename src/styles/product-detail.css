@@ -232,6 +232,7 @@
   left:12px;
   width:auto;
   height:64%;
+  padding-bottom:20px;
 }
 .category-product-card__visual>span{
   position:absolute;

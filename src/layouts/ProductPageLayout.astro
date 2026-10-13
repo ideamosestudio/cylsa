@@ -23,6 +23,7 @@ interface Props {
   category: string;
   categoryHref: string;
   brand: string;
+  brandLogo?: string;
   description: string;
   heroImage: string;
   heroImageAlt: string;
@@ -41,6 +42,7 @@ const {
   category,
   categoryHref,
   brand,
+  brandLogo,
   description,
   heroImage,
   heroImageAlt,
@@ -77,7 +79,10 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
 
         <div class="product-cover__copy">
           <a class="product-breadcrumb" href={`${base}${categoryHref}`}><span>01</span> PRODUCTOS / {category}</a>
-          <p class="product-brand">{brand} / PREMIUM SERIES</p>
+          <div class="product-brand">
+            {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" /> : <strong>{brand}</strong>}
+            <span>PREMIUM SERIES</span>
+          </div>
           <h1 id="product-title"><span>{model}</span><em>{variant}</em></h1>
           <p class="product-cover__intro">Diseño italiano, eficiencia premium y control preciso para una conducción más segura y confortable.</p>
           <div class="product-cover__actions">
@@ -107,7 +112,10 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
           </div>
           <div class="product-overview__copy">
             <p>{description}</p>
-            <div class="product-overview__stamp" aria-label={`${brand}, línea premium`}><span>{brand}</span><strong>PREMIUM<br />PERFORMANCE</strong></div>
+            <div class="product-overview__stamp" aria-label={`${brand}, línea premium`}>
+              {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" loading="lazy" /> : <span>{brand}</span>}
+              <strong>PREMIUM<br />PERFORMANCE</strong>
+            </div>
           </div>
         </div>
       </section>
@@ -131,6 +139,14 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
               <span>03</span><h3>VELOCIDADES</h3>
               <ul>{speeds.map((item) => <li>{item}</li>)}</ul>
             </article>
+            <article>
+              <span>04</span><h3>RECOMENDACIONES</h3>
+              <ul>{recommendations.map((item) => <li>{item}</li>)}</ul>
+            </article>
+            <article>
+              <span>05</span><h3>MEDIDAS</h3>
+              <ul>{sizes.map((size) => <li>{size.measure} / RANGO {size.speed}</li>)}</ul>
+            </article>
           </div>
         </div>
       </section>
@@ -142,7 +158,7 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
         </div>
         <div class="product-gallery__grid product-shell">
           {gallery.map((image, index) => (
-            <figure class={index === 0 ? 'product-gallery__feature' : ''}>
+            <figure>
               <span>0{index + 1}</span>
               <img src={asset(image.src)} alt={image.alt} width="640" height="640" loading="lazy" />
               <figcaption>{image.label}</figcaption>

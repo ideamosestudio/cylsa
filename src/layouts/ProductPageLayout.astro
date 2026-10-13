@@ -6,6 +6,7 @@ import '../styles/button-system.css';
 import Header from '../components/Header.astro';
 import ContactSuite from '../components/ContactSuite.astro';
 import Footer from '../components/Footer.astro';
+import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton.astro';
 
 interface ProductImage {
   src: string;
@@ -237,6 +238,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
       <ContactSuite />
     </main>
     <Footer />
+    <WhatsAppFloatingButton />
 
     <script>
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

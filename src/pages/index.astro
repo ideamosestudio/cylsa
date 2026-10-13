@@ -13,6 +13,7 @@ import '../styles/brand-ticker.css';
 import '../styles/home-premium.css';
 import '../styles/button-system.css';
 import Footer from '../components/Footer.astro';
+import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton.astro';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
@@ -50,6 +51,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <ContactSuite />
     </main>
     <Footer />
+    <WhatsAppFloatingButton />
 
     <script>
       import gsap from 'gsap';

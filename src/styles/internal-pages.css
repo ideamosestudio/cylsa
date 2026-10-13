@@ -76,3 +76,12 @@
   :is(.page-cta__actions,.section-actions)>a{width:100%!important}
   :is(.page-cta__actions,.section-actions)>:nth-child(n+2){display:none!important}
 }
+
+/* About pages: compact copy and a single-line desktop hero title. */
+.page-copy p{font-size:clamp(14px,1.05vw,17px)}
+@media(min-width:901px){
+  .internal-page--single-line-title .internal-hero__content{width:min(82vw,1480px)}
+  .internal-page--single-line-title .internal-hero h1{display:flex;gap:.16em;font-size:clamp(58px,6.1vw,112px);white-space:nowrap}
+  .internal-page--single-line-title .internal-hero h1 span,
+  .internal-page--single-line-title .internal-hero h1 em{display:inline-block}
+}

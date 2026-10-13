@@ -282,7 +282,7 @@
   display:flex;
   min-height:1.65em;
   flex-direction:column;
-  justify-content:flex-end;
+  justify-content:flex-start;
   margin:14px 0 20px;
   font-size:clamp(34px,2.8vw,52px);
   line-height:.82;

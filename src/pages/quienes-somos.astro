@@ -10,20 +10,21 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   heading="QUIÉNES"
   accent="SOMOS."
   intro="Somos una empresa neuquina dedicada a la venta, distribución e instalación de neumáticos, con atención cercana para particulares y empresas."
+  singleLineHeroTitle
 >
   <section class="page-section page-section--light">
     <div class="page-shell page-lead-grid" data-page-reveal>
       <p class="page-label">01 / NUESTRA HISTORIA</p>
       <div>
         <h2 class="page-display">SOLUCIONES QUE<br /><em>MUEVEN.</em></h2>
-        <div class="section-actions">
-          <a class="button button--primary" href={`${base}nuestros-neumaticos/`}>Ver nuestros neumáticos</a>
-          <a class="button button--light-outline" href={`${base}contacto/`}>Ver sucursales</a>
-        </div>
         <div class="page-copy">
           <p>CYL S.A. brinda soluciones integrales para las necesidades de sus clientes. Nuestro portafolio reúne una amplia gama de neumáticos, con foco en la calidad y la funcionalidad de cada producto.</p>
           <p>Desde la sede central hasta nuestras sucursales en la provincia de Neuquén, ofrecemos colocación, balanceo, alineación de precisión y servicios vinculados al rendimiento del vehículo.</p>
           <p>Atendemos a empresas y particulares con un servicio personalizado. También acompañamos a clientes del interior mediante envíos, sosteniendo la misma atención y compromiso en cada operación.</p>
+        </div>
+        <div class="section-actions">
+          <a class="button button--primary" href={`${base}nuestros-neumaticos/`}>Ver nuestros neumáticos</a>
+          <a class="button button--light-outline" href={`${base}contacto/`}>Ver sucursales</a>
         </div>
       </div>
     </div>

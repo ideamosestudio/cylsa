@@ -5,6 +5,7 @@ import '../styles/internal-pages.css';
 import '../styles/button-system.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton.astro';
 
 interface Props {
   title: string;
@@ -19,6 +20,7 @@ interface Props {
   heroIndex?: string;
   heroApplication?: string;
   heroProfile?: string;
+  singleLineHeroTitle?: boolean;
 }
 
 const {
@@ -34,6 +36,7 @@ const {
   heroIndex = '01',
   heroApplication = 'MULTIPROPÓSITO',
   heroProfile = 'RENDIMIENTO + CONTROL',
+  singleLineHeroTitle = false,
 } = Astro.props;
 const isProductHero = Boolean(heroImage);
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -49,7 +52,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <title>{title} — CYL Neumáticos</title>
   </head>
-  <body class={`internal-page${showHero ? '' : ' internal-page--no-hero'}`}>
+  <body class={`internal-page${showHero ? '' : ' internal-page--no-hero'}${singleLineHeroTitle ? ' internal-page--single-line-title' : ''}`}>
     <Header />
     <main>
       {showHero && (
@@ -95,6 +98,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <slot />
     </main>
     <Footer />
+    <WhatsAppFloatingButton />
 
     <script>
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

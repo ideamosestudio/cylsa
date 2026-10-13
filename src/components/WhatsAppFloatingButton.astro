@@ -1,0 +1,153 @@
+---
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const whatsappUrl = 'https://wa.me/5492994082513?text=Hola%2C%20%C2%BFc%C3%B3mo%20est%C3%A1n%3F%20Quisiera%20consultar%20por%20neum%C3%A1ticos%20en%20CYL%20Neum%C3%A1ticos.%20%C2%BFMe%20podr%C3%ADan%20asesorar%3F';
+---
+
+<div class="whatsapp-fab-shell">
+  <a
+    class="whatsapp-fab"
+    href={whatsappUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Consultar por WhatsApp a CYL Neumáticos"
+    aria-describedby="whatsapp-fab-tooltip"
+  >
+    <span class="whatsapp-fab__tooltip" id="whatsapp-fab-tooltip" role="tooltip">Consultanos por WhatsApp</span>
+    <img
+      src={`${base}images/ui/whatsapp-cyl.png`}
+      alt=""
+      width="288"
+      height="288"
+      loading="eager"
+      decoding="async"
+    />
+  </a>
+</div>
+
+<style>
+  .whatsapp-fab-shell {
+    position: fixed;
+    z-index: 24;
+    right: 30px;
+    bottom: 30px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    animation: whatsappFabEnter 600ms cubic-bezier(.22, 1, .36, 1) 350ms forwards;
+  }
+
+  .whatsapp-fab {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    filter: drop-shadow(0 8px 17px rgba(0, 0, 0, .42));
+    pointer-events: auto;
+    transition: transform 300ms cubic-bezier(.22, 1, .36, 1), filter 300ms ease;
+  }
+
+  .whatsapp-fab::before {
+    position: absolute;
+    z-index: -1;
+    inset: 8%;
+    border-radius: 50%;
+    background: rgba(235, 18, 46, .34);
+    box-shadow: 0 0 18px rgba(235, 18, 46, .36), 0 0 34px rgba(156, 0, 24, .2);
+    content: '';
+    animation: whatsappFabBreath 5s ease-in-out infinite;
+  }
+
+  .whatsapp-fab img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .whatsapp-fab:hover {
+    filter: drop-shadow(0 11px 23px rgba(0, 0, 0, .48)) drop-shadow(0 0 13px rgba(239, 25, 52, .45));
+    transform: translateY(-3px) scale(1.08);
+  }
+
+  .whatsapp-fab:active {
+    transform: scale(.96);
+  }
+
+  .whatsapp-fab:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 5px;
+    filter: drop-shadow(0 0 13px rgba(239, 25, 52, .52));
+  }
+
+  .whatsapp-fab__tooltip {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 13px);
+    padding: 10px 13px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 7px;
+    background: linear-gradient(135deg, rgba(18, 8, 10, .97), rgba(55, 4, 12, .97));
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .34);
+    color: #fff;
+    font: 600 9px/1 'IBM Plex Mono', monospace;
+    letter-spacing: .08em;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(7px, -50%);
+    transition: opacity 220ms ease, transform 300ms cubic-bezier(.22, 1, .36, 1);
+    white-space: nowrap;
+  }
+
+  .whatsapp-fab:hover .whatsapp-fab__tooltip,
+  .whatsapp-fab:focus-visible .whatsapp-fab__tooltip {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  @keyframes whatsappFabEnter {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes whatsappFabBreath {
+    0%, 100% { opacity: .5; transform: scale(.92); }
+    50% { opacity: .86; transform: scale(1.12); }
+  }
+
+  @media (max-width: 900px) {
+    .whatsapp-fab-shell {
+      right: 24px;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      width: 66px;
+      height: 66px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .whatsapp-fab-shell {
+      right: 20px;
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      width: 60px;
+      height: 60px;
+    }
+
+    .whatsapp-fab__tooltip { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-fab-shell {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .whatsapp-fab,
+    .whatsapp-fab__tooltip {
+      transition: none;
+    }
+
+    .whatsapp-fab::before { animation: none; }
+  }
+</style>

@@ -18,26 +18,22 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   heroApplication="URBANO / RUTA"
   heroProfile="PRECISIÓN + CONFORT"
 >
-  <section class="category-products" aria-labelledby="automovil-products-title">
+  <section class="category-products" aria-label="Modelos de neumáticos para automóvil">
     <div class="category-products__shell">
-      <div class="category-products__heading">
-        <div>
-          <p>01 / MODELOS DISPONIBLES</p>
-          <h2 id="automovil-products-title">NEUMÁTICOS PARA <em>AUTOMÓVIL.</em></h2>
-        </div>
-        <span>Ocho modelos para diferentes necesidades de confort, eficiencia, rendimiento y control.</span>
-      </div>
       <div class="category-products__grid">
         {automovilProducts.map((product, index) => (
-          <a class="category-product-card" href={`${base}${product.slug}/`} aria-label={`Ver ficha técnica de ${product.title}`}>
+          <a class="category-product-card" href={`${base}${product.slug}/`} aria-label={`Quiero ver el producto ${product.title}`}>
             <div class="category-product-card__visual">
               <span>0{index + 1}</span>
               <img src={`${base}${product.heroImage}`} alt={product.heroImageAlt} width="640" height="640" loading="lazy" />
             </div>
             <div class="category-product-card__copy">
-              <span>{product.brand} / {product.segment}</span>
+              <div class="category-product-card__meta">
+                <span>{product.brand} / {product.segment}</span>
+                <img src={`${base}images/brands/fate-logo-black.png`} alt="Fate" width="1165" height="450" loading="lazy" />
+              </div>
               <h3>{product.model}{product.cardVariant && <em>{product.cardVariant}</em>}</h3>
-              <p>Ver ficha técnica <b>↗</b></p>
+              <p>Quiero ver este producto <b>↗</b></p>
             </div>
           </a>
         ))}

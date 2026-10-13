@@ -232,7 +232,7 @@
   left:12px;
   width:auto;
   height:64%;
-  padding-bottom:35px;
+  padding-bottom:45px;
 }
 .category-product-card__visual>span{
   position:absolute;
@@ -271,6 +271,12 @@
 }
 .category-product-card:hover .category-product-card__meta img{
   transform:none;
+}
+.category-products--static .category-product-card__visual img,
+.category-products--static .category-product-card:hover .category-product-card__visual img,
+.category-products--static .category-product-card:focus-visible .category-product-card__visual img{
+  transform:none;
+  transition:none;
 }
 .category-product-card h3{
   display:flex;

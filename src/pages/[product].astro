@@ -3,6 +3,7 @@ import ProductPageLayout from '../layouts/ProductPageLayout.astro';
 import { additionalAutomovilProducts, type AutomovilProduct } from '../data/automovil-products';
 import { camionetaProducts } from '../data/camioneta-products';
 import { transporteProducts } from '../data/transporte-products';
+import { agroVialProducts } from '../data/agro-vial-products';
 
 export function getStaticPaths() {
   return [
@@ -17,6 +18,10 @@ export function getStaticPaths() {
     ...transporteProducts.map((product) => ({
       params: { product: product.slug },
       props: { product, category: 'TRANSPORTE', categoryHref: 'transporte/' },
+    })),
+    ...agroVialProducts.map((product) => ({
+      params: { product: product.slug },
+      props: { product, category: 'AGRO / VIAL', categoryHref: 'agro-vial/' },
     })),
   ];
 }

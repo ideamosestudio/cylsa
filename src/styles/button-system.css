@@ -8,7 +8,6 @@
   .product-card__cta,
   .premium-form button,
   .internal-form button,
-  .site-nav .nav-quote,
   .site-mobile-nav__primary
 ){
   --cyl-button-fill:radial-gradient(circle at 50% 135%,#430008 0%,#850011 46%,#c81229 100%);
@@ -61,7 +60,6 @@
   .product-card__cta,
   .premium-form button,
   .internal-form button,
-  .site-nav .nav-quote,
   .site-mobile-nav__primary
 ):is(:hover,:focus-visible){
   --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
@@ -79,7 +77,6 @@
   .product-card__cta,
   .premium-form button,
   .internal-form button,
-  .site-nav .nav-quote,
   .site-mobile-nav__primary
 ):is(:hover,:focus-visible) > *{
   color:#111318!important;
@@ -123,7 +120,6 @@
   .product-card__cta,
   .premium-form button,
   .internal-form button,
-  .site-nav .nav-quote,
   .site-mobile-nav__primary
 ) > :is(i,b,span[aria-hidden="true"]){
   display:none;
@@ -154,11 +150,6 @@
 .product-card__cta:is(:hover,:focus-visible){--cyl-button-fill:radial-gradient(circle at 50% 135%,#430008 0%,#850011 46%,#c81229 100%)!important;color:#fff!important}
 .product-card__cta.product-card__cta:is(:hover,:focus-visible)>span{color:#fff!important}
 .premium-form button,.internal-form button{width:100%;justify-content:center;border:1px solid transparent}
-.site-nav .nav-quote{min-height:46px;margin-left:7px;padding:0 34px;border-radius:0;font-size:11px}
-.site-nav .nav-quote small{position:absolute;left:18px}
-.site-nav .nav-quote b{position:absolute;right:17px}
-.site-nav .nav-quote:hover,.site-nav .nav-quote:focus-visible{--cyl-button-fill:radial-gradient(circle at 50% 135%,#270006 0%,#63000d 50%,#9e0b1e 100%)!important;border-color:#ed1d31!important;color:#fff!important}
-.site-nav .nav-quote:hover>*,.site-nav .nav-quote:focus-visible>*{color:#fff!important}
 .site-mobile-nav .site-mobile-nav__primary{display:flex;width:100%;min-height:52px;padding:0 34px;border-radius:0}
 .site-mobile-nav__primary small{position:absolute;left:18px}.site-mobile-nav__primary b{position:absolute;right:18px}
 
@@ -169,5 +160,5 @@
 }
 
 @media(prefers-reduced-motion:reduce){
-  :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-nav .nav-quote,.site-mobile-nav__primary){animation:none}
+  :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary){animation:none}
 }

@@ -172,6 +172,12 @@
   .site-loader__glows i:nth-child(2) { width: 120vw; height: 120vw; bottom: -32%; left: -58%; }
 }
 
+@media (max-width: 900px) {
+  .is-loading,
+  .is-loading body { overflow: auto; }
+  .site-loader { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-loader,
   .site-loader__glows i,

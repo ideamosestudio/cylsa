@@ -1,5 +1,8 @@
 ---
 import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+import '../styles/product-detail.css';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <InternalPageLayout
@@ -13,4 +16,24 @@ import InternalPageLayout from '../layouts/InternalPageLayout.astro';
   heroIndex="01"
   heroApplication="URBANO / RUTA"
   heroProfile="PRECISIÓN + CONFORT"
-/>
+>
+  <section class="category-products" aria-labelledby="automovil-products-title">
+    <div class="category-products__shell">
+      <div class="category-products__heading">
+        <p>01 / MODELOS DISPONIBLES</p>
+        <h2 id="automovil-products-title">NEUMÁTICOS PARA<br /><em>AUTOMÓVIL.</em></h2>
+        <span>Conocé la primera incorporación de la línea.</span>
+      </div>
+      <a class="category-product-card" href={`${base}eximia-by-pininfarina-hp/`}>
+        <div class="category-product-card__visual">
+          <img src={`${base}images/products/eximia-pininfarina-hp/eximia-01.png`} alt="Neumático Eximia by Pininfarina HP" width="640" height="640" loading="lazy" />
+        </div>
+        <div class="category-product-card__copy">
+          <span>FATE / PREMIUM</span>
+          <h3>EXIMIA<br /><em>BY PININFARINA HP</em></h3>
+          <p>Ver ficha técnica <b>↗</b></p>
+        </div>
+      </a>
+    </div>
+  </section>
+</InternalPageLayout>

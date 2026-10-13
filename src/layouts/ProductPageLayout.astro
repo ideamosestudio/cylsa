@@ -1,0 +1,199 @@
+---
+import '../styles/global.css';
+import '../styles/home-premium.css';
+import '../styles/product-detail.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface ProductImage {
+  src: string;
+  alt: string;
+  label: string;
+}
+
+interface ProductSize {
+  measure: string;
+  speed: string;
+}
+
+interface Props {
+  title: string;
+  model: string;
+  variant: string;
+  category: string;
+  categoryHref: string;
+  brand: string;
+  description: string;
+  heroImage: string;
+  heroImageAlt: string;
+  gallery: ProductImage[];
+  performance: string[];
+  uses: string[];
+  speeds: string[];
+  recommendations: string[];
+  sizes: ProductSize[];
+}
+
+const {
+  title,
+  model,
+  variant,
+  category,
+  categoryHref,
+  brand,
+  description,
+  heroImage,
+  heroImageAlt,
+  gallery,
+  performance,
+  uses,
+  speeds,
+  recommendations,
+  sizes,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={`${model} ${variant}: características, prestaciones y medidas disponibles en CYL Neumáticos.`} />
+    <meta name="theme-color" content="#080808" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <title>{title} — CYL Neumáticos</title>
+  </head>
+  <body class="product-detail-page">
+    <Header />
+    <main>
+      <section class="product-cover" aria-labelledby="product-title">
+        <div class="product-cover__grid" aria-hidden="true"></div>
+        <div class="product-cover__glow" aria-hidden="true"></div>
+        <div class="product-cover__orbit" aria-hidden="true"><i></i><i></i><i></i><span>CYL / PRODUCT SYSTEM</span></div>
+        <div class="product-cover__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+        <div class="product-cover__copy">
+          <a class="product-breadcrumb" href={`${base}${categoryHref}`}><span>01</span> PRODUCTOS / {category}</a>
+          <p class="product-brand">{brand} / PREMIUM SERIES</p>
+          <h1 id="product-title"><span>{model}</span><em>{variant}</em></h1>
+          <p class="product-cover__intro">Diseño italiano, eficiencia premium y control preciso para una conducción más segura y confortable.</p>
+          <div class="product-cover__actions">
+            <a class="button button-primary" href="https://wa.me/5492994082513" target="_blank" rel="noopener noreferrer">Solicitar cotización</a>
+            <a class="button button-secondary" href="#medidas">Ver medidas</a>
+          </div>
+        </div>
+
+        <div class="product-cover__visual">
+          <img src={asset(heroImage)} alt={heroImageAlt} width="640" height="640" fetchpriority="high" />
+        </div>
+
+        <div class="product-cover__readout" aria-hidden="true"><span>01 / 01</span><i></i><strong>FICHA DE PRODUCTO</strong></div>
+        <div class="product-cover__side" aria-hidden="true">CYL—NQN / 38.95°S / 068.06°W</div>
+        <div class="product-cover__specs" aria-hidden="true">
+          <span><small>SEGMENTO</small><strong>PREMIUM</strong></span>
+          <span><small>SUPERFICIE</small><strong>PAVIMENTO</strong></span>
+          <span><small>VELOCIDAD</small><strong>HASTA 270 KM/H</strong></span>
+        </div>
+      </section>
+
+      <section class="product-overview product-section" data-product-reveal>
+        <div class="product-shell product-overview__grid">
+          <div>
+            <p class="product-section__label">01 / CARACTERÍSTICAS GENERALES</p>
+            <h2>DISEÑO ITALIANO.<br /><em>EVOLUCIÓN REAL.</em></h2>
+          </div>
+          <div class="product-overview__copy">
+            <p>{description}</p>
+            <div class="product-overview__stamp" aria-label={`${brand}, línea premium`}><span>{brand}</span><strong>PREMIUM<br />PERFORMANCE</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-facts product-section" data-product-reveal>
+        <div class="product-shell">
+          <div class="product-section__heading">
+            <p class="product-section__label">02 / INFORMACIÓN TÉCNICA</p>
+            <h2>HECHA PARA<br /><em>AVANZAR.</em></h2>
+          </div>
+          <div class="product-facts__grid">
+            <article>
+              <span>01</span><h3>PRESTACIONES</h3>
+              <ul>{performance.map((item) => <li>{item}</li>)}</ul>
+            </article>
+            <article>
+              <span>02</span><h3>USOS</h3>
+              <ul>{uses.map((item) => <li>{item}</li>)}</ul>
+            </article>
+            <article>
+              <span>03</span><h3>VELOCIDADES</h3>
+              <ul>{speeds.map((item) => <li>{item}</li>)}</ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-gallery product-section" aria-label="Vistas del neumático" data-product-reveal>
+        <div class="product-gallery__top product-shell">
+          <p class="product-section__label">03 / PRODUCT VIEW</p>
+          <p>FORMA, PISADA Y PERFIL<br />DESDE TODOS LOS ÁNGULOS.</p>
+        </div>
+        <div class="product-gallery__grid product-shell">
+          {gallery.map((image, index) => (
+            <figure class={index === 0 ? 'product-gallery__feature' : ''}>
+              <span>0{index + 1}</span>
+              <img src={asset(image.src)} alt={image.alt} width="640" height="640" loading="lazy" />
+              <figcaption>{image.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section class="product-sizes product-section" id="medidas" data-product-reveal>
+        <div class="product-shell">
+          <div class="product-sizes__heading">
+            <div><p class="product-section__label">04 / MEDIDAS DISPONIBLES</p><h2>ENCONTRÁ TU<br /><em>MEDIDA.</em></h2></div>
+            <p>Versiones homologadas para distintas configuraciones de llanta y desempeño.</p>
+          </div>
+          <div class="product-sizes__list">
+            {sizes.map((size, index) => (
+              <div><span>0{index + 1}</span><strong>{size.measure}</strong><small>RANGO {size.speed}</small></div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="product-care product-section" data-product-reveal>
+        <div class="product-shell product-care__grid">
+          <div>
+            <p class="product-section__label">05 / RECOMENDACIONES</p>
+            <h2>CUIDÁ EL RENDIMIENTO.<br /><em>CUIDÁ TU CAMINO.</em></h2>
+          </div>
+          <div>
+            <ol>{recommendations.map((item) => <li>{item}</li>)}</ol>
+            <a href="https://wa.me/5492994082513" target="_blank" rel="noopener noreferrer">Consultar por este modelo <span>↗</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+
+    <script>
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) {
+        document.querySelectorAll<HTMLElement>('[data-product-reveal]').forEach((element) => element.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: .1 });
+        document.querySelectorAll<HTMLElement>('[data-product-reveal]').forEach((element) => observer.observe(element));
+      }
+    </script>
+  </body>
+</html>

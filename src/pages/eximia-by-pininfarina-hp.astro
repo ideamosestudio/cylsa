@@ -1,0 +1,36 @@
+---
+import ProductPageLayout from '../layouts/ProductPageLayout.astro';
+---
+
+<ProductPageLayout
+  title="Eximia by Pininfarina HP"
+  model="EXIMIA"
+  variant="BY PININFARINA HP"
+  category="AUTOMÓVIL"
+  categoryHref="automovil/"
+  brand="FATE"
+  description="La evolución de Eximia by Pininfarina combina diseño italiano con mejoras en consumo, seguridad y confort de marcha. Su construcción reduce peso y energía de fabricación para ofrecer una propuesta destacada dentro del segmento premium."
+  heroImage="images/products/eximia-pininfarina-hp/eximia-01.png"
+  heroImageAlt="Neumático Eximia by Pininfarina HP en vista tres cuartos"
+  gallery={[
+    { src: 'images/products/eximia-pininfarina-hp/eximia-01.png', alt: 'Vista en perspectiva del neumático Eximia by Pininfarina HP', label: 'PERSPECTIVA / PERFORMANCE' },
+    { src: 'images/products/eximia-pininfarina-hp/eximia-02.png', alt: 'Segunda vista en perspectiva del neumático Eximia by Pininfarina HP', label: 'VOLUMEN / DISEÑO' },
+    { src: 'images/products/eximia-pininfarina-hp/eximia-03.png', alt: 'Vista lateral del neumático Eximia by Pininfarina HP', label: 'PERFIL / CONTROL' },
+    { src: 'images/products/eximia-pininfarina-hp/eximia-04.png', alt: 'Vista frontal de la banda de rodamiento Eximia by Pininfarina HP', label: 'PISADA / ADHERENCIA' },
+  ]}
+  performance={[
+    'Baja resistencia a la rodadura para una marcha eficiente, segura y confortable.',
+    'Respuesta de manejo mejorada para un control más preciso.',
+  ]}
+  uses={['Desarrollado para circulación sobre pavimento.']}
+  speeds={['Rango V: hasta 240 km/h.', 'Rango W: hasta 270 km/h.']}
+  recommendations={[
+    'Controlá periódicamente la presión de inflado y respetá los valores indicados por el fabricante del vehículo.',
+    'Al reemplazar un neumático, mantené sin excepciones el índice de carga y el rango de velocidad correspondientes.',
+  ]}
+  sizes={[
+    { measure: '205/55 R16', speed: 'V / 240 KM/H' },
+    { measure: '215/50 R17', speed: 'W / 270 KM/H' },
+    { measure: '225/45 R17', speed: 'W / 270 KM/H' },
+  ]}
+/>

@@ -73,7 +73,8 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
   <body class="product-detail-page">
     <Header />
     <main>
-      <section class="product-cover" aria-labelledby="product-title">
+      <section class="product-story" aria-label={`Presentación y ficha técnica de ${model} ${variant}`}>
+      <div class="product-cover" aria-labelledby="product-title">
         <div class="product-cover__grid" aria-hidden="true"></div>
         <div class="product-cover__glow" aria-hidden="true"></div>
         <div class="product-cover__orbit" aria-hidden="true"><i></i><i></i><i></i><span>CYL / PRODUCT SYSTEM</span></div>
@@ -104,9 +105,9 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
           <span><small>SUPERFICIE</small><strong>PAVIMENTO</strong></span>
           <span><small>VELOCIDAD</small><strong>HASTA 270 KM/H</strong></span>
         </div>
-      </section>
+      </div>
 
-      <section class="product-facts product-facts--merged product-section" data-product-reveal data-code="CYL / DESIGN + TECHNICAL DATA">
+      <div class="product-facts product-facts--merged product-section" data-product-reveal data-code="CYL / DESIGN + TECHNICAL DATA">
         <div class="product-shell">
           <div class="product-facts__intro">
             <div class="product-facts__headline">
@@ -163,9 +164,9 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
             </article>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section class="product-gallery product-section" aria-label="Vistas del neumático" data-product-reveal data-code="CYL / PRODUCT VIEW">
+      <div class="product-gallery product-section" aria-label="Vistas del neumático" data-product-reveal data-code="CYL / PRODUCT VIEW">
         <div class="product-gallery__top product-shell">
           <p class="product-section__label">03 / PRODUCT VIEW</p>
           <p>FORMA, PISADA Y PERFIL<br />DESDE TODOS LOS ÁNGULOS.</p>
@@ -179,6 +180,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
             </figure>
           ))}
         </div>
+      </div>
       </section>
 
       <section class="product-sizes product-section" id="medidas" data-product-reveal data-code="CYL / FITMENT MATRIX">

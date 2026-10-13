@@ -63,7 +63,7 @@
   .internal-form button,
   .site-nav .nav-quote,
   .site-mobile-nav__primary
-):hover{
+):is(:hover,:focus-visible){
   --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
   color:#111318!important;
   transform:translateY(-3px);
@@ -81,26 +81,26 @@
   .internal-form button,
   .site-nav .nav-quote,
   .site-mobile-nav__primary
-):hover > *{
+):is(:hover,:focus-visible) > *{
   color:#111318!important;
 }
 
-:is(.button-primary,.button--primary,.premium-form button,.internal-form button,.site-mobile-nav__primary):hover{
+:is(.button-primary,.button--primary,.premium-form button,.internal-form button,.site-mobile-nav__primary):is(:hover,:focus-visible){
   --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
   color:#111318!important;
 }
 
-:is(.button-primary,.button--primary,.premium-form button,.internal-form button,.site-mobile-nav__primary):hover > *{
+:is(.button-primary,.button--primary,.premium-form button,.internal-form button,.site-mobile-nav__primary):is(:hover,:focus-visible) > *{
   color:#111318!important;
 }
 
-.product-inline-cta--light:hover{
+.product-inline-cta--light:is(:hover,:focus-visible){
   --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
   --cyl-button-ink:#111318!important;
   color:#111318!important;
 }
 
-.product-inline-cta--red:hover{
+.product-inline-cta--red:is(:hover,:focus-visible){
   --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
   color:#111318!important;
 }
@@ -146,17 +146,19 @@
 .product-care a{width:min(100%,360px);justify-content:center}
 .page-cta a{min-width:250px;justify-content:center}
 .footer-nav-group .footer-action{width:100%;min-width:190px;color:#fff;font:600 11px/1 'Instrument Sans',sans-serif;letter-spacing:.13em}
-.footer-nav-group .footer-action:hover{color:#111318!important;transform:translateY(-3px)}
+.footer-nav-group .footer-action:is(:hover,:focus-visible){color:#111318!important;transform:translateY(-3px)}
 .product-card__cta{--cyl-button-fill:linear-gradient(transparent,transparent)!important;--cyl-button-ink:#c30e22!important;min-width:180px;margin-top:24px;gap:0;box-shadow:0 7px 18px rgba(92,0,14,.12)}
 .product-card__cta>span{display:block!important;min-width:0!important;height:auto!important;margin:0 auto!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:inherit!important;font:inherit!important;letter-spacing:inherit!important;place-items:unset!important;transform:none!important;transition:none!important}
 .product-card__cta i{display:none!important}
-.product-card__cta:hover>span{background:transparent!important;color:inherit!important;transform:none!important}
-.product-card__cta:hover{--cyl-button-fill:radial-gradient(circle at 50% 135%,#430008 0%,#850011 46%,#c81229 100%)!important;color:#fff!important}
-.product-card__cta.product-card__cta:hover>span{color:#fff!important}
+.product-card__cta:is(:hover,:focus-visible)>span{background:transparent!important;color:inherit!important;transform:none!important}
+.product-card__cta:is(:hover,:focus-visible){--cyl-button-fill:radial-gradient(circle at 50% 135%,#430008 0%,#850011 46%,#c81229 100%)!important;color:#fff!important}
+.product-card__cta.product-card__cta:is(:hover,:focus-visible)>span{color:#fff!important}
 .premium-form button,.internal-form button{width:100%;justify-content:center;border:1px solid transparent}
 .site-nav .nav-quote{min-height:46px;margin-left:7px;padding:0 34px;border-radius:0;font-size:11px}
 .site-nav .nav-quote small{position:absolute;left:18px}
 .site-nav .nav-quote b{position:absolute;right:17px}
+.site-nav .nav-quote:hover,.site-nav .nav-quote:focus-visible{--cyl-button-fill:radial-gradient(circle at 50% 135%,#270006 0%,#63000d 50%,#9e0b1e 100%)!important;border-color:#ed1d31!important;color:#fff!important}
+.site-nav .nav-quote:hover>*,.site-nav .nav-quote:focus-visible>*{color:#fff!important}
 .site-mobile-nav .site-mobile-nav__primary{display:flex;width:100%;min-height:52px;padding:0 34px;border-radius:0}
 .site-mobile-nav__primary small{position:absolute;left:18px}.site-mobile-nav__primary b{position:absolute;right:18px}
 

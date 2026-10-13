@@ -4,6 +4,7 @@ import '../styles/home-premium.css';
 import '../styles/product-detail.css';
 import '../styles/button-system.css';
 import Header from '../components/Header.astro';
+import ContactSuite from '../components/ContactSuite.astro';
 import Footer from '../components/Footer.astro';
 
 interface ProductImage {
@@ -211,6 +212,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
           </div>
         </div>
       </section>
+      <ContactSuite />
     </main>
     <Footer />
 

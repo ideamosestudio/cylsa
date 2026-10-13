@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/home-premium.css';
 import '../styles/product-detail.css';
+import '../styles/button-system.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -105,28 +106,22 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
         </div>
       </section>
 
-      <section class="product-overview product-section" data-product-reveal data-code="CYL / DESIGN SYSTEM">
-        <div class="product-shell product-overview__grid">
-          <div>
-            <p class="product-section__label">01 / CARACTERÍSTICAS GENERALES</p>
-            <h2>DISEÑO ITALIANO.<br /><em class="title-accent title-accent--light">EVOLUCIÓN REAL.</em></h2>
-          </div>
-          <div class="product-overview__copy">
-            <p>{description}</p>
-            <div class="product-overview__stamp" aria-label={`${brand}, línea premium`}>
-              {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" loading="lazy" /> : <span>{brand}</span>}
-              <strong>PREMIUM<br />PERFORMANCE</strong>
-            </div>
-            <a class="product-inline-cta product-inline-cta--light" href={whatsapp('quiero recibir más información sobre')} target="_blank" rel="noopener noreferrer">Quiero más info <span>↗</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="product-facts product-section" data-product-reveal data-code="CYL / TECHNICAL DATA">
+      <section class="product-facts product-facts--merged product-section" data-product-reveal data-code="CYL / DESIGN + TECHNICAL DATA">
         <div class="product-shell">
-          <div class="product-section__heading">
-            <p class="product-section__label">02 / INFORMACIÓN TÉCNICA</p>
-            <h2>HECHA PARA<br /><em class="title-accent">AVANZAR.</em></h2>
+          <div class="product-facts__intro">
+            <div>
+              <p class="product-section__label">01 / PRODUCTO + INFORMACIÓN TÉCNICA</p>
+              <h2>DISEÑO ITALIANO.<br /><em class="title-accent">EVOLUCIÓN REAL.</em></h2>
+            </div>
+            <div class="product-facts__summary">
+              <p class="product-facts__claim">HECHA PARA <em>AVANZAR.</em></p>
+              <p>{description}</p>
+              <div class="product-overview__stamp" aria-label={`${brand}, línea premium`}>
+                {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" loading="lazy" /> : <span>{brand}</span>}
+                <strong>PREMIUM<br />PERFORMANCE</strong>
+              </div>
+              <a class="product-inline-cta product-inline-cta--dark" href={whatsapp('quiero recibir más información sobre')} target="_blank" rel="noopener noreferrer">Quiero más info <span>↗</span></a>
+            </div>
           </div>
           <div class="product-facts__grid">
             <article>

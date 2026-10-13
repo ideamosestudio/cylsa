@@ -128,23 +128,38 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
           </div>
           <div class="product-facts__grid">
             <article>
-              <span>01</span><h3>PRESTACIONES</h3>
+              <div class="product-fact-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M8 34a18 18 0 1 1 32 0" /><path d="m24 25 11-8" /><circle cx="24" cy="25" r="3" /><path d="M13 34h22" /></svg>
+              </div>
+              <h3>PRESTACIONES</h3>
               <ul>{performance.map((item) => <li>{item}</li>)}</ul>
             </article>
             <article>
-              <span>02</span><h3>USOS</h3>
+              <div class="product-fact-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M17 42 21 6h6l4 36" /><path d="M24 9v7m0 7v7m0 7v5" /><path d="M8 42h32" /></svg>
+              </div>
+              <h3>USOS</h3>
               <ul>{uses.map((item) => <li>{item}</li>)}</ul>
             </article>
             <article>
-              <span>03</span><h3>VELOCIDADES</h3>
+              <div class="product-fact-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" /><path d="M8 24h5m22 0h5M24 8v5" /><path d="m24 24 9-7" /><circle cx="24" cy="24" r="2.5" /></svg>
+              </div>
+              <h3>VELOCIDADES</h3>
               <ul>{speeds.map((item) => <li>{item}</li>)}</ul>
             </article>
             <article>
-              <span>04</span><h3>RECOMENDACIONES</h3>
+              <div class="product-fact-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M24 5 39 11v11c0 10-6 17-15 21-9-4-15-11-15-21V11Z" /><path d="m16 24 5 5 11-12" /></svg>
+              </div>
+              <h3>RECOMENDACIONES</h3>
               <ul>{recommendations.map((item) => <li>{item}</li>)}</ul>
             </article>
             <article>
-              <span>05</span><h3>MEDIDAS</h3>
+              <div class="product-fact-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M8 34 34 8l6 6-26 26Z" /><path d="m29 13 6 6m-12 0 4 4m-10 2 4 4m-10 2 4 4" /></svg>
+              </div>
+              <h3>MEDIDAS</h3>
               <ul>{sizes.map((size) => <li>{size.measure} / RANGO {size.speed}</li>)}</ul>
             </article>
           </div>

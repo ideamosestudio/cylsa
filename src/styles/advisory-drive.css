@@ -148,6 +148,13 @@
   will-change: transform, opacity;
 }
 
+.advisory-car__motion {
+  position: relative;
+  width: 100%;
+  transform-origin: 54% 80%;
+  will-change: transform;
+}
+
 .advisory-car img {
   position: relative;
   z-index: 2;

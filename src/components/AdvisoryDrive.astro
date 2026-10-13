@@ -20,9 +20,11 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     </div>
 
     <div class="advisory-car" data-advisory-car>
-      <div class="advisory-car__glow"></div>
-      <img src={`${base}images/advisory/cyl-race-car-v2.png`} alt="Automóvil deportivo CYL Neumáticos" loading="lazy" decoding="async" />
-      <img class="advisory-car__reflection" src={`${base}images/advisory/cyl-race-car-v2.png`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <div class="advisory-car__motion" data-advisory-car-motion>
+        <div class="advisory-car__glow"></div>
+        <img src={`${base}images/advisory/cyl-race-car-v2.png`} alt="Automóvil deportivo CYL Neumáticos" loading="lazy" decoding="async" />
+        <img class="advisory-car__reflection" src={`${base}images/advisory/cyl-race-car-v2.png`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      </div>
     </div>
 
     <div class="advisory-data" aria-hidden="true">
@@ -48,39 +50,44 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   document.querySelectorAll<HTMLElement>('[data-advisory-drive]').forEach((section) => {
     const bg = section.querySelector<HTMLElement>('[data-advisory-bg]');
     const car = section.querySelector<HTMLElement>('[data-advisory-car]');
+    const carMotion = section.querySelector<HTMLElement>('[data-advisory-car-motion]');
     const copy = section.querySelector<HTMLElement>('[data-advisory-copy]');
     const speed = section.querySelector<HTMLElement>('[data-advisory-speed]');
     const redline = section.querySelector<HTMLElement>('[data-advisory-redline]');
     const counter = section.querySelector<HTMLElement>('[data-advisory-counter]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let revealedProgress = reduced ? 0.45 : 0;
+    let carPulsePlayed = reduced;
 
     const apply = (p: number) => {
+      revealedProgress = Math.max(revealedProgress, p);
+      const reveal = revealedProgress;
       const mobile = window.innerWidth < 700;
-      const enter = smooth(range(p, 0.02, mobile ? 0.3 : 0.24));
-      const settle = smooth(range(p, 0.28, 0.72));
-      const exit = smooth(range(p, 0.9, 1));
-      const copyIn = smooth(range(p, 0.05, 0.22));
-      const copyOut = smooth(range(p, 0.88, 0.98));
-      const copyOpacity = copyIn * (1 - copyOut);
+      const enter = smooth(range(reveal, 0.02, mobile ? 0.3 : 0.24));
+      const copyIn = smooth(range(reveal, 0.05, 0.22));
 
       if (bg) bg.style.transform = `translate3d(${p * -0.55}%,${p * -0.8}%,0) scale(${1.035 + p * 0.012})`;
       if (car) {
-        const x = (1 - enter) * (mobile ? 18 : 4.5) + exit * (mobile ? 14 : 3.5);
-        const y = (1 - enter) * 1.4 + Math.sin(p * Math.PI * 2) * (mobile ? 0.28 : 0.18) - settle * 0.35;
-        const scale = (mobile ? 0.91 : 0.965) + enter * (mobile ? 0.07 : 0.025) + settle * 0.008 - exit * 0.012;
+        const x = (1 - enter) * (mobile ? 18 : 4.5);
+        const y = (1 - enter) * 1.4;
+        const scale = (mobile ? 0.91 : 0.965) + enter * (mobile ? 0.07 : 0.025);
         car.style.transform = `translate3d(${x}vw,${y}vh,0) scale(${scale})`;
-        car.style.opacity = String(smooth(range(enter, 0, 0.16)) * (1 - exit * 0.72));
+        car.style.opacity = String(smooth(range(enter, 0, 0.16)));
+        if (carMotion && enter >= 0.98 && !carPulsePlayed) {
+          carPulsePlayed = true;
+          gsap.fromTo(carMotion, { scale: 1 }, { scale: 1.05, duration: 1.4, ease: 'sine.inOut', repeat: 1, yoyo: true });
+        }
       }
       if (copy) {
-        copy.style.opacity = String(copyOpacity);
-        copy.style.transform = `translate3d(0,${(1-copyIn)*24 - copyOut*18}px,0)`;
+        copy.style.opacity = String(copyIn);
+        copy.style.transform = `translate3d(0,${(1-copyIn)*24}px,0)`;
       }
       if (speed) {
-        speed.style.opacity = String((enter * (1-settle*.78) + exit * .25) * 0.26);
-        speed.style.transform = `translate3d(${(1-enter)*12 - exit*7}vw,0,0)`;
+        speed.style.opacity = String(enter * 0.12);
+        speed.style.transform = `translate3d(${(1-enter)*12}vw,0,0)`;
       }
-      if (redline) redline.style.transform = `scaleX(${Math.min(1, enter * 1.15) * (1-exit*.35)})`;
-      if (counter) counter.textContent = String(Math.round(p * 100)).padStart(2, '0');
+      if (redline) redline.style.transform = `scaleX(${Math.min(1, enter * 1.15)})`;
+      if (counter) counter.textContent = String(Math.round(reveal * 100)).padStart(2, '0');
     };
 
     apply(reduced ? 0.45 : 0);

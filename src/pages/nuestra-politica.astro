@@ -1,6 +1,6 @@
 ---
 import InternalPageLayout from '../layouts/InternalPageLayout.astro';
-const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+import InternalContactForm from '../components/InternalContactForm.astro';
 const principles = [
   ['Responsabilidad compartida', 'La calidad y su mejora continua son responsabilidad de todas las personas que integran la organización.'],
   ['Gestión consciente', 'Planificamos, ejecutamos, revisamos y mejoramos nuestro sistema considerando el contexto interno y externo de CYL.'],
@@ -30,5 +30,5 @@ const principles = [
       </div>
     </div>
   </section>
-  <section class="page-section page-section--red"><div class="page-shell page-cta" data-page-reveal><h2>CALIDAD QUE SE SIENTE EN EL CAMINO.</h2><div class="page-cta__actions"><a href={`${base}contacto/`}><span>Hablar con CYL</span></a><a href={`${base}cotizacion/`}><span>Solicitar cotización</span></a></div></div></section>
+  <InternalContactForm sectionNumber="02" />
 </InternalPageLayout>

@@ -1,5 +1,6 @@
 ---
 import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+import InternalContactForm from '../components/InternalContactForm.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
@@ -41,7 +42,5 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     </div>
   </section>
 
-  <section class="page-section page-section--red">
-    <div class="page-shell page-cta" data-page-reveal><h2>ENCONTRÁ TU PRÓXIMO NEUMÁTICO.</h2><div class="page-cta__actions"><a href={`${base}cotizacion/`}><span>Solicitar cotización</span></a><a href={`${base}nuestros-neumaticos/`}><span>Ver neumáticos</span></a></div></div>
-  </section>
+  <InternalContactForm sectionNumber="03" />
 </InternalPageLayout>

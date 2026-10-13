@@ -56,24 +56,23 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   </div>
   <nav class="site-mobile-nav" id="mobile-navigation" aria-label="Navegación móvil" aria-hidden="true" inert>
     <span class="site-mobile-nav__meta">CYL / NQN / 38.95° S</span>
-    <details class="site-mobile-nav__products">
-      <summary><small>01</small><span>Nuestros neumáticos</span><b aria-hidden="true">⌄</b></summary>
-      <div>
-        <a href={`${base}nuestros-neumaticos/`}><small>00</small><span>Ver todas las líneas</span><b>↗</b></a>
+    <div class="site-mobile-nav__group">
+      <a class="site-mobile-nav__heading" href={`${base}nuestros-neumaticos/`}><small>01</small><span>Nuestros neumáticos</span></a>
+      <div class="site-mobile-nav__subnav">
         <a href={`${base}automovil/`}><small>01</small><span>Automóvil</span><b>↗</b></a>
         <a href={`${base}camioneta/`}><small>02</small><span>Camioneta</span><b>↗</b></a>
         <a href={`${base}transporte/`}><small>03</small><span>Transporte</span><b>↗</b></a>
         <a href={`${base}agro-vial/`}><small>04</small><span>Agro / Vial</span><b>↗</b></a>
       </div>
-    </details>
-    <details class="site-mobile-nav__group">
-      <summary><small>02</small><span>Sobre nosotros</span><b aria-hidden="true">⌄</b></summary>
-      <div>
+    </div>
+    <div class="site-mobile-nav__group">
+      <p class="site-mobile-nav__heading"><small>02</small><span>Sobre nosotros</span></p>
+      <div class="site-mobile-nav__subnav">
         <a href={`${base}quienes-somos/`}><small>01</small><span>Quiénes somos</span><b>↗</b></a>
         <a href={`${base}nuestra-politica/`}><small>02</small><span>Nuestra política</span><b>↗</b></a>
         <a href={`${base}forma-parte-de-nuestro-equipo/`}><small>03</small><span>Equipo</span><b>↗</b></a>
       </div>
-    </details>
+    </div>
     <a href={`${base}contacto/`}><small>03</small><span>Contacto</span><b>↗</b></a>
     <a class="site-mobile-nav__primary" href={`${base}cotizacion/`}><small>04</small><span>Solicitar cotización</span><b>↗</b></a>
   </nav>
@@ -86,19 +85,12 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     if (!toggle || !menu) return;
     const setOpen = (open: boolean) => {
       header.classList.toggle('is-menu-open', open);
+      document.documentElement.classList.toggle('has-site-menu-open', open);
       toggle.setAttribute('aria-expanded', String(open));
       menu.setAttribute('aria-hidden', String(!open));
       menu.toggleAttribute('inert', !open);
     };
     toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-    menu.querySelectorAll<HTMLDetailsElement>('details').forEach((details) => {
-      details.addEventListener('toggle', () => {
-        if (!details.open) return;
-        menu.querySelectorAll<HTMLDetailsElement>('details').forEach((other) => {
-          if (other !== details) other.open = false;
-        });
-      });
-    });
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
   });

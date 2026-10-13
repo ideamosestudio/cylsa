@@ -111,6 +111,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
           <p class="product-section__label product-facts__label">01 / PRODUCTO + INFORMACIÓN TÉCNICA</p>
           <div class="product-facts__intro">
             <div class="product-facts__headline">
+              <p class="product-facts__title-eyebrow">{brand} / {model} {variant}</p>
               <h2>DISEÑO ITALIANO.<br /><em class="title-accent">EVOLUCIÓN REAL.</em></h2>
               <p class="product-facts__micro">FATE / EXIMIA / PAVIMENTO / HASTA 270 KM/H</p>
             </div>
@@ -162,7 +163,6 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
               <ul>{sizes.map((size) => <li>{size.measure} / RANGO {size.speed}</li>)}</ul>
             </article>
           </div>
-          <a class="product-inline-cta product-inline-cta--dark product-inline-cta--after-grid" href={whatsapp('quiero pedir presupuesto por')} target="_blank" rel="noopener noreferrer">Pedir presupuesto <span>↗</span></a>
         </div>
       </section>
 
@@ -188,7 +188,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
             <p class="product-section__label">04 / MEDIDAS DISPONIBLES</p>
             <h2>ENCONTRÁ TU<br /><em class="title-accent title-accent--light">MEDIDA.</em></h2>
             <p class="product-sizes__description">Versiones homologadas para distintas configuraciones de llanta y desempeño.</p>
-            <a class="product-inline-cta product-inline-cta--light" href={whatsapp('quiero hacer un pedido de')} target="_blank" rel="noopener noreferrer">Quiero hacer un pedido <span>↗</span></a>
+            <a class="product-inline-cta product-inline-cta--red" href={whatsapp('quiero recibir más información sobre')} target="_blank" rel="noopener noreferrer">Quiero más info</a>
           </div>
           <div class="product-sizes__list">
             {sizes.map((size, index) => (
@@ -203,10 +203,10 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
           <div>
             <p class="product-section__label">05 / RECOMENDACIONES</p>
             <h2>CUIDÁ EL RENDIMIENTO.<br /><em class="title-accent">CUIDÁ TU CAMINO.</em></h2>
+            <a class="product-inline-cta product-inline-cta--red product-care__cta" href={whatsapp('quiero consultar a un experto sobre')} target="_blank" rel="noopener noreferrer">Consultar a un experto</a>
           </div>
           <div>
             <ol>{recommendations.map((item) => <li>{item}</li>)}</ol>
-            <a href={whatsapp('quiero asesoramiento para comprar')} target="_blank" rel="noopener noreferrer">Consultar por este modelo <span>↗</span></a>
           </div>
         </div>
       </section>

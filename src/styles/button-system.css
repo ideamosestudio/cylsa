@@ -47,6 +47,12 @@
   --cyl-button-ink:#111318!important;
 }
 
+:is(.product-inline-cta--red){
+  --cyl-button-fill:linear-gradient(110deg,#a80017,#e7192e,#ff3946,#8f0014,#db1027)!important;
+  --cyl-button-ink:#fff!important;
+  background-size:230% 100%,260% 100%;
+}
+
 :is(
   .button,
   .product-inline-cta,
@@ -78,6 +84,11 @@
   --cyl-button-fill:linear-gradient(110deg,#8d0014,#ed1d31,#ff4e42,#a90019)!important;
   --cyl-button-ink:#fff!important;
   color:#fff;
+}
+
+.product-inline-cta--red:hover{
+  --cyl-button-fill:linear-gradient(#f5f5f2,#f5f5f2)!important;
+  color:#111318!important;
 }
 
 :is(.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button) > :is(i,b,span:last-child){

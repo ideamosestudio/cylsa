@@ -185,3 +185,102 @@
   .product-inline-cta::before{display:none}
   .product-facts article,.product-gallery img,.product-gallery figure::before,.product-sizes__list>div,.product-care li{transition:none}
 }
+
+/* Automóvil: catálogo completo en una grilla editorial 4 × 2. */
+.category-products__shell{
+  display:block;
+  width:min(calc(100% - 84px),1800px);
+}
+.category-products__heading{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:clamp(36px,7vw,120px);
+  align-items:end;
+}
+.category-products__heading>div>p{
+  margin:0 0 30px;
+  color:#d51025;
+  font:600 9px/1 'IBM Plex Mono',monospace;
+  letter-spacing:.17em;
+}
+.category-products__heading>span{
+  max-width:520px;
+  margin:0 0 4px;
+}
+.category-products__grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-top:clamp(56px,6vw,92px);
+}
+.category-product-card{
+  min-height:clamp(500px,36vw,620px);
+  background:linear-gradient(155deg,#f8f8f6 0%,#e1e1df 100%);
+}
+.category-product-card::before{
+  top:-9%;
+  right:-28%;
+  width:98%;
+}
+.category-product-card__visual{
+  position:absolute;
+  top:12px;
+  right:12px;
+  left:12px;
+  width:auto;
+  height:64%;
+}
+.category-product-card__visual>span{
+  position:absolute;
+  z-index:2;
+  top:12px;
+  left:12px;
+  color:#d51025;
+  font:600 8px/1 'IBM Plex Mono',monospace;
+  letter-spacing:.14em;
+}
+.category-product-card__visual img{
+  object-position:50% 44%;
+}
+.category-product-card__copy{
+  right:24px;
+  bottom:24px;
+  left:24px;
+}
+.category-product-card h3{
+  display:flex;
+  min-height:1.65em;
+  flex-direction:column;
+  justify-content:flex-end;
+  margin:14px 0 20px;
+  font-size:clamp(34px,2.8vw,52px);
+  line-height:.82;
+}
+.category-product-card h3 em{
+  display:block;
+  max-width:100%;
+  margin-top:7px;
+  font-size:.42em;
+  line-height:.92;
+}
+
+@media(max-width:1200px){
+  .category-products__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .category-product-card{min-height:610px}
+  .category-product-card h3{font-size:clamp(42px,6vw,66px)}
+}
+
+@media(max-width:900px){
+  .category-products__shell{width:min(calc(100% - 44px),760px)}
+  .category-products__heading{grid-template-columns:1fr;gap:24px}
+  .category-products__heading>span{margin:0}
+}
+
+@media(max-width:620px){
+  .category-products__shell{width:84%}
+  .category-products__grid{grid-template-columns:1fr;gap:12px;margin-top:44px}
+  .category-product-card{min-height:520px}
+  .category-product-card__visual{top:10px;right:10px;left:10px;width:auto;height:65%}
+  .category-product-card__copy{right:22px;bottom:22px;left:22px}
+  .category-product-card h3{font-size:clamp(42px,13vw,58px)}
+}

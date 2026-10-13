@@ -1,0 +1,44 @@
+---
+import ProductPageLayout from '../layouts/ProductPageLayout.astro';
+import { additionalAutomovilProducts, type AutomovilProduct } from '../data/automovil-products';
+
+export function getStaticPaths() {
+  return additionalAutomovilProducts.map((product) => ({
+    params: { product: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: AutomovilProduct;
+}
+
+const { product } = Astro.props;
+---
+
+<ProductPageLayout
+  title={product.title}
+  model={product.model}
+  variant={product.variant}
+  category="AUTOMÓVIL"
+  categoryHref="automovil/"
+  brand={product.brand}
+  brandLogo={product.brandLogo}
+  series={product.series}
+  description={product.description}
+  coverIntro={product.coverIntro}
+  storyTitle={product.storyTitle}
+  storyAccent={product.storyAccent}
+  claim={product.claim}
+  micro={product.micro}
+  segment={product.segment}
+  maxSpeed={product.maxSpeed}
+  heroImage={product.heroImage}
+  heroImageAlt={product.heroImageAlt}
+  gallery={product.gallery}
+  performance={product.performance}
+  uses={product.uses}
+  speeds={product.speeds}
+  recommendations={product.recommendations}
+  sizes={product.sizes}
+/>

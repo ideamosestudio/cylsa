@@ -26,7 +26,15 @@ interface Props {
   categoryHref: string;
   brand: string;
   brandLogo?: string;
+  series?: string;
   description: string;
+  coverIntro?: string;
+  storyTitle?: string;
+  storyAccent?: string;
+  claim?: string;
+  micro?: string;
+  segment?: string;
+  maxSpeed?: string;
   heroImage: string;
   heroImageAlt: string;
   gallery: ProductImage[];
@@ -45,7 +53,15 @@ const {
   categoryHref,
   brand,
   brandLogo,
+  series = 'PREMIUM SERIES',
   description,
+  coverIntro = 'Diseño, eficiencia y control para una conducción más segura y confortable.',
+  storyTitle = 'DISEÑO ITALIANO.',
+  storyAccent = 'EVOLUCIÓN REAL.',
+  claim = 'HECHA PARA AVANZAR.',
+  micro = `${brand} / ${model} / PAVIMENTO`,
+  segment = 'PREMIUM',
+  maxSpeed = 'CONSULTAR',
   heroImage,
   heroImageAlt,
   gallery,
@@ -58,7 +74,11 @@ const {
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
-const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeURIComponent(`Hola, ${intent} ${model} ${variant}.`)}`;
+const productName = `${model} ${variant}`.trim();
+const claimParts = claim.trim().split(/\s+/);
+const claimAccent = claimParts.pop() ?? '';
+const claimLead = claimParts.join(' ');
+const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeURIComponent(`Hola, ${intent} ${productName}.`)}`;
 ---
 
 <!doctype html>
@@ -66,7 +86,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={`${model} ${variant}: características, prestaciones y medidas disponibles en CYL Neumáticos.`} />
+    <meta name="description" content={`${productName}: características, prestaciones y medidas disponibles en CYL Neumáticos.`} />
     <meta name="theme-color" content="#080808" />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <title>{title} — CYL Neumáticos</title>
@@ -74,7 +94,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
   <body class="product-detail-page">
     <Header />
     <main>
-      <section class="product-story" aria-label={`Presentación y ficha técnica de ${model} ${variant}`}>
+      <section class="product-story" aria-label={`Presentación y ficha técnica de ${productName}`}>
       <div class="product-cover" aria-labelledby="product-title">
         <div class="product-cover__grid" aria-hidden="true"></div>
         <div class="product-cover__glow" aria-hidden="true"></div>
@@ -85,10 +105,10 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
           <a class="product-breadcrumb" href={`${base}${categoryHref}`}><span>01</span> PRODUCTOS / {category}</a>
           <div class="product-brand">
             {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" /> : <strong>{brand}</strong>}
-            <span>PREMIUM SERIES</span>
+            <span>{series}</span>
           </div>
-          <h1 id="product-title"><span>{model}</span><em class="animated-title">{variant}</em></h1>
-          <p class="product-cover__intro">Diseño italiano, eficiencia premium y control preciso para una conducción más segura y confortable.</p>
+          <h1 id="product-title"><span>{model}</span>{variant && <em class="animated-title">{variant}</em>}</h1>
+          <p class="product-cover__intro">{coverIntro}</p>
           <div class="product-cover__actions">
             <a class="button button-primary" href={whatsapp('quiero solicitar una cotización por')} target="_blank" rel="noopener noreferrer">Solicitar cotización</a>
             <a class="button button-secondary" href="#medidas">Ver medidas</a>
@@ -102,9 +122,9 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
         <div class="product-cover__readout" aria-hidden="true"><span>01 / 01</span><i></i><strong>FICHA DE PRODUCTO</strong></div>
         <div class="product-cover__side" aria-hidden="true">CYL—NQN / 38.95°S / 068.06°W</div>
         <div class="product-cover__specs" aria-hidden="true">
-          <span><small>SEGMENTO</small><strong>PREMIUM</strong></span>
+          <span><small>SEGMENTO</small><strong>{segment}</strong></span>
           <span><small>SUPERFICIE</small><strong>PAVIMENTO</strong></span>
-          <span><small>VELOCIDAD</small><strong>HASTA 270 KM/H</strong></span>
+          <span><small>VELOCIDAD</small><strong>HASTA {maxSpeed}</strong></span>
         </div>
       </div>
 
@@ -113,12 +133,12 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
           <div class="product-facts__intro">
             <div class="product-facts__headline">
               <p class="product-facts__title-eyebrow">{brand} / {model} {variant}</p>
-              <h2>DISEÑO ITALIANO.<br /><em class="title-accent">EVOLUCIÓN REAL.</em></h2>
-              <p class="product-facts__micro">FATE / EXIMIA / PAVIMENTO / HASTA 270 KM/H</p>
+              <h2>{storyTitle}<br /><em class="title-accent">{storyAccent}</em></h2>
+              <p class="product-facts__micro">{micro}</p>
             </div>
             <div class="product-facts__summary">
               <span class="product-facts__summary-index" aria-hidden="true">01 — 05</span>
-              <p class="product-facts__claim">HECHA PARA <em>AVANZAR.</em></p>
+              <p class="product-facts__claim">{claimLead} <em>{claimAccent}</em></p>
               <p>{description}</p>
               <div class="product-overview__stamp" aria-label={`${brand}, línea premium`}>
                 {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" loading="lazy" /> : <span>{brand}</span>}

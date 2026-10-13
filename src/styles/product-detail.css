@@ -109,8 +109,12 @@
 .product-inline-cta:hover::before{animation:productCtaSheen .8s ease forwards}
 .product-facts{background-image:linear-gradient(rgba(255,255,255,.017) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.017) 1px,transparent 1px);background-size:72px 72px}
 .product-facts article{position:relative;overflow:hidden;transition:transform .5s cubic-bezier(.2,.75,.2,1),background .45s ease}
+.product-facts article>*{position:relative;z-index:1}
+.product-facts article::before{position:absolute;z-index:0;inset:-35%;background:radial-gradient(circle at 32% 88%,rgba(237,29,49,.22) 0%,rgba(173,4,28,.09) 22%,transparent 49%);content:'';opacity:.38;transform:translate3d(-12%,12%,0) scale(.88);animation:productCardGlow 7s ease-in-out infinite;pointer-events:none;will-change:transform,opacity}
+.product-facts article:nth-child(2)::before{animation-delay:-1.4s}.product-facts article:nth-child(3)::before{animation-delay:-2.8s}.product-facts article:nth-child(4)::before{animation-delay:-4.2s}.product-facts article:nth-child(5)::before{animation-delay:-5.6s}
 .product-facts article::after{position:absolute;right:0;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,#ed1d31,transparent);content:'';transform:scaleX(0);transition:transform .5s cubic-bezier(.2,.75,.2,1)}
-.product-facts article:hover{z-index:2;background:#101014;transform:translateY(-6px)}
+.product-facts article:hover{z-index:2;background:#101014;box-shadow:inset 0 0 50px rgba(237,29,49,.055);transform:translateY(-6px)}
+.product-facts article:hover::before{opacity:.72}
 .product-facts article:hover::after{transform:scaleX(1)}
 .product-fact-icon{position:relative;overflow:hidden;animation:productIconFloat 5s ease-in-out infinite}
 .product-facts article:nth-child(2) .product-fact-icon{animation-delay:-1s}.product-facts article:nth-child(3) .product-fact-icon{animation-delay:-2s}.product-facts article:nth-child(4) .product-fact-icon{animation-delay:-3s}.product-facts article:nth-child(5) .product-fact-icon{animation-delay:-4s}
@@ -128,6 +132,7 @@
 .product-care li{transition:color .35s ease,transform .35s ease}
 .product-care li:hover{color:rgba(255,255,255,.88);transform:translateX(5px)}
 @keyframes productIconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes productCardGlow{0%,100%{opacity:.3;transform:translate3d(-14%,13%,0) scale(.86)}50%{opacity:.58;transform:translate3d(15%,-9%,0) scale(1.08)}}
 @keyframes productDataPulse{0%{box-shadow:0 0 0 0 rgba(237,29,49,.42)}70%,100%{box-shadow:0 0 0 8px rgba(237,29,49,0)}}
 @keyframes productCtaSheen{0%{transform:rotate(18deg) translateX(-260%)}100%{transform:rotate(18deg) translateX(720%)}}
 
@@ -162,7 +167,8 @@
 }
 
 @media(prefers-reduced-motion:reduce){
-  .product-section__label::before,.product-fact-icon{animation:none}
+  .product-section__label::before,.product-fact-icon,.product-facts article::before{animation:none}
+  .product-facts article::before{opacity:.38;transform:none}
   .product-inline-cta::before{display:none}
   .product-facts article,.product-gallery img,.product-gallery figure::before,.product-sizes__list>div,.product-care li{transition:none}
 }

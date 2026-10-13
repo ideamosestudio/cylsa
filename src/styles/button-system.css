@@ -150,10 +150,12 @@
 .page-cta a{min-width:250px;justify-content:center}
 .footer-nav-group .footer-action{width:100%;min-width:190px;color:#fff;font:600 11px/1 'Instrument Sans',sans-serif;letter-spacing:.13em}
 .footer-nav-group .footer-action:hover{color:#111318!important;transform:translateY(-3px)}
-.product-card__cta{min-width:180px;margin-top:24px;gap:0}
+.product-card__cta{--cyl-button-fill:linear-gradient(transparent,transparent)!important;--cyl-button-ink:#c30e22!important;min-width:180px;margin-top:24px;gap:0}
 .product-card__cta>span{display:block!important;min-width:0!important;height:auto!important;margin:0 auto!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:inherit!important;font:inherit!important;letter-spacing:inherit!important;place-items:unset!important;transform:none!important;transition:none!important}
 .product-card__cta i{display:none!important}
 .product-card__cta:hover>span{background:transparent!important;color:inherit!important;transform:none!important}
+.product-card__cta:hover{--cyl-button-fill:linear-gradient(110deg,#a80017,#e7192e,#ff3946,#8f0014,#db1027)!important;color:#fff!important}
+.product-card__cta.product-card__cta:hover>span{color:#fff!important}
 .premium-form button,.internal-form button{width:100%;justify-content:center;border:1px solid transparent}
 .site-nav .nav-quote{min-height:46px;margin-left:7px;padding:0 34px;border-radius:0;font-size:11px}
 .site-nav .nav-quote small{position:absolute;left:18px}

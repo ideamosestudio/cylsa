@@ -156,6 +156,13 @@
 
 @media(max-width:600px){
   .product-shell,.category-products__shell{width:84%}
+  .product-section h2{font-size:clamp(38px,11.25vw,53px)}
+  .product-facts__intro h2{font-size:clamp(38px,10.5vw,50px)}
+  .product-care h2{font-size:clamp(35px,9.75vw,47px)}
+  .product-sizes__heading h2{font-size:clamp(30px,6vw,44px)}
+  .category-products__heading h2{font-size:clamp(36px,10.5vw,49px)}
+  .product-gallery{padding-bottom:62px}
+  .product-sizes{padding-top:62px}
   .product-cover{display:flex;height:auto;min-height:0;flex-direction:column;padding:108px var(--mobile-page-gutter) 48px}
   .product-cover__copy{position:static;display:contents;width:auto;transform:none}
   .product-cover__copy>*{position:relative;z-index:4}

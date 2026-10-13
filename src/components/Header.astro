@@ -9,18 +9,45 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <nav class="site-nav" aria-label="Secciones">
       <div class="site-nav__products">
         <a href={`${base}nuestros-neumaticos/`}><small>01</small><span>Nuestros neumáticos</span><b aria-hidden="true">⌄</b></a>
-        <div class="site-nav__submenu" aria-label="Líneas de neumáticos">
-          <a href={`${base}automovil/`}><small>01</small><span>Automóvil</span></a>
-          <a href={`${base}camioneta/`}><small>02</small><span>Camioneta</span></a>
-          <a href={`${base}transporte/`}><small>03</small><span>Transporte</span></a>
-          <a href={`${base}agro-vial/`}><small>04</small><span>Agro / Vial</span></a>
+        <div class="site-nav__mega" aria-label="Líneas de neumáticos">
+          <div class="site-nav__mega-heading">
+            <span>CYL / LÍNEAS DE NEUMÁTICOS</span>
+            <a href={`${base}nuestros-neumaticos/`}>Ver todas las líneas</a>
+          </div>
+          <div class="site-nav__mega-grid">
+            <a class="site-nav__mega-card" href={`${base}automovil/`}>
+              <span><small>01</small> Precisión y confort</span>
+              <strong>Automóvil</strong>
+              <img src={`${base}images/products/automovil.png`} alt="" width="460" height="259" />
+            </a>
+            <a class="site-nav__mega-card" href={`${base}camioneta/`}>
+              <span><small>02</small> Tracción y libertad</span>
+              <strong>Camioneta</strong>
+              <img src={`${base}images/products/camioneta.png`} alt="" width="460" height="259" />
+            </a>
+            <a class="site-nav__mega-card" href={`${base}transporte/`}>
+              <span><small>03</small> Resistencia continua</span>
+              <strong>Transporte</strong>
+              <img src={`${base}images/products/transporte.png`} alt="" width="460" height="259" />
+            </a>
+            <a class="site-nav__mega-card" href={`${base}agro-vial/`}>
+              <span><small>04</small> Potencia y trabajo</span>
+              <strong>Agro / Vial</strong>
+              <img src={`${base}images/products/agro-vial.png`} alt="" width="460" height="259" />
+            </a>
+          </div>
         </div>
       </div>
-      <a href={`${base}quienes-somos/`}><small>02</small><span>Quiénes somos</span></a>
-      <a href={`${base}nuestra-politica/`}><small>03</small><span>Política</span></a>
-      <a href={`${base}forma-parte-de-nuestro-equipo/`}><small>04</small><span>Equipo</span></a>
-      <a href={`${base}contacto/`}><small>05</small><span>Contacto</span></a>
-      <a class="nav-quote" href={`${base}cotizacion/`}><small>06</small><span>Cotización</span><b aria-hidden="true">↗</b></a>
+      <div class="site-nav__about">
+        <button class="site-nav__group-trigger" type="button" aria-haspopup="true"><small>02</small><span>Sobre nosotros</span><b aria-hidden="true">⌄</b></button>
+        <div class="site-nav__submenu" aria-label="Sobre nosotros">
+          <a href={`${base}quienes-somos/`}><small>01</small><span>Quiénes somos</span></a>
+          <a href={`${base}nuestra-politica/`}><small>02</small><span>Política</span></a>
+          <a href={`${base}forma-parte-de-nuestro-equipo/`}><small>03</small><span>Equipo</span></a>
+        </div>
+      </div>
+      <a href={`${base}contacto/`}><small>03</small><span>Contacto</span></a>
+      <a class="nav-quote" href={`${base}cotizacion/`}><small>04</small><span>Cotización</span></a>
     </nav>
     <span class="header-index" aria-hidden="true"><i></i><span>NQN</span><b>38.95° S</b></span>
     <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation">
@@ -39,11 +66,16 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         <a href={`${base}agro-vial/`}><small>04</small><span>Agro / Vial</span><b>↗</b></a>
       </div>
     </details>
-    <a href={`${base}quienes-somos/`}><small>02</small><span>Quiénes somos</span><b>↗</b></a>
-    <a href={`${base}nuestra-politica/`}><small>03</small><span>Nuestra política</span><b>↗</b></a>
-    <a href={`${base}forma-parte-de-nuestro-equipo/`}><small>04</small><span>Trabajá con nosotros</span><b>↗</b></a>
-    <a href={`${base}contacto/`}><small>05</small><span>Contacto</span><b>↗</b></a>
-    <a class="site-mobile-nav__primary" href={`${base}cotizacion/`}><small>06</small><span>Solicitar cotización</span><b>↗</b></a>
+    <details class="site-mobile-nav__group">
+      <summary><small>02</small><span>Sobre nosotros</span><b aria-hidden="true">⌄</b></summary>
+      <div>
+        <a href={`${base}quienes-somos/`}><small>01</small><span>Quiénes somos</span><b>↗</b></a>
+        <a href={`${base}nuestra-politica/`}><small>02</small><span>Nuestra política</span><b>↗</b></a>
+        <a href={`${base}forma-parte-de-nuestro-equipo/`}><small>03</small><span>Equipo</span><b>↗</b></a>
+      </div>
+    </details>
+    <a href={`${base}contacto/`}><small>03</small><span>Contacto</span><b>↗</b></a>
+    <a class="site-mobile-nav__primary" href={`${base}cotizacion/`}><small>04</small><span>Solicitar cotización</span><b>↗</b></a>
   </nav>
 </header>
 
@@ -59,6 +91,14 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       menu.toggleAttribute('inert', !open);
     };
     toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    menu.querySelectorAll<HTMLDetailsElement>('details').forEach((details) => {
+      details.addEventListener('toggle', () => {
+        if (!details.open) return;
+        menu.querySelectorAll<HTMLDetailsElement>('details').forEach((other) => {
+          if (other !== details) other.open = false;
+        });
+      });
+    });
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
   });

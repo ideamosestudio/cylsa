@@ -13,9 +13,28 @@ interface Props {
   accent?: string;
   intro: string;
   showHero?: boolean;
+  heroImage?: string;
+  heroImageAlt?: string;
+  heroIndex?: string;
+  heroApplication?: string;
+  heroProfile?: string;
 }
 
-const { title, description, eyebrow, heading, accent, intro, showHero = true } = Astro.props;
+const {
+  title,
+  description,
+  eyebrow,
+  heading,
+  accent,
+  intro,
+  showHero = true,
+  heroImage,
+  heroImageAlt = '',
+  heroIndex = '01',
+  heroApplication = 'MULTIPROPÓSITO',
+  heroProfile = 'RENDIMIENTO + CONTROL',
+} = Astro.props;
+const isProductHero = Boolean(heroImage);
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
@@ -33,9 +52,32 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <Header />
     <main>
       {showHero && (
-        <section class="internal-hero">
+        <section class={`internal-hero${isProductHero ? ' internal-hero--product' : ''}`}>
           <div class="internal-hero__glow" aria-hidden="true"></div>
           <div class="internal-hero__grid" aria-hidden="true"></div>
+          {isProductHero && (
+            <>
+              <div class="internal-product-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <div class="internal-product-orbit" aria-hidden="true">
+                <i></i><i></i><i></i><span>CYL / PRODUCT SYSTEM</span>
+              </div>
+              <div class="internal-product-visual">
+                <img src={`${base}images/product-heroes/${heroImage}`} alt={heroImageAlt} width="1280" height="1280" fetchpriority="high" />
+              </div>
+              <div class="internal-product-readout" aria-hidden="true">
+                <span>{heroIndex} / 04</span><i></i><strong>{heading}</strong>
+              </div>
+              <div class="internal-product-note" aria-hidden="true">
+                <i></i><span>CYL PRODUCT SERIES<br /><strong>{heading}</strong></span>
+              </div>
+              <div class="internal-product-side-code" aria-hidden="true">CYL—NQN&nbsp;&nbsp;/&nbsp;&nbsp;38.95°S&nbsp;&nbsp;/&nbsp;&nbsp;068.06°W</div>
+              <div class="internal-product-specs" aria-hidden="true">
+                <span><small>APLICACIÓN</small><strong>{heroApplication}</strong></span>
+                <span><small>PERFIL</small><strong>{heroProfile}</strong></span>
+                <span><small>LÍNEA</small><strong>{heading} / {heroIndex}</strong></span>
+              </div>
+            </>
+          )}
           <div class="internal-hero__content">
             <p class="internal-kicker"><span>CYL</span> {eyebrow}</p>
             <h1><span>{heading}</span>{accent && <em>{accent}</em>}</h1>

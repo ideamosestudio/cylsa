@@ -7,3 +7,60 @@
 @media(max-width:900px){.internal-page--no-hero main{padding-top:86px}.internal-page--no-hero .product-selector{padding-top:78px}.internal-hero{display:flex;height:auto;min-height:760px;align-items:flex-end;padding:180px 22px 74px}.internal-hero__content{position:relative;left:auto;top:auto;width:auto;transform:none}.internal-hero__intro{width:auto;max-width:660px;white-space:normal}.internal-hero__actions{margin-top:22px}.page-lead-grid,.policy-intro,.form-layout{grid-template-columns:1fr}.statement-grid,.locations-grid{grid-template-columns:1fr}.statement-card{min-height:290px}.statement-card h2,.statement-card h3{margin-top:72px}.principle{grid-template-columns:54px 1fr}.principle p{grid-column:2}.page-cta{display:grid}.page-cta a{width:fit-content}.form-side>p{max-width:680px}}
 @media(max-width:600px){.internal-page--no-hero main{padding-top:76px}.internal-page--no-hero .product-selector{padding-top:68px}.internal-hero{min-height:680px;padding-right:18px;padding-left:18px}.internal-hero h1{font-size:clamp(55px,18vw,82px)}.internal-hero__intro{font-size:16px}.internal-hero__actions{gap:8px;margin-top:18px}.internal-hero__actions .button{width:100%;padding:12px 14px;font-size:9px;text-align:center}.internal-hero__meta{display:none}.page-section{padding:76px 18px}.page-display{font-size:clamp(44px,13vw,60px)}.statement-card{padding:26px}.policy-badge{min-height:270px}.principle{grid-template-columns:38px 1fr;gap:18px}.internal-form{grid-template-columns:1fr;padding:24px 18px}.internal-form>label{grid-column:1/-1}.internal-form__top{display:grid}.page-cta h2{font-size:clamp(50px,14vw,68px)}}
 @media(prefers-reduced-motion:reduce){.internal-hero__glow{animation:none}[data-page-reveal]{opacity:1;transform:none;transition:none}}
+
+/* Product hero: mirrors the technical language of the home cover. */
+.internal-hero--product::after{display:none}
+.internal-hero--product .internal-hero__content{z-index:5;width:min(47vw,700px)}
+.internal-hero--product .internal-hero__meta{display:none}
+.internal-product-visual{position:absolute;z-index:3;top:52%;right:clamp(30px,4.8vw,92px);width:min(49vw,790px);height:min(80vh,820px);transform:translateY(-48%);pointer-events:none}
+.internal-product-visual::after{position:absolute;right:8%;bottom:5%;left:8%;height:9%;border-radius:50%;background:rgba(0,0,0,.62);content:'';filter:blur(23px)}
+.internal-product-visual img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 32px 42px rgba(0,0,0,.62))}
+.internal-product-orbit{position:absolute;z-index:1;top:50%;right:-4vw;width:min(61vw,980px);aspect-ratio:1;transform:translateY(-47%);border:1px solid rgba(255,255,255,.075);border-radius:50%;box-shadow:0 0 0 6.5vw rgba(255,255,255,.017),0 0 0 13vw rgba(255,255,255,.011)}
+.internal-product-orbit::before,.internal-product-orbit::after{position:absolute;border:1px solid rgba(237,28,49,.13);border-radius:50%;content:''}
+.internal-product-orbit::before{inset:15%}
+.internal-product-orbit::after{inset:30%}
+.internal-product-orbit i{position:absolute;width:7px;height:7px;border:1px solid rgba(255,255,255,.38);border-radius:50%}
+.internal-product-orbit i:nth-child(1){top:3%;left:48%;background:#a70b1c}
+.internal-product-orbit i:nth-child(2){top:50%;right:7%}
+.internal-product-orbit i:nth-child(3){bottom:14%;left:18%}
+.internal-product-orbit span{position:absolute;top:24%;right:4%;color:rgba(255,255,255,.16);font:600 8px/1 'IBM Plex Mono',monospace;letter-spacing:.14em}
+.internal-product-frame{position:absolute;z-index:6;inset:clamp(118px,15vh,146px) 42px 35px;pointer-events:none}
+.internal-product-frame i{position:absolute;width:37px;height:37px;border-color:rgba(255,255,255,.22);border-style:solid}
+.internal-product-frame i:nth-child(1){top:0;left:0;border-width:1px 0 0 1px}
+.internal-product-frame i:nth-child(2){top:0;right:0;border-width:1px 1px 0 0}
+.internal-product-frame i:nth-child(3){right:0;bottom:0;border-width:0 1px 1px 0}
+.internal-product-frame i:nth-child(4){bottom:0;left:0;border-width:0 0 1px 1px}
+.internal-product-readout{position:absolute;z-index:6;top:38%;right:5.3%;display:flex;align-items:center;gap:13px;color:rgba(255,255,255,.42);font:600 8px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase}
+.internal-product-readout i{width:58px;height:1px;background:linear-gradient(90deg,#ed1c31,rgba(255,255,255,.12))}
+.internal-product-readout strong{color:rgba(255,255,255,.76);font-weight:600}
+.internal-product-note{position:absolute;z-index:6;top:48%;left:51%;display:flex;align-items:center;gap:11px;color:rgba(255,255,255,.28);font:600 7px/1.55 'IBM Plex Mono',monospace;letter-spacing:.12em}
+.internal-product-note i{width:7px;height:7px;border:1px solid rgba(255,255,255,.38);border-radius:50%}
+.internal-product-note strong{color:rgba(255,255,255,.44);font-weight:600}
+.internal-product-side-code{position:absolute;z-index:6;top:46%;right:17px;color:rgba(255,255,255,.36);font:600 7px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;transform:rotate(90deg) translateX(100%);transform-origin:top right}
+.internal-product-specs{position:absolute;z-index:6;right:5.2%;bottom:5.4%;display:flex}
+.internal-product-specs span{display:grid;min-width:120px;gap:8px;padding:0 16px;border-left:1px solid rgba(237,28,49,.58)}
+.internal-product-specs small{color:rgba(255,255,255,.3);font:600 7px/1 'IBM Plex Mono',monospace;letter-spacing:.12em}
+.internal-product-specs strong{color:rgba(255,255,255,.74);font:600 8px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;white-space:nowrap}
+
+@media(max-width:900px){
+  .internal-hero--product{display:block;height:100svh;min-height:760px;padding:0}
+  .internal-hero--product .internal-hero__content{position:absolute;left:30px;top:18%;width:calc(100% - 60px);transform:none}
+  .internal-hero--product .internal-hero__content h1{font-size:clamp(66px,12vw,104px)}
+  .internal-product-visual{top:auto;right:-5%;bottom:-3%;width:68vw;height:55vh;transform:none}
+  .internal-product-orbit{top:auto;right:-24vw;bottom:-8vw;width:88vw;transform:none}
+  .internal-product-frame{inset:110px 22px 22px}
+  .internal-product-readout{top:auto;right:30px;bottom:30px}
+  .internal-product-note,.internal-product-side-code,.internal-product-specs{display:none}
+}
+
+@media(max-width:600px){
+  .internal-hero--product{min-height:760px}
+  .internal-hero--product .internal-hero__content{left:18px;top:15%;width:calc(100% - 36px)}
+  .internal-hero--product .internal-hero__content h1{font-size:clamp(55px,17vw,78px)}
+  .internal-hero--product .internal-hero__intro{max-width:92%;font-size:14px;line-height:1.5}
+  .internal-product-visual{right:-22%;bottom:-1%;width:108vw;height:51vh}
+  .internal-product-orbit{right:-48vw;bottom:-5vw;width:125vw}
+  .internal-product-frame{inset:90px 12px 14px}
+  .internal-product-readout{right:20px;bottom:20px}
+  .internal-product-readout i{width:34px}
+}

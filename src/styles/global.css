@@ -3,7 +3,7 @@
 @font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular.otf') format('opentype'); font-style: normal; font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular-Italic.otf') format('opentype'); font-style: italic; font-weight: 400; font-display: swap; }
 
-:root { --red: #d10f1b; --ink: #060607; --paper: #f4f4f2; --line: rgba(255,255,255,.14); color-scheme: dark; font-family: 'Instrument Sans',Arial,sans-serif; background: var(--ink); color: var(--paper); }
+:root { --red: #d10f1b; --ink: #060607; --paper: #f4f4f2; --line: rgba(255,255,255,.14); --mobile-page-gutter: 8vw; color-scheme: dark; font-family: 'Instrument Sans',Arial,sans-serif; background: var(--ink); color: var(--paper); }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--ink); }
 body { margin: 0; min-width: 320px; overflow-x: hidden; background: var(--ink); }
@@ -189,9 +189,9 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
   .hero-copy { left: 18px; bottom: 10%; width: calc(100% - 36px); } .hero-copy h1 { font-size: clamp(2.65rem,11vw,4rem); }
   .hero-intro { font-size: .94rem; line-height: 1.45; }
   .hero-actions { margin-top: 18px; } .button { width: 100%; min-height: 44px; } .hero-progress-wrap { left: 18px; width: calc(100% - 36px); }
-  .hero-progress-wrap span { display: none; } .universes { padding-right: 18px; padding-left: 18px; } .section-intro { margin-bottom: 48px; }
+  .hero-progress-wrap span { display: none; } .universes { padding-right: var(--mobile-page-gutter); padding-left: var(--mobile-page-gutter); } .section-intro { margin-bottom: 48px; }
   .section-intro h2 { font-size: clamp(3.5rem,18vw,5.3rem); } .universe-grid { grid-auto-rows: 120vw; } .universe-card { min-height: 420px; }
   .card-number { font-size: 5rem; } .card-copy { right: 20px; bottom: 22px; left: 20px; } .brand-note { flex-direction: column; gap: 10px; }
-  .marquee-track { gap: 24px; } .site-footer { padding-right: 18px; padding-left: 18px; } .footer-heading { margin-bottom: 70px; } .footer-heading h2 { font-size: 24vw; }
+  .marquee-track { gap: 24px; } .site-footer { padding-right: var(--mobile-page-gutter); padding-left: var(--mobile-page-gutter); } .footer-heading { margin-bottom: 70px; } .footer-heading h2 { font-size: 24vw; }
 }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms!important; animation-iteration-count: 1!important; transition-duration: .01ms!important; } .hero-track { height: 100svh; } .marquee-track { transform: translateX(0); } }

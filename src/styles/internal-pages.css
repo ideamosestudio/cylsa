@@ -85,3 +85,7 @@
   .internal-page--single-line-title .internal-hero h1 span,
   .internal-page--single-line-title .internal-hero h1 em{display:inline-block}
 }
+
+/* Closing CTA modules: actions always sit directly below the title. */
+.page-cta{display:grid;align-items:start;justify-content:stretch;gap:30px}
+.page-cta__actions{justify-content:flex-start}

@@ -153,6 +153,9 @@
 .site-mobile-nav .site-mobile-nav__primary{display:flex;width:100%;min-height:52px;padding:0 34px;border-radius:0}
 .site-mobile-nav__primary small{position:absolute;left:18px}.site-mobile-nav__primary b{position:absolute;right:18px}
 
+/* Buttons may change tone or glow on interaction, but never shift position. */
+:is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-nav .nav-quote,.site-mobile-nav__primary):is(:hover,:focus-visible){transform:none!important}
+
 @media(max-width:600px){
   :is(.button,.product-inline-cta,.product-care a,.page-cta a,.premium-form button,.internal-form button){width:100%;min-height:50px;padding-right:28px;padding-left:28px}
   .footer-nav-group .footer-action{width:100%}

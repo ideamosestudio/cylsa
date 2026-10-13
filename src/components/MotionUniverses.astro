@@ -3,10 +3,10 @@ import '../styles/product-selector.css';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const categories = [
-  { n: '01', title: 'Automóvil', eyebrow: 'Precisión y confort', use: 'Urbano / Ruta', image: 'automovil.png', alt: 'Neumáticos para automóvil con llantas deportivas' },
-  { n: '02', title: 'Camioneta', eyebrow: 'Tracción y libertad', use: 'On road / Off road', image: 'camioneta.png', alt: 'Neumáticos para camioneta de uso mixto y todo terreno' },
-  { n: '03', title: 'Transporte', eyebrow: 'Resistencia continua', use: 'Media / Larga distancia', image: 'transporte.png', alt: 'Neumáticos de carga para transporte' },
-  { n: '04', title: 'Agro / Vial', eyebrow: 'Potencia y trabajo', use: 'Tracción / Carga', image: 'agro-vial.png', alt: 'Neumáticos de gran tracción para aplicaciones agro y viales' },
+  { n: '01', title: 'Automóvil', slug: 'automovil', eyebrow: 'Precisión y confort', use: 'Urbano / Ruta', image: 'automovil.png', alt: 'Neumáticos para automóvil con llantas deportivas' },
+  { n: '02', title: 'Camioneta', slug: 'camioneta', eyebrow: 'Tracción y libertad', use: 'On road / Off road', image: 'camioneta.png', alt: 'Neumáticos para camioneta de uso mixto y todo terreno' },
+  { n: '03', title: 'Transporte', slug: 'transporte', eyebrow: 'Resistencia continua', use: 'Media / Larga distancia', image: 'transporte.png', alt: 'Neumáticos de carga para transporte' },
+  { n: '04', title: 'Agro / Vial', slug: 'agro-vial', eyebrow: 'Potencia y trabajo', use: 'Tracción / Carga', image: 'agro-vial.png', alt: 'Neumáticos de gran tracción para aplicaciones agro y viales' },
 ];
 ---
 
@@ -29,7 +29,7 @@ const categories = [
           <div class="product-card__head">
             <p><span>{item.n}</span> {item.eyebrow}</p>
             <h3>{item.title}</h3>
-            <a class="product-card__cta" href={`${base}cotizacion/`} aria-label={`Consultar línea de neumáticos para ${item.title}`}>
+            <a class="product-card__cta" href={`${base}${item.slug}/`} aria-label={`Ver línea de neumáticos para ${item.title}`}>
               <span>Ver línea</span><i aria-hidden="true">↗</i>
             </a>
           </div>

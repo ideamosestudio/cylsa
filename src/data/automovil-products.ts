@@ -25,6 +25,7 @@ export interface AutomovilProduct {
   claim: string;
   micro: string;
   segment: string;
+  surface?: string;
   maxSpeed: string;
   heroImage: string;
   heroImageAlt: string;

@@ -34,6 +34,7 @@ interface Props {
   claim?: string;
   micro?: string;
   segment?: string;
+  surface?: string;
   maxSpeed?: string;
   heroImage: string;
   heroImageAlt: string;
@@ -61,6 +62,7 @@ const {
   claim = 'HECHA PARA AVANZAR.',
   micro = `${brand} / ${model} / PAVIMENTO`,
   segment = 'PREMIUM',
+  surface = 'PAVIMENTO',
   maxSpeed = 'CONSULTAR',
   heroImage,
   heroImageAlt,
@@ -123,7 +125,7 @@ const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeU
         <div class="product-cover__side" aria-hidden="true">CYL—NQN / 38.95°S / 068.06°W</div>
         <div class="product-cover__specs" aria-hidden="true">
           <span><small>SEGMENTO</small><strong>{segment}</strong></span>
-          <span><small>SUPERFICIE</small><strong>PAVIMENTO</strong></span>
+          <span><small>SUPERFICIE</small><strong>{surface}</strong></span>
           <span><small>VELOCIDAD</small><strong>HASTA {maxSpeed}</strong></span>
         </div>
       </div>

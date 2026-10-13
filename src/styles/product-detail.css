@@ -48,9 +48,9 @@
 .product-inline-cta--light{border:1px solid rgba(17,19,24,.28);color:#111318}
 .product-inline-cta--light:hover{border-color:#111318;background:#111318;color:#fff}
 .product-inline-cta--dark{border:1px solid rgba(237,28,49,.58);background:linear-gradient(135deg,rgba(237,28,49,.16),rgba(137,2,20,.06));color:#fff}
-.product-inline-cta--after-grid{margin-top:28px;margin-left:auto}
-.product-sizes__layout{display:grid;grid-template-columns:minmax(310px,.62fr) minmax(520px,1fr);gap:clamp(60px,8vw,130px);align-items:start}
-.product-sizes__heading{position:sticky;top:145px;display:block}
+.product-inline-cta--after-grid{margin-top:28px;margin-left:0}
+.product-sizes__layout{display:grid;grid-template-columns:minmax(310px,.62fr) minmax(520px,1fr);gap:clamp(60px,8vw,130px);align-items:center}
+.product-sizes__heading{position:static;top:auto;display:block}
 .product-sizes__heading h2{font-size:clamp(52px,5.6vw,88px)}
 .product-sizes__heading>p{max-width:430px;margin:28px 0 0}
 .product-sizes__list{margin-top:0}
@@ -68,4 +68,57 @@
   .product-inline-cta{width:100%}
   .product-sizes__list{margin-top:0}
   .product-sizes__list>div{grid-template-columns:38px 1fr;min-height:96px}
+}
+
+/* Premium product micro-interactions and technical detailing. */
+.product-section[data-code]{isolation:isolate}
+.product-section[data-code]::before{position:absolute;z-index:2;top:31px;right:clamp(22px,4vw,70px);padding-left:13px;border-left:1px solid #ed1d31;color:rgba(255,255,255,.3);font:600 7px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;content:attr(data-code)}
+.product-overview[data-code]::before,.product-sizes[data-code]::before{color:rgba(17,19,24,.34)}
+.product-section__label{display:flex;align-items:center;gap:10px}
+.product-section__label::before{width:5px;height:5px;border-radius:50%;background:#ed1d31;box-shadow:0 0 0 0 rgba(237,29,49,.45);content:'';animation:productDataPulse 2.6s ease-out infinite}
+.product-section__label::after{width:35px;height:1px;margin-left:4px;background:linear-gradient(90deg,#ed1d31,transparent);content:''}
+.product-overview__copy .product-inline-cta{margin-right:auto;margin-left:auto}
+.product-inline-cta{position:relative;isolation:isolate;overflow:hidden}
+.product-inline-cta::before{position:absolute;z-index:-1;top:-120%;left:-35%;width:24%;height:340%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);content:'';transform:rotate(18deg) translateX(-260%);pointer-events:none}
+.product-inline-cta:hover::before{animation:productCtaSheen .8s ease forwards}
+.product-facts{background-image:linear-gradient(rgba(255,255,255,.017) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.017) 1px,transparent 1px);background-size:72px 72px}
+.product-facts article{position:relative;overflow:hidden;transition:transform .5s cubic-bezier(.2,.75,.2,1),background .45s ease}
+.product-facts article::after{position:absolute;right:0;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,#ed1d31,transparent);content:'';transform:scaleX(0);transition:transform .5s cubic-bezier(.2,.75,.2,1)}
+.product-facts article:hover{z-index:2;background:#101014;transform:translateY(-6px)}
+.product-facts article:hover::after{transform:scaleX(1)}
+.product-fact-icon{position:relative;overflow:hidden;animation:productIconFloat 5s ease-in-out infinite}
+.product-facts article:nth-child(2) .product-fact-icon{animation-delay:-1s}.product-facts article:nth-child(3) .product-fact-icon{animation-delay:-2s}.product-facts article:nth-child(4) .product-fact-icon{animation-delay:-3s}.product-facts article:nth-child(5) .product-fact-icon{animation-delay:-4s}
+.product-fact-icon::after{position:absolute;inset:-60% auto -60% -55%;width:32%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent);content:'';transform:rotate(18deg);transition:left .7s ease}
+.product-facts article:hover .product-fact-icon::after{left:125%}
+.product-gallery figure::before{position:absolute;z-index:3;right:0;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,#ed1d31 18%,#ff704e 82%,transparent);content:'';transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.2,.75,.2,1)}
+.product-gallery figure:hover::before{transform:scaleX(1)}
+.product-gallery figure:hover{background:radial-gradient(circle at 50% 42%,#303136,#141518 67%)}
+.product-sizes__list>div{position:relative;overflow:hidden;padding-right:18px;transition:transform .45s cubic-bezier(.2,.75,.2,1),background .35s ease,padding-left .45s cubic-bezier(.2,.75,.2,1)}
+.product-sizes__list>div::before{position:absolute;top:18%;bottom:18%;left:0;width:2px;background:linear-gradient(#ed1d31,#ff704e);content:'';transform:scaleY(0);transition:transform .4s ease}
+.product-sizes__list>div:hover{padding-left:16px;background:rgba(213,16,37,.035);transform:translateX(8px)}
+.product-sizes__list>div:hover::before{transform:scaleY(1)}
+.product-sizes__list strong{transition:color .35s ease,letter-spacing .45s ease}
+.product-sizes__list>div:hover strong{color:#b70d20;letter-spacing:.012em}
+.product-care li{transition:color .35s ease,transform .35s ease}
+.product-care li:hover{color:rgba(255,255,255,.88);transform:translateX(5px)}
+@keyframes productIconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes productDataPulse{0%{box-shadow:0 0 0 0 rgba(237,29,49,.42)}70%,100%{box-shadow:0 0 0 8px rgba(237,29,49,0)}}
+@keyframes productCtaSheen{0%{transform:rotate(18deg) translateX(-260%)}100%{transform:rotate(18deg) translateX(720%)}}
+
+@media(max-width:900px){
+  .product-section[data-code]::before{top:22px}
+  .product-sizes__layout{align-items:start}
+  .product-overview__copy .product-inline-cta{margin-left:0}
+}
+
+@media(max-width:600px){
+  .product-section[data-code]::before{display:none}
+  .product-section__label::after{width:24px}
+  .product-sizes__list>div:hover{padding-left:0;transform:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .product-section__label::before,.product-fact-icon{animation:none}
+  .product-inline-cta::before{display:none}
+  .product-facts article,.product-gallery img,.product-gallery figure::before,.product-sizes__list>div,.product-care li{transition:none}
 }

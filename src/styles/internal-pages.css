@@ -89,24 +89,3 @@
 /* Closing CTA modules: actions always sit directly below the title. */
 .page-cta{display:grid;align-items:start;justify-content:stretch;gap:30px}
 .page-cta__actions{justify-content:flex-start}
-
-/* Premium technical treatment for the red closing modules. */
-.page-section--red{overflow:hidden;isolation:isolate;background:radial-gradient(circle at 88% 28%,rgba(255,91,103,.2),transparent 26%),linear-gradient(135deg,#bd071c 0%,#8f0012 56%,#61000b 100%)}
-.page-section--red::before{position:absolute;z-index:-2;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:76px 76px;content:'';mask-image:linear-gradient(90deg,rgba(0,0,0,.72),transparent 84%)}
-.page-section--red::after{position:absolute;z-index:-1;right:-12vw;bottom:-27vw;width:min(68vw,1020px);aspect-ratio:1;border:1px solid rgba(255,255,255,.12);border-radius:50%;box-shadow:0 0 0 7vw rgba(255,255,255,.025),0 0 0 14vw rgba(255,255,255,.014);content:'';pointer-events:none}
-.page-section--red .page-cta{position:relative;padding:clamp(28px,3.1vw,48px);border-top:1px solid rgba(255,255,255,.24);border-bottom:1px solid rgba(255,255,255,.16);background:linear-gradient(110deg,rgba(20,0,4,.16),rgba(255,255,255,.025));box-shadow:inset 0 1px rgba(255,255,255,.06)}
-.page-section--red .page-cta::before{color:rgba(255,255,255,.62);font:600 8px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;content:'CYL / ACCIÓN DIRECTA — NEUQUÉN + AÑELO'}
-.page-section--red .page-cta::after{position:absolute;top:-1px;right:0;width:92px;height:36px;border-top:2px solid rgba(255,255,255,.72);border-right:1px solid rgba(255,255,255,.2);content:'';pointer-events:none}
-.page-section--red .page-cta h2{max-width:1050px;text-wrap:balance}
-.page-section--red .page-cta__actions{gap:14px}
-.page-section--red .page-cta__actions a{position:relative;min-width:310px;justify-content:space-between;gap:30px;overflow:hidden;border-color:rgba(255,255,255,.45);background:rgba(40,0,6,.22);box-shadow:inset 0 1px rgba(255,255,255,.06);transition:background-color .28s ease,border-color .28s ease,color .28s ease}
-.page-section--red .page-cta__actions a:first-child{border-color:#08090a;background:#08090a}
-.page-section--red .page-cta__actions a::before{color:rgba(255,255,255,.54);font:600 8px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;content:'01'}
-.page-section--red .page-cta__actions a:nth-child(2)::before{content:'02'}
-.page-section--red .page-cta__actions a:hover,.page-section--red .page-cta__actions a:focus-visible{border-color:#fff;background:#fff;color:#111318}
-.page-section--red .page-cta__actions a:hover::before,.page-section--red .page-cta__actions a:focus-visible::before{color:#d51025}
-@media(max-width:600px){
-  .page-section--red .page-cta{padding:24px 0}
-  .page-section--red .page-cta::after{width:54px;height:24px}
-  .page-section--red .page-cta__actions a{min-width:0}
-}

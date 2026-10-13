@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import '../styles/loading-screen.css';
 import Header from '../components/Header.astro';
 import HeroExperience from '../components/HeroSport.astro';
 import MotionUniverses from '../components/MotionUniverses.astro';
@@ -18,7 +17,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 ---
 
 <!doctype html>
-<html lang="es" class="is-loading">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,22 +27,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <title>CYL Neumáticos — Confianza en cada kilómetro</title>
   </head>
   <body>
-    <noscript><style>html.is-loading,html.is-loading body{overflow:auto}.site-loader{display:none}</style></noscript>
-    <div class="site-loader" data-site-loader role="status" aria-live="polite" aria-label="Cargando experiencia 3D">
-      <div class="site-loader__glows" aria-hidden="true">
-        <i></i><i></i><i></i>
-      </div>
-      <div class="site-loader__content">
-        <img src={`${base}logos/cyl-loading-logo.png`} alt="CYL Neumáticos" />
-        <div class="site-loader__status">
-          <span>Cargando<span class="site-loader__dots" aria-hidden="true"></span></span>
-          <b data-loader-percent>00%</b>
-        </div>
-        <div class="site-loader__track" aria-hidden="true">
-          <i data-loader-bar></i>
-        </div>
-      </div>
-    </div>
     <Header />
     <main>
       <HeroExperience />
@@ -58,55 +41,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <script>
       import gsap from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
-      import { initTireScene } from '../three/PremiumWheelScene';
 
       gsap.registerPlugin(ScrollTrigger);
-      const canvas = document.querySelector('#tire-canvas');
-      const track = document.querySelector('[data-hero-track]');
-      const progress = document.querySelector('#hero-progress');
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      const loader = document.querySelector<HTMLElement>('[data-site-loader]');
-      const loaderBar = document.querySelector<HTMLElement>('[data-loader-bar]');
-      const loaderPercent = document.querySelector<HTMLElement>('[data-loader-percent]');
-      let shownProgress = 0;
-      let targetLoadProgress = .08;
-      let loaderFrame = 0;
-      let loaderFinished = false;
-
-      const paintLoader = () => {
-        shownProgress += (targetLoadProgress - shownProgress) * (reduced ? 1 : loaderFinished ? .2 : .055);
-        if (loaderBar) loaderBar.style.transform = `scaleX(${Math.min(shownProgress, 1)})`;
-        if (loaderPercent) loaderPercent.textContent = `${String(Math.round(Math.min(shownProgress, 1) * 100)).padStart(2, '0')}%`;
-        if (!loaderFinished || Math.abs(targetLoadProgress - shownProgress) > .002) loaderFrame = requestAnimationFrame(paintLoader);
-      };
-
-      const finishLoader = () => {
-        if (loaderFinished) return;
-        loaderFinished = true;
-        targetLoadProgress = 1;
-        window.setTimeout(() => {
-          loader?.classList.add('is-complete');
-          loader?.setAttribute('aria-hidden', 'true');
-          document.documentElement.classList.remove('is-loading');
-        }, reduced ? 0 : 450);
-      };
-
-      window.addEventListener('cyl:model-progress', ((event: CustomEvent<{ progress: number | null }>) => {
-        const value = event.detail.progress;
-        targetLoadProgress = value == null ? Math.min(.86, targetLoadProgress + .08) : Math.max(targetLoadProgress, value * .92);
-      }) as EventListener);
-      window.addEventListener('cyl:model-ready', finishLoader, { once: true });
-      window.addEventListener('cyl:model-error', finishLoader, { once: true });
-      loaderFrame = requestAnimationFrame(paintLoader);
-
-      if (canvas instanceof HTMLCanvasElement && track instanceof HTMLElement) {
-        initTireScene(canvas, track, progress instanceof HTMLElement ? progress : null, reduced);
-      } else {
-        finishLoader();
-      }
-
-      window.addEventListener('pagehide', () => cancelAnimationFrame(loaderFrame), { once: true });
 
       if (!reduced) {
         gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {

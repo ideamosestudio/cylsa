@@ -151,7 +151,7 @@
   .footer-main { grid-template-columns: 1fr; }
   .footer-main { padding-top: 58px; }
   .footer-brand,.footer-nav-group { grid-column: auto; }
-  .footer-brand h2 { font-size: clamp(49px,14vw,65px); }
+  .footer-brand h2 { font-size: clamp(32px,9.1vw,42px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

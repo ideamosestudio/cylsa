@@ -56,6 +56,7 @@ const {
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
+const whatsapp = (intent: string) => `https://wa.me/5492994082513?text=${encodeURIComponent(`Hola, ${intent} ${model} ${variant}.`)}`;
 ---
 
 <!doctype html>
@@ -83,10 +84,10 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
             {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" /> : <strong>{brand}</strong>}
             <span>PREMIUM SERIES</span>
           </div>
-          <h1 id="product-title"><span>{model}</span><em>{variant}</em></h1>
+          <h1 id="product-title"><span>{model}</span><em class="animated-title">{variant}</em></h1>
           <p class="product-cover__intro">Diseño italiano, eficiencia premium y control preciso para una conducción más segura y confortable.</p>
           <div class="product-cover__actions">
-            <a class="button button-primary" href="https://wa.me/5492994082513" target="_blank" rel="noopener noreferrer">Solicitar cotización</a>
+            <a class="button button-primary" href={whatsapp('quiero solicitar una cotización por')} target="_blank" rel="noopener noreferrer">Solicitar cotización</a>
             <a class="button button-secondary" href="#medidas">Ver medidas</a>
           </div>
         </div>
@@ -108,7 +109,7 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
         <div class="product-shell product-overview__grid">
           <div>
             <p class="product-section__label">01 / CARACTERÍSTICAS GENERALES</p>
-            <h2>DISEÑO ITALIANO.<br /><em>EVOLUCIÓN REAL.</em></h2>
+            <h2>DISEÑO ITALIANO.<br /><em class="title-accent title-accent--light">EVOLUCIÓN REAL.</em></h2>
           </div>
           <div class="product-overview__copy">
             <p>{description}</p>
@@ -116,6 +117,7 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
               {brandLogo ? <img src={asset(brandLogo)} alt={brand} width="1254" height="1254" loading="lazy" /> : <span>{brand}</span>}
               <strong>PREMIUM<br />PERFORMANCE</strong>
             </div>
+            <a class="product-inline-cta product-inline-cta--light" href={whatsapp('quiero recibir más información sobre')} target="_blank" rel="noopener noreferrer">Quiero más info <span>↗</span></a>
           </div>
         </div>
       </section>
@@ -124,7 +126,7 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
         <div class="product-shell">
           <div class="product-section__heading">
             <p class="product-section__label">02 / INFORMACIÓN TÉCNICA</p>
-            <h2>HECHA PARA<br /><em>AVANZAR.</em></h2>
+            <h2>HECHA PARA<br /><em class="title-accent">AVANZAR.</em></h2>
           </div>
           <div class="product-facts__grid">
             <article>
@@ -163,6 +165,7 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
               <ul>{sizes.map((size) => <li>{size.measure} / RANGO {size.speed}</li>)}</ul>
             </article>
           </div>
+          <a class="product-inline-cta product-inline-cta--dark product-inline-cta--after-grid" href={whatsapp('quiero pedir presupuesto por')} target="_blank" rel="noopener noreferrer">Pedir presupuesto <span>↗</span></a>
         </div>
       </section>
 
@@ -183,10 +186,12 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
       </section>
 
       <section class="product-sizes product-section" id="medidas" data-product-reveal>
-        <div class="product-shell">
+        <div class="product-shell product-sizes__layout">
           <div class="product-sizes__heading">
-            <div><p class="product-section__label">04 / MEDIDAS DISPONIBLES</p><h2>ENCONTRÁ TU<br /><em>MEDIDA.</em></h2></div>
+            <p class="product-section__label">04 / MEDIDAS DISPONIBLES</p>
+            <h2>ENCONTRÁ TU<br /><em class="title-accent title-accent--light">MEDIDA.</em></h2>
             <p>Versiones homologadas para distintas configuraciones de llanta y desempeño.</p>
+            <a class="product-inline-cta product-inline-cta--light" href={whatsapp('quiero hacer un pedido de')} target="_blank" rel="noopener noreferrer">Quiero hacer un pedido <span>↗</span></a>
           </div>
           <div class="product-sizes__list">
             {sizes.map((size, index) => (
@@ -200,11 +205,11 @@ const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
         <div class="product-shell product-care__grid">
           <div>
             <p class="product-section__label">05 / RECOMENDACIONES</p>
-            <h2>CUIDÁ EL RENDIMIENTO.<br /><em>CUIDÁ TU CAMINO.</em></h2>
+            <h2>CUIDÁ EL RENDIMIENTO.<br /><em class="title-accent">CUIDÁ TU CAMINO.</em></h2>
           </div>
           <div>
             <ol>{recommendations.map((item) => <li>{item}</li>)}</ol>
-            <a href="https://wa.me/5492994082513" target="_blank" rel="noopener noreferrer">Consultar por este modelo <span>↗</span></a>
+            <a href={whatsapp('quiero asesoramiento para comprar')} target="_blank" rel="noopener noreferrer">Consultar por este modelo <span>↗</span></a>
           </div>
         </div>
       </section>

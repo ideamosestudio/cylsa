@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import optimizedModel from '../generated/model.json';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import gsap from 'gsap';
@@ -105,7 +107,7 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     frame = requestAnimationFrame(render);
   };
 
-  new GLTFLoader().load(`${base}models/cyl-premium-wheel.glb`, (gltf) => {
+  new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(`${base}${optimizedModel.src}`, (gltf) => {
     const model = gltf.scene;
     model.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
@@ -114,6 +116,8 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
         ? new THREE.MeshPhysicalMaterial({ color: 0x020304, roughness: .64, metalness: .01, clearcoat: .06, clearcoatRoughness: .82, envMapIntensity: .3 })
         : new THREE.MeshPhysicalMaterial({ color: 0x101318, roughness: .16, metalness: .96, clearcoat: .48, clearcoatRoughness: .16, envMapIntensity: 1.75 });
       material.name = tire ? 'CYL_RUBBER_WEB' : 'CYL_METAL_WEB';
+      const originals = Array.isArray(object.material) ? object.material : [object.material];
+      originals.forEach(original => original.dispose());
       object.material = material;
       object.castShadow = false;
       object.receiveShadow = false;
@@ -126,7 +130,9 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     model.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
     wheel.add(model);
     modelReady = true;
-    track.classList.add('model-ready');
+    // Keep the poster visible while the GPU prepares the first frame.
+    track.classList.add('scene-enabled');
+    ScrollTrigger.refresh();
     requestRender();
   }, (event) => {
     const progress = event.total > 0 ? Math.min(event.loaded / event.total, 1) : null;
@@ -223,9 +229,19 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     pointerY += (pointerTargetY - pointerY) * .085;
     apply(currentProgress);
     if (modelReady) {
-      renderer.render(scene, camera);
+      try {
+        renderer.render(scene, camera);
+      } catch (error) {
+        modelReady = false;
+        track.classList.remove('model-ready', 'scene-enabled');
+        ScrollTrigger.refresh();
+        console.error('CYL premium wheel failed to render', error);
+        window.dispatchEvent(new CustomEvent('cyl:model-error'));
+        return;
+      }
       if (!readyAnnounced) {
         readyAnnounced = true;
+        track.classList.add('model-ready');
         window.dispatchEvent(new CustomEvent('cyl:model-ready'));
       }
     }
@@ -256,20 +272,25 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   track.addEventListener('pointerleave', pointerLeave, { passive: true });
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
-  const visibilityObserver = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting && !document.hidden; if (visible) requestRender(); }, { rootMargin: '180px' });
+  let inViewport = true;
+  const updateVisibility = () => { visible = inViewport && !document.hidden; if (visible) requestRender(); };
+  const visibilityObserver = new IntersectionObserver(([entry]) => { inViewport = entry.isIntersecting; updateVisibility(); }, { rootMargin: '180px' });
   visibilityObserver.observe(track);
-  document.addEventListener('visibilitychange', () => { visible = !document.hidden; if (visible) requestRender(); });
+  document.addEventListener('visibilitychange', updateVisibility);
   resize();
   apply(0);
   requestRender();
 
-  addEventListener('pagehide', () => {
+  addEventListener('pagehide', (event) => {
+    if (event.persisted) return;
     if (frame) cancelAnimationFrame(frame);
     trigger.kill();
     resizeObserver.disconnect();
     visibilityObserver.disconnect();
     removeEventListener('pointermove', pointer);
     track.removeEventListener('pointerleave', pointerLeave);
+    document.removeEventListener('visibilitychange', updateVisibility);
+    wheel.traverse(object => { if (object instanceof THREE.Mesh) object.geometry.dispose(); });
     environment.dispose();
     disposableMaterials.forEach((material) => material.dispose());
     renderer.dispose();

@@ -1,4 +1,7 @@
 ---
+import SeoHead from '../components/SeoHead.astro';
+import { branchSchema } from '../data/branches';
+import OptimizedImage from '../components/OptimizedImage.astro';
 import '../styles/global.css';
 import '../styles/home-premium.css';
 import '../styles/internal-pages.css';
@@ -21,6 +24,7 @@ interface Props {
   heroApplication?: string;
   heroProfile?: string;
   singleLineHeroTitle?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -37,6 +41,7 @@ const {
   heroApplication = 'MULTIPROPÓSITO',
   heroProfile = 'RENDIMIENTO + CONTROL',
   singleLineHeroTitle = false,
+  noindex = false,
 } = Astro.props;
 const isProductHero = Boolean(heroImage);
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -45,16 +50,11 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#080808" />
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <title>{title} — CYL Neumáticos</title>
+    <SeoHead title={title + ' | CYL Neumáticos'} description={description} noindex={noindex} schema={Astro.url.pathname.endsWith('/contacto/') ? branchSchema : []} />
   </head>
   <body class={`internal-page${showHero ? '' : ' internal-page--no-hero'}${singleLineHeroTitle ? ' internal-page--single-line-title' : ''}`}>
     <Header />
-    <main>
+    <main id="contenido">
       {showHero && (
         <section class={`internal-hero${isProductHero ? ' internal-hero--product' : ''}`}>
           <div class="internal-hero__glow" aria-hidden="true"></div>
@@ -66,7 +66,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
                 <i></i><i></i><i></i><span>CYL / PRODUCT SYSTEM</span>
               </div>
               <div class="internal-product-visual">
-                <img src={`${base}images/product-heroes/${heroImage}`} alt={heroImageAlt} width="1280" height="1280" fetchpriority="high" />
+                <OptimizedImage src={`${base}images/product-heroes/${heroImage}`} alt={heroImageAlt} width="1280" height="1280" fetchpriority="high" />
               </div>
               <div class="internal-product-readout" aria-hidden="true">
                 <span>{heroIndex} / 04</span><i></i><strong>{heading}</strong>
@@ -115,42 +115,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         document.querySelectorAll<HTMLElement>('[data-page-reveal]').forEach((element) => element.classList.add('is-visible'));
       }
 
-      const branchNumbers: Record<string, string> = {
-        perticone: '5492995470052',
-        pin: '5492995470059',
-        anelo: '5492995483985',
-      };
-
-      document.querySelectorAll<HTMLFormElement>('[data-whatsapp-form]').forEach((form) => {
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          if (!form.reportValidity()) return;
-          const data = new FormData(form);
-          const branch = String(data.get('sucursal') || 'perticone');
-          const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[data-message-label]'));
-          const lines = fields.flatMap((field) => {
-            const value = field instanceof HTMLSelectElement ? field.selectedOptions[0]?.text.trim() : field.value.trim();
-            return value ? [`${field.dataset.messageLabel}: ${value}`] : [];
-          });
-          const heading = form.dataset.messageHeading || 'Consulta desde la web de CYL';
-          const message = [heading, '', ...lines].join('\n');
-          window.open(`https://wa.me/${branchNumbers[branch] || branchNumbers.perticone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
-        });
-      });
-
-      document.querySelectorAll<HTMLFormElement>('[data-mail-form]').forEach((form) => {
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          if (!form.reportValidity()) return;
-          const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[data-message-label]'));
-          const lines = fields.flatMap((field) => {
-            const value = field instanceof HTMLSelectElement ? field.selectedOptions[0]?.text.trim() : field.value.trim();
-            return value ? [`${field.dataset.messageLabel}: ${value}`] : [];
-          });
-          const subject = form.dataset.mailSubject || 'Contacto desde la web de CYL';
-          window.location.href = `mailto:${form.dataset.mailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-        });
-      });
     </script>
+    <script src="../scripts/forms.ts"></script>
   </body>
 </html>

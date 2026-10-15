@@ -1,10 +1,12 @@
 ---
+import OptimizedImage from './OptimizedImage.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
 <header class="site-header" aria-label="Navegación principal" data-site-header>
   <div class="site-header__shell">
     <a class="site-logo" href={base} aria-label="CYL Neumáticos, inicio">
-      <img src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" />
+      <OptimizedImage src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" />
     </a>
     <nav class="site-nav" aria-label="Secciones">
       <div class="site-nav__products">
@@ -18,22 +20,22 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
             <a class="site-nav__mega-card" href={`${base}automovil/`}>
               <span><small>01</small> Precisión y confort</span>
               <strong>Automóvil</strong>
-              <img src={`${base}images/products/automovil.png`} alt="" width="460" height="259" />
+              <OptimizedImage src={`${base}images/products/automovil.png`} alt="" width="460" height="259" />
             </a>
             <a class="site-nav__mega-card" href={`${base}camioneta/`}>
               <span><small>02</small> Tracción y libertad</span>
               <strong>Camioneta</strong>
-              <img src={`${base}images/products/camioneta.png`} alt="" width="460" height="259" />
+              <OptimizedImage src={`${base}images/products/camioneta.png`} alt="" width="460" height="259" />
             </a>
             <a class="site-nav__mega-card" href={`${base}transporte/`}>
               <span><small>03</small> Resistencia continua</span>
               <strong>Transporte</strong>
-              <img src={`${base}images/products/transporte.png`} alt="" width="460" height="259" />
+              <OptimizedImage src={`${base}images/products/transporte.png`} alt="" width="460" height="259" />
             </a>
             <a class="site-nav__mega-card" href={`${base}agro-vial/`}>
               <span><small>04</small> Potencia y trabajo</span>
               <strong>Agro / Vial</strong>
-              <img src={`${base}images/products/agro-vial.png`} alt="" width="460" height="259" />
+              <OptimizedImage src={`${base}images/products/agro-vial.png`} alt="" width="460" height="259" />
             </a>
           </div>
         </div>

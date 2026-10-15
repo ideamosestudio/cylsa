@@ -1,6 +1,5 @@
 ---
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-const quoteUrl = `${base}cotizacion/`;
 const locations = [
   { n: '01', name: 'Perticone', address: 'Eugenio Perticone 1203', city: 'Neuquén', phones: [['(0299) 5470052', '+542995470052'], ['(0299) 6324963', '+542996324963']] },
   { n: '02', name: 'Pin Oeste', address: 'Ingeniero Huergo 2554', city: 'Neuquén', phones: [['(0299) 5470059', '+542995470059'], ['(0299) 6562386', '+542996562386']] },
@@ -12,25 +11,26 @@ const locations = [
   <div class="contact-suite__flare" aria-hidden="true"></div>
   <header class="premium-heading premium-heading--compact" data-reveal>
     <p class="premium-kicker"><span>06</span> CONTACTO / RESPUESTA DIRECTA</p>
-    <div><h2 id="contact-title">CONTANOS<br /><span class="title-accent">QUÉ NECESITÁS.</span></h2><p>Dejanos tus datos y continuá la solicitud en el canal oficial de cotizaciones de CYL.</p></div>
+    <div><h2 id="contact-title">CONTANOS<br /><span class="title-accent">QUÉ NECESITÁS.</span></h2><p>Completá tus datos y continuá la consulta por WhatsApp con la sucursal que prefieras.</p></div>
   </header>
 
   <div class="contact-layout">
-    <form class="premium-form glass-panel" action={quoteUrl} method="get" data-reveal>
+    <form class="premium-form glass-panel" data-whatsapp-form data-message-heading="Hola, quiero consultar por neumáticos en CYL." data-reveal>
       <div class="form-intro"><span>FORM / 01</span><p>Los campos nos ayudan a orientarte mejor.</p></div>
-      <label><span>Nombre y apellido</span><input type="text" name="nombre" autocomplete="name" placeholder="Tu nombre" required /></label>
+      <label><span>Nombre y apellido</span><input type="text" maxlength="160" name="nombre" data-message-label="Nombre y apellido" autocomplete="name" placeholder="Tu nombre" required /></label>
       <div class="form-row">
-        <label><span>Teléfono</span><input type="tel" name="telefono" autocomplete="tel" placeholder="0299..." required /></label>
-        <label><span>Email</span><input type="email" name="email" autocomplete="email" placeholder="nombre@email.com" /></label>
+        <label><span>Teléfono</span><input type="tel" maxlength="40" name="telefono" data-message-label="Teléfono" autocomplete="tel" placeholder="0299..." required /></label>
+        <label><span>Email</span><input type="email" maxlength="160" name="email" data-message-label="Email" autocomplete="email" placeholder="nombre@email.com" /></label>
       </div>
       <div class="form-row">
-        <label><span>Tipo de vehículo</span><select name="vehiculo"><option>Automóvil</option><option>Camioneta</option><option>Transporte</option><option>Agro / Vial</option></select></label>
-        <label><span>Sucursal preferida</span><select name="sucursal"><option>Neuquén / Perticone</option><option>Neuquén / Pin Oeste</option><option>Añelo</option></select></label>
+        <label><span>Tipo de vehículo</span><select name="vehiculo" data-message-label="Tipo de vehículo"><option>Automóvil</option><option>Camioneta</option><option>Transporte</option><option>Agro / Vial</option></select></label>
+        <label><span>Sucursal preferida</span><select name="sucursal" data-message-label="Sucursal"><option value="perticone">Neuquén / Perticone</option><option value="pin">Neuquén / Pin Oeste</option><option value="anelo">Añelo</option></select></label>
       </div>
-      <label><span>¿Cómo podemos ayudarte?</span><textarea name="mensaje" rows="4" placeholder="Contanos medida, vehículo o tipo de uso"></textarea></label>
-      <button class="button button--primary button--magnetic" type="submit"><span>Continuar cotización</span></button>
-      <p class="form-legal">Se abrirá el formulario oficial de cotización de CYL Neumáticos.</p>
+      <label><span>¿Cómo podemos ayudarte?</span><textarea maxlength="2000" name="mensaje" data-message-label="Consulta" rows="4" placeholder="Contanos medida, vehículo o tipo de uso"></textarea></label>
+      <button class="button button--primary button--magnetic" type="submit"><span>Consultar por WhatsApp</span></button>
+      <p class="form-legal">Se abrirá WhatsApp con tu consulta lista para enviar a la sucursal elegida.</p>
     </form>
+<noscript><p>Para completar el formulario activá JavaScript. También podés contactarnos por <a href="https://wa.me/5492994082513" rel="noopener noreferrer">WhatsApp</a> o por <a href="mailto:rrhh@cylneumaticos.com.ar">correo para postulaciones</a>.</p></noscript>
 
     <div class="contact-locations" id="sucursales">
       {locations.map((location) => (
@@ -43,3 +43,5 @@ const locations = [
     </div>
   </div>
 </section>
+
+<script src="../scripts/forms.ts"></script>

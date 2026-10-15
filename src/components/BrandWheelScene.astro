@@ -7,9 +7,19 @@
 </div>
 
 <script>
-  import { initBrandWheelScene } from '../three/BrandWheelScene';
-
-  document.querySelectorAll<HTMLElement>('[data-brand-wheel]').forEach((element) => {
-    initBrandWheelScene(element);
-  });
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  if (matchMedia('(min-width: 901px) and (pointer: fine)').matches && !reduced && !saveData) {
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        import('../three/BrandWheelScene').then(({ initBrandWheelScene }) => initBrandWheelScene(entry.target as HTMLElement)).catch(() => {
+          entry.target.querySelector('[data-brand-wheel-fallback]')?.removeAttribute('hidden');
+        });
+      }
+    }, { rootMargin: '200px' });
+    document.querySelectorAll<HTMLElement>('[data-brand-wheel]').forEach(el => observer.observe(el));
+  } else {
+    document.querySelectorAll<HTMLElement>('[data-brand-wheel]').forEach(el => el.hidden = true);
+  }
 </script>

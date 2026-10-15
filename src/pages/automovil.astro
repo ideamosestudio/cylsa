@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from '../components/OptimizedImage.astro';
 import InternalPageLayout from '../layouts/InternalPageLayout.astro';
 import '../styles/product-detail.css';
 import { automovilProducts } from '../data/automovil-products';
@@ -25,12 +26,12 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
           <a class="category-product-card" href={`${base}${product.slug}/`} aria-label={`Quiero ver el producto ${product.title}`}>
             <div class="category-product-card__visual">
               <span>0{index + 1}</span>
-              <img src={`${base}${product.heroImage}`} alt={product.heroImageAlt} width="640" height="640" loading="lazy" />
+              <OptimizedImage src={`${base}${product.heroImage}`} alt={product.heroImageAlt} width="640" height="640" loading="lazy" />
             </div>
             <div class="category-product-card__copy">
               <div class="category-product-card__meta">
                 <span>{product.brand} / {product.segment}</span>
-                <img src={`${base}images/brands/fate-logo-black.png`} alt="Fate" width="1165" height="450" loading="lazy" />
+                <OptimizedImage src={`${base}images/brands/fate-logo-black.png`} alt="Fate" width="1165" height="450" loading="lazy" />
               </div>
               <h3>{product.model}{product.cardVariant && <em>{product.cardVariant}</em>}</h3>
               <p>Quiero ver este producto</p>

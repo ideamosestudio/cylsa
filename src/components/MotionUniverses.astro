@@ -1,5 +1,8 @@
 ---
+import OptimizedImage from './OptimizedImage.astro';
 import '../styles/product-selector.css';
+interface Props { headingTag?: 'h1' | 'h2'; }
+const { headingTag: Heading = 'h2' } = Astro.props;
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const categories = [
@@ -14,7 +17,7 @@ const categories = [
   <header class="product-selector__header" data-reveal>
     <div>
       <p class="product-selector__eyebrow"><span>02</span> PRODUCTOS / APLICACIÓN</p>
-      <h2 id="product-selector-title">ELEGÍ TU <em>LÍNEA.</em></h2>
+      <Heading id="product-selector-title">ELEGÍ TU <em>LÍNEA.</em></Heading>
     </div>
     <p class="product-selector__intro">Una solución específica para cada forma de moverse, producir y avanzar.</p>
   </header>
@@ -34,7 +37,7 @@ const categories = [
             </a>
           </div>
           <div class="product-card__image-shell" aria-hidden="true">
-            <img class="product-card__image" src={`${base}images/products/${item.image}`} alt="" loading="lazy" width="460" height="259" />
+            <OptimizedImage class="product-card__image" src={`${base}images/products/${item.image}`} alt="" loading="lazy" width="460" height="259" />
           </div>
           <footer class="product-card__meta">
             <span>APLICACIÓN</span><b>{item.use}</b><i>CYL / {item.n}</i>

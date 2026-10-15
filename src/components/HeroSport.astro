@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from './OptimizedImage.astro';
 import '../styles/hero-sport.css';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const heroBrands = [
@@ -28,7 +29,7 @@ const heroBrands = [
     <div class="sport-fallback" data-webgl-fallback hidden>VISUALIZACIÓN 3D NO DISPONIBLE</div>
 
     <div class="sport-visual" aria-hidden="true">
-      <img src={`${base}images/product-heroes/automovil.png`} alt="Neumático para automóvil con iluminación roja" width="1280" height="1280" fetchpriority="high" />
+      <OptimizedImage src={`${base}images/product-heroes/automovil.png`} alt="Neumático para automóvil con iluminación roja" width="1280" height="1280" fetchpriority="high" />
     </div>
 
     <div class="sport-frame" aria-hidden="true">
@@ -47,7 +48,7 @@ const heroBrands = [
         <div class="sport-brand-track">
           {[...heroBrands, ...heroBrands].map(([file, name], index) => (
             <span aria-hidden={index >= heroBrands.length}>
-              <img src={`${base}images/brands/hero/${file}`} alt={index < heroBrands.length ? name : ''} loading="eager" decoding="async" />
+              <OptimizedImage src={`${base}images/brands/hero/${file}`} alt={index < heroBrands.length ? name : ''} sizes="104px" loading="eager" decoding="async" />
             </span>
           ))}
         </div>

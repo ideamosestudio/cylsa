@@ -1,0 +1,41 @@
+---
+import { site, siteUrl } from '../../site.config.mjs';
+import headingFont from '../assets/fonts/UPBOLTERS-New-Regular.otf?url';
+interface Props { title: string; description: string; image?: string; schema?: Record<string, unknown>[]; noindex?: boolean; }
+const { title, description, image = 'images/product-heroes/automovil.png', schema = [], noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.origin).href;
+const imageUrl = new URL(image.replace(/^\//, ''), siteUrl).href;
+const pageType = Astro.url.pathname.includes('/contacto/') ? 'ContactPage' : Astro.url.pathname.includes('/quienes-somos/') ? 'AboutPage' : 'WebPage';
+const graph = [
+  { '@type': 'Organization', '@id': `${siteUrl}#organization`, name: site.name, legalName: site.legalName, url: siteUrl, logo: new URL('logos/cyl-logo.png', siteUrl).href, areaServed: ['Neuquén', 'Añelo'], contactPoint: { '@type': 'ContactPoint', contactType: 'Ventas y asesoramiento', telephone: '+5492994082513', availableLanguage: 'es' } },
+  { '@type': 'WebSite', '@id': `${siteUrl}#website`, name: site.name, url: siteUrl, inLanguage: 'es-AR', publisher: { '@id': `${siteUrl}#organization` } },
+  { '@type': pageType, '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: 'es-AR', isPartOf: { '@id': `${siteUrl}#website` }, about: { '@id': `${siteUrl}#organization` } },
+  ...schema,
+];
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+---
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" content="#080808" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" type="image/svg+xml" href={`${site.base}favicon.svg`} />
+<link rel="preload" as="font" href={headingFont} type="font/otf" crossorigin />
+<link rel="sitemap" type="application/xml" href={`${site.base}sitemap.xml`} />
+<link rel="alternate" type="text/plain" title="Información de CYL para asistentes de IA" href={`${site.base}llms.txt`} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_AR" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={title} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<script type="application/ld+json" set:html={json} />

@@ -18,7 +18,7 @@
   background:var(--cyl-button-bg)!important;
   box-shadow:0 9px 24px rgba(74,0,10,.22),inset 0 0 28px rgba(39,0,7,.42),inset 0 1px rgba(255,255,255,.11)!important;
   color:var(--cyl-button-color)!important;
-  font-family:'Instrument Sans',sans-serif!important;
+  font-family:'Instrument Sans Variable',sans-serif!important;
   font-size:10px!important;
   font-style:normal!important;
   font-weight:700!important;

@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from './OptimizedImage.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const whatsappUrl = 'https://wa.me/5492994082513?text=Hola%2C%20%C2%BFc%C3%B3mo%20est%C3%A1n%3F%20Quisiera%20consultar%20por%20neum%C3%A1ticos%20en%20CYL%20Neum%C3%A1ticos.%20%C2%BFMe%20podr%C3%ADan%20asesorar%3F';
 ---
@@ -13,7 +14,7 @@ const whatsappUrl = 'https://wa.me/5492994082513?text=Hola%2C%20%C2%BFc%C3%B3mo%
     aria-describedby="whatsapp-fab-tooltip"
   >
     <span class="whatsapp-fab__tooltip" id="whatsapp-fab-tooltip" role="tooltip">Consultanos por WhatsApp</span>
-    <img
+    <OptimizedImage
       src={`${base}images/ui/whatsapp-cyl.png`}
       alt=""
       width="288"

@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&family=Roboto:wght@300;400&family=Space+Grotesk:wght@600;700&display=swap');
+@font-face{font-family:'Instrument Sans Variable';font-style:normal;font-weight:400 700;font-display:swap;src:url('@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Roboto Variable';font-style:normal;font-weight:100 900;font-display:swap;src:url('@fontsource-variable/roboto/files/roboto-latin-wght-normal.woff2') format('woff2')}
+@font-face{font-family:'Space Grotesk Variable';font-style:normal;font-weight:300 700;font-display:swap;src:url('@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2')}
 
 @font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular.otf') format('opentype'); font-style: normal; font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular-Italic.otf') format('opentype'); font-style: italic; font-weight: 400; font-display: swap; }
 
-:root { --red: #d10f1b; --ink: #060607; --paper: #f4f4f2; --line: rgba(255,255,255,.14); --mobile-page-gutter: 8vw; color-scheme: dark; font-family: 'Instrument Sans',Arial,sans-serif; background: var(--ink); color: var(--paper); }
+:root { --red: #d10f1b; --ink: #060607; --paper: #f4f4f2; --line: rgba(255,255,255,.14); --mobile-page-gutter: 8vw; color-scheme: dark; font-family: 'Instrument Sans Variable',Arial,sans-serif; background: var(--ink); color: var(--paper); }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; background: var(--ink); }
 body { margin: 0; min-width: 320px; overflow-x: hidden; background: var(--ink); }
 a { color: inherit; }
@@ -104,7 +110,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
 .model-loader { position: absolute; z-index: 12; top: 50%; right: 26%; display: flex; width: 190px; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.25); color: #85898e; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; transition: opacity .45s ease,visibility .45s ease; }
 .model-loader strong { color: #d8dade; font-weight: 500; }
 .model-loader.is-ready { visibility: hidden; opacity: 0; }
-.webgl-fallback { display: none; position: absolute; right: 9%; top: 34%; font-family: 'Space Grotesk',sans-serif; font-size: 25vw; font-weight: 700; color: rgba(209,15,27,.16); }
+.webgl-fallback { display: none; position: absolute; right: 9%; top: 34%; font-family: 'Space Grotesk Variable',sans-serif; font-size: 25vw; font-weight: 700; color: rgba(209,15,27,.16); }
 .no-webgl .webgl-fallback { display: block; }
 .no-webgl #tire-canvas { display: none; }
 .hero-copy { position: absolute; z-index: 10; top: 49%; left: clamp(20px,5.2vw,88px); width: min(43vw,620px); transform: translateY(-48%) translateZ(1px); will-change: opacity,transform; }
@@ -131,7 +137,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
 .hero-claim { position: absolute; z-index: 9; right: 3.5%; bottom: 27px; margin: 0; color: #d5d7da; font-size: .73rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; will-change: opacity; }
 .part-label { position: absolute; z-index: 9; display: flex; width: 160px; align-items: center; gap: 11px; color: #f0f1f2; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; opacity: 0; pointer-events: none; }
 .part-label::after { position: absolute; bottom: -9px; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg,var(--red),rgba(255,255,255,.22)); content: ''; }
-.part-label span { color: var(--red); font-family: 'Space Grotesk',sans-serif; }
+.part-label span { color: var(--red); font-family: 'Space Grotesk Variable',sans-serif; }
 .part-label strong { font-weight: 500; }
 .part-label-tire { top: 34%; right: 33%; }
 .part-label-rim { top: 62%; right: 8%; }
@@ -151,7 +157,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
 .universe-card img { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: filter .55s ease,transform .8s cubic-bezier(.2,.7,.2,1); }
 .universe-card:hover img { filter: saturate(1.05) brightness(1.08); transform: scale(1.04)!important; }
 .card-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg,rgba(4,4,4,.08),rgba(4,4,4,.78)); }
-.card-number { position: absolute; top: 24px; right: 28px; font-family: 'Space Grotesk',sans-serif; font-size: clamp(4rem,8vw,8rem); font-weight: 700; line-height: 1; color: rgba(255,255,255,.16); }
+.card-number { position: absolute; top: 24px; right: 28px; font-family: 'Space Grotesk Variable',sans-serif; font-size: clamp(4rem,8vw,8rem); font-weight: 700; line-height: 1; color: rgba(255,255,255,.16); }
 .card-copy { position: absolute; right: 28px; bottom: 28px; left: 28px; }
 .card-copy p { margin: 0 0 8px; color: #d4d6d8; font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; }
 .card-copy h3 { margin: 0 0 22px; font-family: 'Upbolters','Arial Black',sans-serif; font-size: clamp(2.6rem,5vw,5.4rem); font-weight: 400; line-height: .82; letter-spacing: -.025em; text-transform: uppercase; }
@@ -162,7 +168,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
 .brand-note p { margin: 0; color: #686c71; }
 .marquee { overflow: hidden; mask-image: linear-gradient(90deg,transparent,black 8%,black 92%,transparent); }
 .marquee-track { display: flex; width: max-content; align-items: center; gap: 38px; animation: marquee 28s linear infinite; }
-.marquee-track span { font-family: 'Space Grotesk',sans-serif; font-size: clamp(2.8rem,5vw,5.6rem); font-weight: 700; letter-spacing: -.04em; text-transform: uppercase; white-space: nowrap; }
+.marquee-track span { font-family: 'Space Grotesk Variable',sans-serif; font-size: clamp(2.8rem,5vw,5.6rem); font-weight: 700; letter-spacing: -.04em; text-transform: uppercase; white-space: nowrap; }
 .marquee-track b { color: var(--red); font-size: 1.2rem; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
@@ -222,3 +228,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Upbolters','Arial Black',sans-serif; font-weig
   .marquee-track { gap: 24px; } .site-footer { padding-right: var(--mobile-page-gutter); padding-left: var(--mobile-page-gutter); } .footer-heading { margin-bottom: 70px; } .footer-heading h2 { font-size: 24vw; }
 }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration: .01ms!important; animation-iteration-count: 1!important; transition-duration: .01ms!important; } .hero-track { height: 100svh; } .marquee-track { transform: translateX(0); } }
+
+.skip-link{position:fixed;z-index:100;left:16px;top:12px;padding:12px 20px;background:#fff;color:#111;transform:translateY(-200%)}
+.skip-link:focus{transform:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

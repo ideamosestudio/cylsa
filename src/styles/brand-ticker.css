@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: clamp(170px, 15vw, 270px) 1fr;
   min-height: 186px;
+  height: 186px;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, .11);
   border-bottom: 1px solid rgba(255, 255, 255, .11);
@@ -102,10 +103,14 @@
 }
 
 .brand-ticker__item img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   display: block;
-  width: 76%;
+  width: calc(var(--logo-width) * var(--logo-scale, 1));
+  max-width: 88%;
   height: auto;
-  transform: scale(1.08);
+  transform: translate(-50%, -50%) translate(var(--logo-x), var(--logo-y));
   filter: drop-shadow(0 0 16px rgba(255, 255, 255, .05));
   opacity: .78;
   transition: opacity .35s ease, transform .45s cubic-bezier(.2, .8, .2, 1), filter .35s ease;
@@ -113,7 +118,7 @@
 
 .brand-ticker__item:hover img {
   opacity: 1;
-  transform: scale(1.14);
+  transform: translate(-50%, -50%) translate(var(--logo-x), var(--logo-y)) scale(1.04);
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, .16));
 }
 
@@ -129,6 +134,8 @@
   .brand-ticker {
     display: block;
     min-height: 142px;
+    height: 142px;
+    --logo-scale: .9;
   }
 
   .brand-ticker::before {
@@ -141,10 +148,6 @@
 
   .brand-ticker__item {
     flex-basis: 245px;
-  }
-
-  .brand-ticker__item img {
-    width: 78%;
   }
 
   .brand-ticker__track {

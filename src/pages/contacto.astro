@@ -20,14 +20,15 @@ const locations = [
       <div class="form-side" data-page-reveal><p class="page-label">01 / ESCRIBINOS</p><h2>¿CÓMO PODEMOS<br /><em>AYUDARTE?</em></h2><p>Completá tus datos y continuá la conversación por WhatsApp con la sucursal que prefieras.</p><div class="form-direct"><a href="tel:+542994400914">0299 440-0914</a></div></div>
       <form class="internal-form" data-whatsapp-form data-message-heading="Hola, quiero hacer una consulta desde la web de CYL." data-page-reveal>
         <div class="internal-form__top"><span>FORM / CONTACTO</span><b>Respuesta por WhatsApp</b></div>
-        <label>Nombre y apellido *<input type="text" name="nombre" autocomplete="name" required data-message-label="Nombre y apellido" /></label>
-        <label>Teléfono *<input type="tel" name="telefono" autocomplete="tel" required data-message-label="Teléfono" /></label>
-        <label>Email<input type="email" name="email" autocomplete="email" data-message-label="Email" /></label>
+        <label>Nombre y apellido *<input type="text" maxlength="160" name="nombre" autocomplete="name" required data-message-label="Nombre y apellido" /></label>
+        <label>Teléfono *<input type="tel" maxlength="40" name="telefono" autocomplete="tel" required data-message-label="Teléfono" /></label>
+        <label>Email<input type="email" maxlength="160" name="email" autocomplete="email" data-message-label="Email" /></label>
         <label>Sucursal *<select name="sucursal" required data-message-label="Sucursal"><option value="perticone">Neuquén / Perticone</option><option value="pin">Neuquén / Pin Oeste</option><option value="anelo">Añelo</option></select></label>
-        <label class="internal-form__full">Consulta *<textarea name="mensaje" required placeholder="Contanos qué necesitás" data-message-label="Consulta"></textarea></label>
+        <label class="internal-form__full">Consulta *<textarea maxlength="2000" name="mensaje" required placeholder="Contanos qué necesitás" data-message-label="Consulta"></textarea></label>
         <button type="submit"><span>Enviar por WhatsApp</span></button>
         <p class="internal-form__note">Al continuar se abrirá WhatsApp con tu consulta lista para enviar.</p>
       </form>
+<noscript><p>Para completar el formulario activá JavaScript. También podés contactarnos por <a href="https://wa.me/5492994082513" rel="noopener noreferrer">WhatsApp</a> o por <a href="mailto:rrhh@cylneumaticos.com.ar">correo para postulaciones</a>.</p></noscript>
     </div>
   </section>
   <section class="page-section page-section--light">

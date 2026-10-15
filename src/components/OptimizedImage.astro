@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import manifest from '../generated/images.json';
+interface Props extends HTMLAttributes<'img'> { src: string; alt: string; }
+const { src, alt, sizes, width, height, loading, decoding = 'async', ...attrs } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const key = src.startsWith(base) ? src.slice(base.length) : src.replace(/^\//, '');
+const data = (manifest as Record<string, { width: number; height: number; variants: {width:number;src:string}[] }>)[key];
+const isLogo = /logos\/|brands\/|brand-ticker\/|ui\//.test(key);
+const defaultSizes = isLogo ? (/ui\//.test(key) ? '72px' : '160px') : '(max-width: 600px) 100vw, (max-width: 900px) 80vw, 50vw';
+---
+<img {...attrs} src={data ? `${base}${data.variants.at(-1)!.src}` : src}
+  srcset={data?.variants.map(v => `${base}${v.src} ${v.width}w`).join(', ')}
+  sizes={data ? (sizes || defaultSizes) : sizes} alt={alt}
+  width={data?.width || width} height={data?.height || height}
+  loading={loading || (attrs.fetchpriority === 'high' || /logos\//.test(key) ? 'eager' : 'lazy')}
+  decoding={decoding} />

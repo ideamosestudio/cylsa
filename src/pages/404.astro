@@ -1,0 +1,7 @@
+---
+import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+---
+<InternalPageLayout title="Página no encontrada" description="La página que buscás no está disponible. Explorá el catálogo o contactá al equipo de CYL Neumáticos." eyebrow="404 / PÁGINA NO ENCONTRADA" heading="BUSQUEMOS" accent="OTRO CAMINO." intro="El enlace puede haber cambiado. Podés volver al inicio o explorar nuestras líneas de neumáticos." noindex>
+  <section class="page-section"><div class="page-shell section-actions"><a class="button button--primary" href={base}>Volver al inicio</a><a class="button button--ghost" href={`${base}nuestros-neumaticos/`}>Ver neumáticos</a></div></section>
+</InternalPageLayout>

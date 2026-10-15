@@ -73,7 +73,6 @@ export function initBrandWheelScene(container: HTMLElement) {
   let pointerX = 0;
   let pointerY = 0;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const clock = new THREE.Clock();
   const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 
   const resize = () => {
@@ -89,14 +88,13 @@ export function initBrandWheelScene(container: HTMLElement) {
     if (!visible || !ready) return;
     pointerX += (pointerTargetX - pointerX) * .065;
     pointerY += (pointerTargetY - pointerY) * .065;
-    const elapsed = clock.getElapsedTime();
     root.rotation.x = -.12 + pointerY * .16;
-    root.rotation.y = -.5 + pointerX * .34 + (reduced ? 0 : Math.sin(elapsed * .42) * .035);
+    root.rotation.y = -.5 + pointerX * .34;
     root.rotation.z = -.07 - pointerX * .045;
     root.position.x = pointerX * .16;
-    root.position.y = -.08 - pointerY * .09 + (reduced ? 0 : Math.sin(elapsed * .65) * .025);
+    root.position.y = -.08 - pointerY * .09;
     renderer.render(scene, camera);
-    if (!reduced || Math.abs(pointerTargetX - pointerX) > .001 || Math.abs(pointerTargetY - pointerY) > .001) frame = requestAnimationFrame(render);
+    if (Math.abs(pointerTargetX - pointerX) > .001 || Math.abs(pointerTargetY - pointerY) > .001) frame = requestAnimationFrame(render);
   };
 
   const loader = new USDLoader();
@@ -140,6 +138,7 @@ export function initBrandWheelScene(container: HTMLElement) {
   });
 
   const onPointerMove = (event: PointerEvent) => {
+    if (reduced || event.pointerType === 'touch' || document.hidden) return;
     const rect = container.getBoundingClientRect();
     pointerTargetX = THREE.MathUtils.clamp(((event.clientX - rect.left) / rect.width) * 2 - 1, -1, 1);
     pointerTargetY = THREE.MathUtils.clamp(((event.clientY - rect.top) / rect.height) * 2 - 1, -1, 1);
@@ -153,11 +152,33 @@ export function initBrandWheelScene(container: HTMLElement) {
 
   container.addEventListener('pointermove', onPointerMove);
   container.addEventListener('pointerleave', onPointerLeave);
-  const resizeObserver = new ResizeObserver(resize);
+  const resizeObserver = new ResizeObserver(() => { resize(); if (visible && ready && !frame) frame = requestAnimationFrame(render); });
   resizeObserver.observe(container);
-  const intersectionObserver = new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
+  let inViewport = true;
+  const updateVisibility = () => {
+    visible = inViewport && !document.hidden;
     if (visible && !frame) frame = requestAnimationFrame(render);
-  }, { rootMargin: '160px' });
+  };
+  const intersectionObserver = new IntersectionObserver(([entry]) => { inViewport = entry.isIntersecting; updateVisibility(); }, { rootMargin: '160px' });
   intersectionObserver.observe(container);
+  document.addEventListener('visibilitychange', updateVisibility);
+  addEventListener('pagehide', event => {
+    if (event.persisted) return;
+    cancelAnimationFrame(frame);
+    resizeObserver.disconnect();
+    intersectionObserver.disconnect();
+    document.removeEventListener('visibilitychange', updateVisibility);
+    container.removeEventListener('pointermove', onPointerMove);
+    container.removeEventListener('pointerleave', onPointerLeave);
+    modelHolder.traverse(object => {
+      if (!(object instanceof THREE.Mesh)) return;
+      object.geometry.dispose();
+      for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+        for (const value of Object.values(material)) if (value instanceof THREE.Texture) value.dispose();
+        material.dispose();
+      }
+    });
+    environment.dispose();
+    renderer.dispose();
+  });
 }

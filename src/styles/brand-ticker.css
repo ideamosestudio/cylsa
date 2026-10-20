@@ -122,10 +122,6 @@
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, .16));
 }
 
-.brand-ticker:hover .brand-ticker__track {
-  animation-play-state: paused;
-}
-
 @keyframes brand-ticker-flow {
   to { transform: translate3d(-50%, 0, 0); }
 }

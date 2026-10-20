@@ -1,13 +1,9 @@
 ---
 import OptimizedImage from './OptimizedImage.astro';
 import '../styles/hero-sport.css';
+import { brands } from '../data/brands';
+
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-const heroBrands = [
-  ['firestone.png', 'Firestone'], ['goodyear.png', 'Goodyear'], ['dunlop.png', 'Dunlop'],
-  ['pirelli.png', 'Pirelli'], ['yokohama.png', 'Yokohama'], ['michelin.png', 'Michelin'],
-  ['bridgestone.png', 'Bridgestone'], ['fate.png', 'Fate'], ['continental.png', 'Continental'],
-  ['bfgoodrich.png', 'BFGoodrich'], ['hankook.png', 'Hankook'], ['kumho.png', 'Kumho'],
-];
 ---
 
 <section class="sport-hero" id="inicio" data-hero-track aria-label="Presentación de CYL Neumáticos">
@@ -46,9 +42,9 @@ const heroBrands = [
       </div>
       <div class="sport-brand-strip" aria-label="Marcas disponibles en CYL Neumáticos">
         <div class="sport-brand-track">
-          {[...heroBrands, ...heroBrands].map(([file, name], index) => (
-            <span aria-hidden={index >= heroBrands.length}>
-              <OptimizedImage src={`${base}images/brands/hero/${file}`} alt={index < heroBrands.length ? name : ''} sizes="104px" loading="eager" decoding="async" />
+          {[...brands, ...brands].map(({ file, name }, index) => (
+            <span aria-hidden={index >= brands.length}>
+              <OptimizedImage src={`${base}images/brands/hero/${file}`} alt={index < brands.length ? name : ''} sizes="104px" loading="eager" decoding="async" />
             </span>
           ))}
         </div>

@@ -1,0 +1,251 @@
+{
+  "steps": [
+    {
+      "title": "Tus datos",
+      "fields": [
+        {
+          "name": "first_name",
+          "label": "Nombre",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "last_name",
+          "label": "Apellido",
+          "required": true,
+          "type": "text"
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "required": true,
+          "type": "email"
+        },
+        {
+          "name": "company",
+          "label": "Empresa y/o razón social",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "title": "Tu experiencia",
+      "fields": [
+        {
+          "name": "overall_experience",
+          "label": "¿Cómo calificas tu experiencia, en general, cuando recibiste el servicio de CyL S.A.?",
+          "required": false,
+          "type": "rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        },
+        {
+          "name": "service_satisfaction",
+          "label": "¿Cómo es tu nivel de satisfacción con el servicio que CyL S.A. te brindó?",
+          "required": true,
+          "type": "rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        },
+        {
+          "name": "trust",
+          "label": "¿Qué tan de acuerdo estás con la siguiente afirmación: \"CyL S.A. es una empresa en la que siempre puedo confiar“?",
+          "required": false,
+          "type": "rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Calidad y atención",
+      "fields": [
+        {
+          "name": "quality",
+          "label": "¿Esta satisfecho con la calidad de venta y/o servicio recibido?",
+          "required": false,
+          "type": "rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        },
+        {
+          "name": "staff_knowledge",
+          "label": "¿Cómo calificas el nivel de conocimiento demostrado por el personal en entender tus necesidades?",
+          "required": false,
+          "type": "rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        },
+        {
+          "name": "complaint_response",
+          "label": "Si hiciste un reclamo de un producto o servicio ¿Cómo calificas la respuesta brindada por la empresa?",
+          "required": false,
+          "type": "rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Tu recomendación",
+      "fields": [
+        {
+          "name": "recommendation",
+          "label": "Basado en tu experiencia ¿Qué probabilidades hay de que recomiendes a CyL S.A. a otros",
+          "required": false,
+          "type": "select",
+          "options": [
+            {
+              "value": "5",
+              "label": "Definitivamente lo recomendaría"
+            },
+            {
+              "value": "4",
+              "label": "Probablemente lo recomendaría"
+            },
+            {
+              "value": "3",
+              "label": "Tal vez/tal vez no lo recomendaría"
+            },
+            {
+              "value": "2",
+              "label": "Probablemente no lo recomendaría"
+            },
+            {
+              "value": "1",
+              "label": "Definitivamente no lo recomendaría"
+            }
+          ]
+        },
+        {
+          "name": "comments",
+          "label": "Por favor dejanos tus comentarios sobre cómo podríamos haber mejorado tu experiencia con el Centro de Atención al Cliente de CyL S.A.",
+          "required": false,
+          "type": "textarea"
+        }
+      ]
+    }
+  ],
+  "version": 1
+}

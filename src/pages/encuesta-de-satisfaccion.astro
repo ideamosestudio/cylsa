@@ -1,0 +1,57 @@
+---
+import InternalPageLayout from '../layouts/InternalPageLayout.astro';
+import survey from '../data/survey.json';
+import '../styles/survey.css';
+---
+<InternalPageLayout title="Encuesta de satisfacción" description="Contanos cómo fue tu experiencia con CYL Neumáticos. Tu opinión nos ayuda a mejorar la calidad de nuestro servicio y atención." eyebrow="TU OPINIÓN CUENTA" heading="Encuesta de satisfacción" intro="" showHero={false}>
+  <section class="survey" aria-labelledby="survey-title">
+    <header class="survey__intro">
+      <p class="internal-kicker"><span>CYL</span> ESCUCHAR PARA MEJORAR</p>
+      <h1 id="survey-title">TU EXPERIENCIA.<br /><em>NUESTRO IMPULSO.</em></h1>
+      <p>Encuesta de satisfacción</p>
+      <p>Para conocer cómo fue tu experiencia con CYL, te invitamos a realizar una encuesta de unos 3 minutos sobre nuestro servicio.</p>
+      <div class="survey__facts"><span>01—04 / CUATRO PASOS</span><span>≈ 3 MINUTOS</span></div>
+    </header>
+    <div class="survey__workspace">
+      <ol class="survey__steps" aria-label="Pasos de la encuesta">
+        {survey.steps.map((step, i) => <li data-survey-indicator aria-current={i === 0 ? 'step' : undefined}><span>{String(i + 1).padStart(2, '0')}</span>{step.title}</li>)}
+      </ol>
+      <div class="survey__panel">
+        <p class="survey__preview">Vista previa · Podés recorrer la encuesta, pero las respuestas todavía no se envían ni se guardan.</p>
+        <form data-survey-form novalidate>
+          <div class="survey__progress"><span data-survey-progress aria-live="polite">Paso 1 de 4</span><span>* Campo obligatorio</span></div>
+          {survey.steps.map((step, i) => <section data-survey-step aria-labelledby={`step-${i}`} hidden={i !== 0}>
+            <h2 id={`step-${i}`} tabindex="-1">{step.title}</h2>
+            <div class:list={['survey__fields', { 'survey__fields--identity': i === 0 }]}>
+              {step.fields.map(field => field.type === 'rating' ? <fieldset class="survey__question">
+                <legend>{field.label}{field.required && <span> *</span>}</legend>
+                <p class="survey__hint" id={`${field.name}-hint`}>En una escala del 1 al 5{!field.required && ' · Opcional'}</p>
+                <div class="survey__ratings">
+                  {field.options?.map(option => <label><input type="radio" name={field.name} value={option.value} required={field.required} aria-describedby={`${field.name}-hint`} /><span>{option.label}</span></label>)}
+                </div>
+                {!field.required && <button type="button" class="survey__clear" data-clear-rating={field.name}>Dejar sin responder</button>}
+                {field.name === 'complaint_response' && <p class="survey__hint">Si no hiciste un reclamo, podés dejar esta pregunta sin responder.</p>}
+              </fieldset> : <div class="survey__field">
+                <label for={`survey-${field.name}`}>{field.label}{field.required && <span> *</span>}</label>
+                {field.type === 'select' ? <select id={`survey-${field.name}`} name={field.name} required={field.required}><option value="">Seleccioná una opción</option>{field.options?.map(option => <option value={option.value}>{option.label}</option>)}</select> : field.type === 'textarea' ? <textarea id={`survey-${field.name}`} name={field.name} rows="5" maxlength="3000"></textarea> : <input id={`survey-${field.name}`} name={field.name} type={field.type} required={field.required} maxlength={field.type === 'email' ? 254 : 160} autocomplete={field.name === 'first_name' ? 'given-name' : field.name === 'last_name' ? 'family-name' : field.name === 'email' ? 'email' : 'organization'} />}
+              </div>)}
+            </div>
+          </section>)}
+          <p class="survey__error" data-survey-error role="alert" hidden></p>
+          <div class="survey__actions" data-survey-actions>
+            <button type="button" class="button button--ghost" data-survey-back hidden>Anterior</button>
+            <button type="submit" class="button button--primary" data-survey-next>Siguiente <span aria-hidden="true">→</span></button>
+          </div>
+          <section class="survey__complete" data-survey-complete hidden aria-labelledby="survey-complete-title">
+            <span class="survey__complete-mark" aria-hidden="true">✓</span>
+            <h2 id="survey-complete-title" tabindex="-1">Recorrido completado</h2>
+            <p>Terminaste la vista previa de la encuesta. Tus respuestas no se enviaron ni se guardaron.</p>
+            <button class="button button--ghost" type="button" data-survey-review>Revisar mis respuestas</button>
+          </section>
+        </form>
+        <noscript><p>Activá JavaScript para recorrer los cuatro pasos de esta vista previa. No se enviará ningún dato.</p></noscript>
+      </div>
+    </div>
+  </section>
+  <script src="../scripts/survey.ts"></script>
+</InternalPageLayout>

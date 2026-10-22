@@ -1,0 +1,32 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { parse, serialize, serializeOuter } from 'parse5';
+import { htmlFiles, nodes, attr, text } from './finalize-build.mjs';
+import { site } from '../site.config.mjs';
+if (site.base !== '/') throw new Error('Build with DEPLOY_TARGET=hosting first.');
+const out = 'wordpress/build/cyl-neumaticos';
+await fs.mkdir(`${out}/pages`, { recursive: true });
+await fs.cp('wordpress/theme', out, { recursive: true });
+const prefix = '/wp-content/themes/cyl-neumaticos/assets/';
+const asset = value => value.replaceAll('/_astro/', `${prefix}_astro/`).replaceAll('/optimized/', `${prefix}optimized/`).replaceAll('/images/', `${prefix}images/`);
+const manifest = [];
+for (const file of await htmlFiles('dist')) {
+ const all = nodes(parse(await fs.readFile(file, 'utf8'))), head = all.find(n => n.tagName === 'head'), body = all.find(n => n.tagName === 'body');
+ const main = body.childNodes.find(n => n.tagName === 'main');
+ if (!main) throw new Error(`No main in ${file}`);
+ const slug = path.relative('dist', file).replaceAll('\\', '/').replace(/\/?index\.html$/, '').replace(/\.html$/, '') || 'inicio';
+ const title = text(all.find(n => n.tagName === 'title'));
+ head.childNodes = head.childNodes.filter(n => !(n.tagName === 'meta' && attr(n, 'http-equiv') === 'Content-Security-Policy'));
+ const index = body.childNodes.indexOf(main), outer = serializeOuter(main);
+ const data = {slug, title, heading:text(all.find(n => n.tagName === 'h1')).replace(/\s+/g, ' ').trim(), head:asset(serialize(head)), before:asset(body.childNodes.slice(0,index).map(serializeOuter).join('') + outer.slice(0,outer.indexOf('>')+1)), content:asset(serialize(main)), after:asset('</main>'+body.childNodes.slice(index+1).map(serializeOuter).join(''))};
+ data.bodyClass = attr(body, 'class') || '';
+ await fs.writeFile(`${out}/pages/${slug}.json`, JSON.stringify(data));
+ if (slug !== '404') manifest.push({slug,title:data.heading||title});
+}
+await fs.writeFile(`${out}/manifest.json`, JSON.stringify(manifest));
+for (const folder of ['_astro','optimized','images']) await fs.cp(`dist/${folder}`, `${out}/assets/${folder}`, {recursive:true});
+await fs.mkdir('wordpress/build/root/optimized', {recursive:true});
+for(const name of await fs.readdir('dist/optimized')) if(name.endsWith('.glb')) await fs.copyFile(`dist/optimized/${name}`,`wordpress/build/root/optimized/${name}`);
+for (const name of ['favicon.svg','llms.txt']) {try {await fs.copyFile(`dist/${name}`,`wordpress/build/root/${name}`);} catch(e) {if(e.code!=='ENOENT')throw e;}}
+await fs.writeFile('wordpress/build/root/llms.txt',(await fs.readFile('dist/llms.txt','utf8')).replaceAll('/sitemap.xml','/wp-sitemap.xml'));
+console.log(`WordPress theme prepared: ${manifest.length} pages + 404.`);

@@ -6,3 +6,4 @@ dist/
 .qa/
 public/optimized/
 src/generated/
+wordpress/build/

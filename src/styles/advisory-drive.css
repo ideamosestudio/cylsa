@@ -9,6 +9,7 @@
   position: sticky;
   top: 0;
   isolation: isolate;
+  contain: layout paint style;
   height: 100svh;
   min-height: 650px;
   overflow: hidden;

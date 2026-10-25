@@ -40,7 +40,11 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
-  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 700 ? 1.15 : 1.55));
+  // A full-viewport WebGL canvas gets expensive very quickly at high DPR. The
+  // small cap is visually indistinguishable in motion, while cutting the
+  // number of shaded pixels substantially on Retina/high-density displays.
+  const renderPixelRatio = () => Math.min(devicePixelRatio, innerWidth < 700 ? 1.1 : 1.3);
+  renderer.setPixelRatio(renderPixelRatio());
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
@@ -101,6 +105,8 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   let readyAnnounced = false;
   let visible = true;
   let frame = 0;
+  let activeStage = -1;
+  const storyOpacity = new WeakMap<HTMLElement, number>();
 
   const requestRender = () => {
     if (!visible || frame) return;
@@ -152,8 +158,13 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const copyOut = ease(range(progress, .1, .19));
     const stage = progress < .16 ? 0 : progress < .30 ? 1 : progress < .43 ? 2 : progress < .56 ? 3 : progress < .69 ? 4 : progress < .82 ? 5 : 6;
 
-    if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 06`;
-    if (stepName) stepName.textContent = acts[stage];
+    // Text updates cause layout work. They only need to happen when the active
+    // chapter changes, not on every animation frame.
+    if (stage !== activeStage) {
+      activeStage = stage;
+      if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 06`;
+      if (stepName) stepName.textContent = acts[stage];
+    }
     if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
     if (copy) {
       copy.style.opacity = String(1 - copyOut);
@@ -167,8 +178,15 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
       const fade = Math.min(.035, (end - start) * .28);
       const opacity = ease(range(progress, start, start + fade)) * (1 - ease(range(progress, end - fade, end)));
       const travel = mix(18, -12, ease(range(progress, start, end)));
+      const previousOpacity = storyOpacity.get(element) ?? -1;
+      if (opacity < .001) {
+        if (previousOpacity !== 0) element.style.opacity = '0';
+        storyOpacity.set(element, 0);
+        return;
+      }
       element.style.opacity = String(opacity);
       element.style.setProperty('--story-travel', `${travel}px`);
+      storyOpacity.set(element, opacity);
     });
     if (flare) {
       flare.style.opacity = String((.64 + journey * .13 + macro * .16) * (1 - exit * .7));
@@ -254,7 +272,7 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const height = canvas.clientHeight;
     if (!width || !height) return;
     renderer.setSize(width, height, false);
-    renderer.setPixelRatio(Math.min(devicePixelRatio, width < 700 ? 1.15 : 1.55));
+    renderer.setPixelRatio(renderPixelRatio());
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     apply(currentProgress);

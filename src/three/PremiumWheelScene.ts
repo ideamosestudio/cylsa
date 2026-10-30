@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
-import optimizedModel from '../generated/model.json';
+import { USDLoader } from 'three/examples/jsm/loaders/USDLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import gsap from 'gsap';
@@ -113,49 +111,41 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     frame = requestAnimationFrame(render);
   };
 
-  new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(`${base}${optimizedModel.src}`, (gltf) => {
-    const model = gltf.scene;
+  new USDLoader().load(`${base}models/nismo/USD/Nismo_LMGT4_Wheels.usdc`, (model) => {
     model.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
       const sourceName = Array.isArray(object.material)
         ? object.material.map(material => material.name).join(' ')
         : object.material?.name ?? '';
       const identity = `${object.name} ${sourceName}`;
-      const tire = /tire|rubber/i.test(identity) && !/rim/i.test(identity);
-      const caliper = /caliper/i.test(identity);
-      const rotor = /brake|rotor/i.test(identity);
-      const emblem = /logo|emblem/i.test(identity);
-      const material = tire
-        ? new THREE.MeshPhysicalMaterial({ color: 0x020304, roughness: .61, metalness: .01, clearcoat: .08, clearcoatRoughness: .78, envMapIntensity: .34 })
-        : caliper
-          ? new THREE.MeshPhysicalMaterial({ color: 0x850814, roughness: .26, metalness: .68, clearcoat: .58, clearcoatRoughness: .14, envMapIntensity: 1.38 })
-          : rotor
-            ? new THREE.MeshPhysicalMaterial({ color: 0x24272c, roughness: .34, metalness: .88, clearcoat: .12, clearcoatRoughness: .3, envMapIntensity: 1.28 })
-            : emblem
-              ? new THREE.MeshPhysicalMaterial({ color: 0xc7cbd1, roughness: .14, metalness: .98, clearcoat: .55, clearcoatRoughness: .12, envMapIntensity: 1.95 })
-              : new THREE.MeshPhysicalMaterial({ color: 0x15191f, roughness: .15, metalness: .96, clearcoat: .5, clearcoatRoughness: .14, envMapIntensity: 1.82 });
-      material.name = tire ? 'CYL_RUBBER_WEB' : caliper ? 'CYL_CALIPER_WEB' : rotor ? 'CYL_ROTOR_WEB' : emblem ? 'CYL_EMBLEM_WEB' : 'CYL_METAL_WEB';
-      const originals = Array.isArray(object.material) ? object.material : [object.material];
-      originals.forEach(original => original.dispose());
-      object.material = material;
+      const tire = /tire|rubber/i.test(identity);
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      materials.forEach((material) => {
+        if (material instanceof THREE.MeshStandardMaterial) {
+          if (tire) {
+            material.color.set(0x0b0c0e);
+            material.metalness = .02;
+            material.roughness = .62;
+            material.envMapIntensity = .72;
+          } else {
+            material.metalness = .92;
+            material.roughness = .2;
+            material.envMapIntensity = 1.9;
+          }
+          material.needsUpdate = true;
+        }
+        disposableMaterials.add(material);
+      });
       object.castShadow = false;
       object.receiveShadow = false;
-      disposableMaterials.add(material);
     });
     const bounds = new THREE.Box3().setFromObject(model);
     const size = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
-    const normalizedModel = new THREE.Group();
-    model.position.copy(center).multiplyScalar(-1);
-    normalizedModel.add(model);
-    // The supplied FBX uses X as the wheel axle, while the hero animation and
-    // camera expect the axle on Z. Keep the choreography untouched and adapt
-    // only the model's local coordinate system. Scaling the wrapper (instead
-    // of the offset model) also keeps assets with a distant origin centered.
-    if (size.x < size.y && size.x < size.z) normalizedModel.rotation.y = Math.PI / 2;
-    else if (size.y < size.x && size.y < size.z) normalizedModel.rotation.x = Math.PI / 2;
-    normalizedModel.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
-    wheel.add(normalizedModel);
+    const scale = 5.45 / Math.max(size.x, size.y, size.z);
+    model.scale.setScalar(scale);
+    model.position.copy(center).multiplyScalar(-scale);
+    wheel.add(model);
     modelReady = true;
     // Keep the poster visible while the GPU prepares the first frame.
     track.classList.add('scene-enabled');

@@ -119,9 +119,16 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
       if (!(object instanceof THREE.Mesh)) return;
       const tire = /tire|rubber/i.test(`${object.name} ${object.material?.name ?? ''}`);
       const material = tire
-        ? new THREE.MeshPhysicalMaterial({ color: 0x020304, roughness: .64, metalness: .01, clearcoat: .06, clearcoatRoughness: .82, envMapIntensity: .3 })
+        ? new THREE.MeshPhysicalMaterial({ color: 0x010203, roughness: .78, metalness: 0, clearcoat: .02, clearcoatRoughness: .92, envMapIntensity: .16 })
         : new THREE.MeshPhysicalMaterial({ color: 0x101318, roughness: .16, metalness: .96, clearcoat: .48, clearcoatRoughness: .16, envMapIntensity: 1.75 });
       material.name = tire ? 'CYL_RUBBER_WEB' : 'CYL_METAL_WEB';
+      material.transparent = false;
+      material.opacity = 1;
+      material.alphaTest = 0;
+      material.depthTest = true;
+      material.depthWrite = true;
+      material.side = THREE.FrontSide;
+      material.blending = THREE.NormalBlending;
       const originals = Array.isArray(object.material) ? object.material : [object.material];
       originals.forEach(original => original.dispose());
       object.material = material;

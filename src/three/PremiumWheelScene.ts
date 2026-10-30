@@ -1,5 +1,7 @@
 import * as THREE from 'three';
-import { USDLoader } from 'three/examples/jsm/loaders/USDLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import optimizedModel from '../generated/model.json';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import gsap from 'gsap';
@@ -111,40 +113,27 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     frame = requestAnimationFrame(render);
   };
 
-  new USDLoader().load(`${base}models/nismo/USD/Nismo_LMGT4_Wheels.usdc`, (model) => {
+  new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(`${base}${optimizedModel.src}`, (gltf) => {
+    const model = gltf.scene;
     model.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
-      const sourceName = Array.isArray(object.material)
-        ? object.material.map(material => material.name).join(' ')
-        : object.material?.name ?? '';
-      const identity = `${object.name} ${sourceName}`;
-      const tire = /tire|rubber/i.test(identity);
-      const materials = Array.isArray(object.material) ? object.material : [object.material];
-      materials.forEach((material) => {
-        if (material instanceof THREE.MeshStandardMaterial) {
-          if (tire) {
-            material.color.set(0x0b0c0e);
-            material.metalness = .02;
-            material.roughness = .62;
-            material.envMapIntensity = .72;
-          } else {
-            material.metalness = .92;
-            material.roughness = .2;
-            material.envMapIntensity = 1.9;
-          }
-          material.needsUpdate = true;
-        }
-        disposableMaterials.add(material);
-      });
+      const tire = /tire|rubber/i.test(`${object.name} ${object.material?.name ?? ''}`);
+      const material = tire
+        ? new THREE.MeshPhysicalMaterial({ color: 0x020304, roughness: .64, metalness: .01, clearcoat: .06, clearcoatRoughness: .82, envMapIntensity: .3 })
+        : new THREE.MeshPhysicalMaterial({ color: 0x101318, roughness: .16, metalness: .96, clearcoat: .48, clearcoatRoughness: .16, envMapIntensity: 1.75 });
+      material.name = tire ? 'CYL_RUBBER_WEB' : 'CYL_METAL_WEB';
+      const originals = Array.isArray(object.material) ? object.material : [object.material];
+      originals.forEach(original => original.dispose());
+      object.material = material;
       object.castShadow = false;
       object.receiveShadow = false;
+      disposableMaterials.add(material);
     });
     const bounds = new THREE.Box3().setFromObject(model);
     const size = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
-    const scale = 5.45 / Math.max(size.x, size.y, size.z);
-    model.scale.setScalar(scale);
-    model.position.copy(center).multiplyScalar(-scale);
+    model.position.copy(center).multiplyScalar(-1);
+    model.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
     wheel.add(model);
     modelReady = true;
     // Keep the poster visible while the GPU prepares the first frame.

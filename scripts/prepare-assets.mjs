@@ -4,8 +4,8 @@ import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { NodeIO } from '@gltf-transform/core';
 import { EXTMeshoptCompression, KHRMeshQuantization } from '@gltf-transform/extensions';
-import { dedup, prune, weld, simplify, meshopt } from '@gltf-transform/functions';
-import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
+import { dedup, prune, weld, meshopt } from '@gltf-transform/functions';
+import { MeshoptEncoder } from 'meshoptimizer';
 
 const root = path.resolve('public');
 const output = path.join(root, 'optimized');
@@ -46,7 +46,7 @@ for (const file of await walk(root)) {
 
 // Keep the same geometry: drop only unused UV/tangent channels and compress losslessly
 // apart from the standard mesh quantization. Runtime materials never use textures.
-await Promise.all([MeshoptEncoder.ready, MeshoptSimplifier.ready]);
+await MeshoptEncoder.ready;
 const modelSource = await fs.readFile('public/models/cyl-premium-wheel.glb');
 const modelHash = createHash('sha256').update(modelSource).update('meshopt-v1').digest('hex').slice(0, 16);
 const modelPath = `optimized/wheel-${modelHash}.glb`;
@@ -56,13 +56,7 @@ if (!await exists(path.join(root, modelPath))) {
   for (const mesh of doc.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
     for (const semantic of primitive.listSemantics()) if (!['POSITION', 'NORMAL'].includes(semantic)) primitive.setAttribute(semantic, null);
   }
-  await doc.transform(
-    prune(),
-    dedup(),
-    weld(),
-    simplify({ simplifier: MeshoptSimplifier, ratio: 0.16, error: 0.006 }),
-    meshopt({ encoder: MeshoptEncoder, level: 'high' }),
-  );
+  await doc.transform(prune(), dedup(), weld(), meshopt({ encoder: MeshoptEncoder, level: 'high' }));
   await io.write(path.join(root, modelPath), doc);
 }
 await fs.writeFile('src/generated/images.json', JSON.stringify(manifest));

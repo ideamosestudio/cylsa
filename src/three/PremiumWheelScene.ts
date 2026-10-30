@@ -117,11 +117,24 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const model = gltf.scene;
     model.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
-      const tire = /tire|rubber/i.test(`${object.name} ${object.material?.name ?? ''}`);
+      const sourceName = Array.isArray(object.material)
+        ? object.material.map(material => material.name).join(' ')
+        : object.material?.name ?? '';
+      const identity = `${object.name} ${sourceName}`;
+      const tire = /tire|rubber/i.test(identity) && !/rim/i.test(identity);
+      const caliper = /caliper/i.test(identity);
+      const rotor = /brake|rotor/i.test(identity);
+      const emblem = /logo|emblem/i.test(identity);
       const material = tire
         ? new THREE.MeshPhysicalMaterial({ color: 0x010203, roughness: .78, metalness: 0, clearcoat: .02, clearcoatRoughness: .92, envMapIntensity: .16 })
-        : new THREE.MeshPhysicalMaterial({ color: 0x101318, roughness: .16, metalness: .96, clearcoat: .48, clearcoatRoughness: .16, envMapIntensity: 1.75 });
-      material.name = tire ? 'CYL_RUBBER_WEB' : 'CYL_METAL_WEB';
+        : caliper
+          ? new THREE.MeshPhysicalMaterial({ color: 0x850814, roughness: .26, metalness: .68, clearcoat: .58, clearcoatRoughness: .14, envMapIntensity: 1.38 })
+          : rotor
+            ? new THREE.MeshPhysicalMaterial({ color: 0x24272c, roughness: .34, metalness: .88, clearcoat: .12, clearcoatRoughness: .3, envMapIntensity: 1.28 })
+            : emblem
+              ? new THREE.MeshPhysicalMaterial({ color: 0xc7cbd1, roughness: .14, metalness: .98, clearcoat: .55, clearcoatRoughness: .12, envMapIntensity: 1.95 })
+              : new THREE.MeshPhysicalMaterial({ color: 0x15191f, roughness: .15, metalness: .96, clearcoat: .5, clearcoatRoughness: .14, envMapIntensity: 1.82 });
+      material.name = tire ? 'CYL_RUBBER_WEB' : caliper ? 'CYL_CALIPER_WEB' : rotor ? 'CYL_ROTOR_WEB' : emblem ? 'CYL_EMBLEM_WEB' : 'CYL_METAL_WEB';
       material.transparent = false;
       material.opacity = 1;
       material.alphaTest = 0;
@@ -139,9 +152,15 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const bounds = new THREE.Box3().setFromObject(model);
     const size = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
+    const normalizedModel = new THREE.Group();
     model.position.copy(center).multiplyScalar(-1);
-    model.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
-    wheel.add(model);
+    normalizedModel.add(model);
+    // The supplied FBX uses X as its axle. Adapt only the model's local axes;
+    // the hero's positions, rotations, camera path and timing remain untouched.
+    if (size.x < size.y && size.x < size.z) normalizedModel.rotation.y = Math.PI / 2;
+    else if (size.y < size.x && size.y < size.z) normalizedModel.rotation.x = Math.PI / 2;
+    normalizedModel.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
+    wheel.add(normalizedModel);
     modelReady = true;
     // Keep the poster visible while the GPU prepares the first frame.
     track.classList.add('scene-enabled');

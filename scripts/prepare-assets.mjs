@@ -2,10 +2,6 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
-import { NodeIO } from '@gltf-transform/core';
-import { EXTMeshoptCompression, KHRMeshQuantization } from '@gltf-transform/extensions';
-import { dedup, prune, weld, meshopt } from '@gltf-transform/functions';
-import { MeshoptEncoder } from 'meshoptimizer';
 
 const root = path.resolve('public');
 const output = path.join(root, 'optimized');
@@ -44,21 +40,10 @@ for (const file of await walk(root)) {
   optimizedBytes += (await fs.stat(path.join(root, variants.at(-1).src))).size;
 }
 
-// Keep the same geometry: drop only unused UV/tangent channels and compress losslessly
-// apart from the standard mesh quantization. Runtime materials never use textures.
-await MeshoptEncoder.ready;
+// The wheel is pre-optimized by convert-tires-fbx.mjs so CI never has to
+// process or publish the 56 MB intermediate export.
 const modelSource = await fs.readFile('public/models/cyl-premium-wheel.glb');
-const modelHash = createHash('sha256').update(modelSource).update('meshopt-v1').digest('hex').slice(0, 16);
-const modelPath = `optimized/wheel-${modelHash}.glb`;
-if (!await exists(path.join(root, modelPath))) {
-  const io = new NodeIO().registerExtensions([EXTMeshoptCompression, KHRMeshQuantization]).registerDependencies({ 'meshopt.encoder': MeshoptEncoder });
-  const doc = await io.read('public/models/cyl-premium-wheel.glb');
-  for (const mesh of doc.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
-    for (const semantic of primitive.listSemantics()) if (!['POSITION', 'NORMAL'].includes(semantic)) primitive.setAttribute(semantic, null);
-  }
-  await doc.transform(prune(), dedup(), weld(), meshopt({ encoder: MeshoptEncoder, level: 'high' }));
-  await io.write(path.join(root, modelPath), doc);
-}
+const modelPath = 'models/cyl-premium-wheel.glb';
 await fs.writeFile('src/generated/images.json', JSON.stringify(manifest));
 await fs.writeFile('src/generated/model.json', JSON.stringify({ src: modelPath }));
-console.log(JSON.stringify({ images: Object.keys(manifest).length, originalBytes, optimizedLargestVariantsBytes: optimizedBytes, modelOriginalBytes: modelSource.length, modelOptimizedBytes: (await fs.stat(path.join(root, modelPath))).size }, null, 2));
+console.log(JSON.stringify({ images: Object.keys(manifest).length, originalBytes, optimizedLargestVariantsBytes: optimizedBytes, modelOriginalBytes: modelSource.length, modelOptimizedBytes: modelSource.length }, null, 2));

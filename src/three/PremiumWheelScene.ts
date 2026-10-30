@@ -145,9 +145,17 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const bounds = new THREE.Box3().setFromObject(model);
     const size = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
+    const normalizedModel = new THREE.Group();
     model.position.copy(center).multiplyScalar(-1);
-    model.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
-    wheel.add(model);
+    normalizedModel.add(model);
+    // The supplied FBX uses X as the wheel axle, while the hero animation and
+    // camera expect the axle on Z. Keep the choreography untouched and adapt
+    // only the model's local coordinate system. Scaling the wrapper (instead
+    // of the offset model) also keeps assets with a distant origin centered.
+    if (size.x < size.y && size.x < size.z) normalizedModel.rotation.y = Math.PI / 2;
+    else if (size.y < size.x && size.y < size.z) normalizedModel.rotation.x = Math.PI / 2;
+    normalizedModel.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
+    wheel.add(normalizedModel);
     modelReady = true;
     // Keep the poster visible while the GPU prepares the first frame.
     track.classList.add('scene-enabled');

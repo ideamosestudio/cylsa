@@ -1,0 +1,20 @@
+---
+// A schematic route, drawn for this page. The four stops mirror the form.
+const road = 'M-24 229 C42 229 50 189 95 189 H177 C225 189 246 151 218 133 C194 116 143 145 131 116 C118 82 175 73 209 80 C258 91 262 109 293 105 C335 99 324 47 362 47 H425';
+const stops = [[57,203],[181,189],[209,80],[362,47]];
+---
+<figure class="survey-map" aria-hidden="true">
+  <svg viewBox="0 0 400 250" fill="none" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="survey-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" stroke="#fff" stroke-opacity=".085"/></pattern>
+      <linearGradient id="survey-road"><stop stop-color="#f56a46"/><stop offset=".55" stop-color="#ff404d"/><stop offset="1" stop-color="#ffada0"/></linearGradient>
+    </defs>
+    <rect width="400" height="250" fill="url(#survey-grid)"/>
+    {Array.from({length:14}, (_,i) => <path d="M-80 132 Q18 151 65 86 T167 32 Q211 26 220 -52 M212 294 Q215 210 280 192 T392 137 Q470 117 477 49" transform={`translate(${i*4-24} ${i*5-24})`} stroke="#957064" stroke-opacity=".34" stroke-width=".9"/>)}
+    <path d={road} stroke="#25191c" stroke-width="12"/>
+    <path d={road} stroke="url(#survey-road)" stroke-width="3"/>
+    <path class="survey-map__trace" d={road} pathLength="100" stroke="#fff4ce" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="6 100"/>
+    {stops.map(([x,y],i)=><g class={`survey-stop survey-stop--${i+1}`}><circle cx={x} cy={y} r="9"/><circle cx={x} cy={y} r="3" fill="currentColor"/><text x={x} y={y-16} text-anchor="middle">{`0${i+1}`}</text></g>)}
+  </svg>
+  <figcaption><span>Patagonia</span><span>Neuquén · Añelo</span></figcaption>
+</figure>

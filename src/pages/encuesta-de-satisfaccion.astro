@@ -1,16 +1,25 @@
 ---
 import InternalPageLayout from '../layouts/InternalPageLayout.astro';
 import survey from '../data/survey.json';
+import SurveyRoute from '../components/SurveyRoute.astro';
 import '../styles/survey.css';
+const guidance = ['Para empezar, contanos quién sos.', 'Pensá en tu última visita a CYL.', 'Ahora nos interesa cómo te atendió el equipo.', 'Si pudieras cambiar algo de tu visita, ¿qué sería?'];
+const scales: Record<string, [string, string]> = {
+  trust: ['En desacuerdo', 'De acuerdo'],
+  service_satisfaction: ['Nada satisfecho', 'Muy satisfecho'],
+  quality: ['Nada satisfecho', 'Muy satisfecho'],
+};
 ---
 <InternalPageLayout title="Encuesta de satisfacción" description="Contanos cómo fue tu experiencia con CYL Neumáticos. Tu opinión nos ayuda a mejorar la calidad de nuestro servicio y atención." eyebrow="TU OPINIÓN CUENTA" heading="Encuesta de satisfacción" intro="" showHero={false}>
   <section class="survey" aria-labelledby="survey-title">
     <header class="survey__intro">
-      <p class="internal-kicker"><span>CYL</span> ESCUCHAR PARA MEJORAR</p>
-      <h1 id="survey-title">TU EXPERIENCIA.<br /><em>NUESTRO IMPULSO.</em></h1>
-      <p>Encuesta de satisfacción</p>
-      <p>Para conocer cómo fue tu experiencia con CYL, te invitamos a realizar una encuesta de unos 3 minutos sobre nuestro servicio.</p>
-      <div class="survey__facts"><span>01—04 / CUATRO PASOS</span><span>≈ 3 MINUTOS</span></div>
+      <div class="survey__invitation">
+        <p class="internal-kicker">Encuesta de satisfacción</p>
+        <h1 id="survey-title">¿CÓMO FUE<br /><em>TU VISITA?</em></h1>
+        <p>Contanos qué salió bien y qué podríamos hacer mejor la próxima vez que vengas a CYL.</p>
+        <div class="survey__facts"><span><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 5v5l3 2"/></svg>Unos 3 minutos</span><span>4 pasos</span></div>
+      </div>
+      <SurveyRoute />
     </header>
     <div class="survey__workspace">
       <ol class="survey__steps" aria-label="Pasos de la encuesta">
@@ -22,6 +31,7 @@ import '../styles/survey.css';
           <div class="survey__progress"><span data-survey-progress aria-live="polite">Paso 1 de 4</span><span>* Campo obligatorio</span></div>
           {survey.steps.map((step, i) => <section data-survey-step aria-labelledby={`step-${i}`} hidden={i !== 0}>
             <h2 id={`step-${i}`} tabindex="-1">{step.title}</h2>
+            <p class="survey__guidance">{guidance[i]}</p>
             <div class:list={['survey__fields', { 'survey__fields--identity': i === 0 }]}>
               {step.fields.map(field => field.type === 'rating' ? <fieldset class="survey__question">
                 <legend>{field.label}{field.required && <span> *</span>}</legend>
@@ -29,6 +39,7 @@ import '../styles/survey.css';
                 <div class="survey__ratings">
                   {field.options?.map(option => <label><input type="radio" name={field.name} value={option.value} required={field.required} aria-describedby={`${field.name}-hint`} /><span>{option.label}</span></label>)}
                 </div>
+                <div class="survey__scale"><span>{(scales[field.name] ?? ['Muy mala', 'Excelente'])[0]}</span><span>{(scales[field.name] ?? ['Muy mala', 'Excelente'])[1]}</span></div>
                 {!field.required && <button type="button" class="survey__clear" data-clear-rating={field.name}>Dejar sin responder</button>}
                 {field.name === 'complaint_response' && <p class="survey__hint">Si no hiciste un reclamo, podés dejar esta pregunta sin responder.</p>}
               </fieldset> : <div class="survey__field">

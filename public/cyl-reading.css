@@ -14,6 +14,26 @@ body .product-card__head>p {color:#55595d}
 body :is(.product-facts li,.internal-form label,.premium-form label>span,.form-legal,.internal-form__note) {color:#c6c6c9}
 body .product-facts__micro {color:#b7b7bc}
 body .product-card__head h3 {line-height:.98;}
+/* The caption occupies its own row. Scaling an image on hover must never
+   move it behind the label or leave text crossing from white into the photo. */
+body .product-grid .product-card {
+ display:grid;grid-template-rows:auto minmax(10rem,1fr) auto;
+}
+body .product-card .product-card__head {grid-row:1;}
+body .product-card .product-card__image-shell {
+ position:relative;inset:auto;grid-row:2;align-self:end;
+ width:112%;margin-inline:-6%;height:clamp(12rem,19vw,19rem);overflow:clip;
+}
+body .product-card .product-card__meta {
+ position:relative;inset:auto;grid-row:3;display:grid;
+ grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"label code" "value value";
+ gap:.3rem .75rem;align-content:center;min-height:5rem;
+ padding:.875rem clamp(1.25rem,1.85vw,2rem) 1.125rem;
+ border-top:1px solid #c9cacc;background:#f6f6f4;
+}
+body .product-card__meta>span {grid-area:label;color:#51545a;font:600 .75rem/1.3 'IBM Plex Mono',monospace;letter-spacing:.055em;}
+body .product-card__meta>i {grid-area:code;justify-self:end;color:#a80b20;font:600 .75rem/1.3 'IBM Plex Mono',monospace;letter-spacing:.04em;white-space:nowrap;}
+body .product-card__meta>b {grid-area:value;color:#191b1e;font:650 1.0625rem/1.3 'Instrument Sans Variable',sans-serif;letter-spacing:0;text-transform:none;}
 html body {min-width:0;}
 /* Keep navigation, opening hours and instructions readable; small numeric
    markers and decorative orbit codes do not carry these labels. */
@@ -28,6 +48,15 @@ body :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,
  white-space:normal; overflow-wrap:anywhere; padding-block:.65rem;
 }
 body .footer-nav-group .footer-action {min-width:0;padding-inline:.75rem;}
+/* Give the longest action a real column, rather than squeezing its type. */
+@media(min-width:1000px) {
+ body .site-footer .footer-main {grid-template-columns:minmax(0,1fr) minmax(9rem,.26fr) minmax(14.5rem,.36fr);column-gap:clamp(1.5rem,4vw,5rem);}
+}
+body .site-footer .footer-nav-group .footer-action {
+ font-family:'Instrument Sans Variable',sans-serif!important;
+ font-weight:550!important;font-size:.75rem!important;line-height:1.4!important;
+ letter-spacing:.105em!important;padding:.75rem 1rem;min-height:3.5rem;
+}
 body .footer-action>span {white-space:normal;}
 @media(max-width:600px) {
  body main .product-cover h1 {font-size:clamp(2.95rem,14.5vw,5.3rem);line-height:.94;}

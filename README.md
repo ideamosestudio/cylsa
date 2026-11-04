@@ -1,6 +1,6 @@
 # CYL Neumáticos
 
-Sitio estático de Astro para `https://ideamosestudio.github.io/cylsa/`.
+Fuente compartida de la web de CYL: **WordPress en www.cylneumaticos.com.ar** y demo estática en GitHub Pages. La publicación en Towebs se describe en [wordpress/README.md](wordpress/README.md).
 
 ## Desarrollo y validación
 
@@ -25,21 +25,22 @@ pnpm preview
 - `src/components/BrandWheelScene.astro`: segunda escena, descargada sólo al acercarse a la sección en escritorio.
 - `src/data/*-products.ts`: catálogo. No inventar stock, precios, reseñas o compatibilidades.
 - `SeoHead.astro`: metadatos, canónicas y JSON-LD. `llms.txt.ts` genera un índice textual a partir del catálogo.
-- `src/scripts/forms.ts`: consultas por WhatsApp y postulaciones por mailto. No hay backend, envío automático de correos, almacenamiento de datos ni carga de CV al sitio.
+- `src/scripts/contact.ts` y `wordpress/mu-plugins/cyl-contacto.php`: contacto directo a hola@cylneumaticos.com.ar desde ambas versiones. El destinatario se fija en el servidor. No se guarda una copia de la consulta en la base.
+- `src/scripts/forms.ts`: cotización por WhatsApp y postulaciones por correo. Las respuestas de la encuesta se guardan exclusivamente en WordPress.
 
-Los formularios preparan un mensaje para que el visitante lo envíe en la aplicación de destino. La portada ya no transmite datos personales como parámetros GET al formulario de cotización. Sin JavaScript se muestran enlaces de contacto alternativos.
+Los formularios de contacto envían por POST a WordPress; no incluyen datos personales en la URL. WordPress valida origen, token, longitud y formato, limita la frecuencia y llama al correo del hosting. La aceptación por el servidor de correo no confirma la entrega en la casilla final.
 
 ## Rendimiento
 
-236 imágenes se convierten a WebP con variantes de ancho, dimensiones intrínsecas y carga diferida salvo recursos prioritarios. Las fuentes se sirven localmente. El HTML y los botones están disponibles antes de WebGL; no hay pantalla que bloquee la página mientras carga el modelo. No se carga 3D en móvil, movimiento reducido o ahorro de datos. La escena secundaria deja de renderizar al estabilizarse el cursor y ambas respetan la visibilidad de la pestaña.
+Las imágenes tienen variantes responsive, dimensiones intrínsecas y carga diferida salvo recursos prioritarios. La portada ofrece AVIF con respaldo WebP. Las fuentes WOFF2 se sirven localmente y la precarga usa la misma URL que el CSS. El contenido se entrega en HTML antes de cargar WebGL. La escena principal no se inicia en móviles, con movimiento reducido o ahorro de datos.
 
-Comparación de archivos fuente y derivados (no equivale a bytes transferidos en una visita): imágenes 53.207.199 → 7.896.366 bytes sumando la variante mayor por original; rueda principal 6.260.444 → 514.756 bytes. Para evaluar Core Web Vitals reales hay que medir la publicación y, cuando haya tráfico suficiente, datos de campo; una prueba local no demuestra el rendimiento público.
+El generador informa pesos por compilación. Para evaluar la velocidad real, medir el dominio publicado y distinguir Lighthouse de los datos de campo. Conservar las fuentes originales para mantenimiento: solo los WOFF2 se usan en la interfaz.
 
 ## SEO e IA
 
 Cada página tiene título, descripción, canónica, metadatos sociales y JSON-LD. Las sucursales usan direcciones y horarios publicados. Las fichas Product no declaran ofertas, stock ni valoraciones sin evidencia. Esto no garantiza resultados enriquecidos.
 
-El sitemap incluye las 75 páginas indexables y excluye 404. `llms.txt` es un complemento legible y enlazado desde el HTML; no es un estándar obligatorio para buscadores ni garantiza inclusión o citas de asistentes. El contenido principal ya se entrega en HTML sin depender de WebGL.
+El sitemap nativo de WordPress es la referencia del sitio público. Las dos versiones señalan canónicas bajo el dominio de CYL. `llms.txt` enlaza el catálogo, el contacto y la encuesta pública; no expone respuestas. Es un complemento, no una garantía de inclusión o citas.
 
 **Subruta de GitHub Pages:** un `robots.txt` sólo gobierna el rastreo si se sirve en la raíz del origen, `https://ideamosestudio.github.io/robots.txt`. La copia en `/cylsa/robots.txt` documenta la política, pero no controla a los robots. Para control efectivo se necesita acceso al repositorio raíz del propietario o un dominio propio. Las canónicas, meta robots, enlaces y sitemap sí están disponibles dentro de esta publicación. Registrar el sitemap en Search Console requiere acceso a la propiedad verificada.
 

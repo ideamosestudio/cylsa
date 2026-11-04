@@ -36,6 +36,16 @@ for (const file of await walk(root)) {
     variants.push({ width, src: `optimized/${name}` });
   }
   manifest[key] = { width: meta.width, height: meta.height, variants };
+  if (key === 'images/product-heroes/automovil.png') {
+    const avif = [];
+    for (const width of widths) {
+      const name = `${hash}-avif55-${width}.avif`;
+      const dest = path.join(output,name);
+      if (!await exists(dest)) await sharp(input).resize({width,withoutEnlargement:true}).avif({quality:55,effort:4}).toFile(dest);
+      avif.push({width,src:`optimized/${name}`});
+    }
+    manifest[key].avif = avif;
+  }
   originalBytes += input.length;
   optimizedBytes += (await fs.stat(path.join(root, variants.at(-1).src))).size;
 }

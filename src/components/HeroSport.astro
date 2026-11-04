@@ -2,8 +2,11 @@
 import OptimizedImage from './OptimizedImage.astro';
 import '../styles/hero-sport.css';
 import { brands } from '../data/brands';
+import images from '../generated/images.json';
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const poster = images['images/product-heroes/automovil.png'];
+const posterSizes = '(max-width:600px) 100vw, (max-width:900px) 80vw, 50vw';
 ---
 
 <section class="sport-hero" id="inicio" data-hero-track aria-label="Presentación de CYL Neumáticos">
@@ -25,7 +28,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <div class="sport-fallback" data-webgl-fallback hidden>VISUALIZACIÓN 3D NO DISPONIBLE</div>
 
     <div class="sport-visual" aria-hidden="true">
-      <OptimizedImage src={`${base}images/product-heroes/automovil.png`} alt="Neumático para automóvil con iluminación roja" width="1280" height="1280" fetchpriority="high" />
+      <picture>
+        <source type="image/avif" sizes={posterSizes} srcset={poster.avif.map(v=>`${base}${v.src} ${v.width}w`).join(', ')} />
+        <OptimizedImage src={`${base}images/product-heroes/automovil.png`} alt="Neumático para automóvil con iluminación roja" width="1280" height="1280" sizes={posterSizes} fetchpriority="high" />
+      </picture>
     </div>
 
     <div class="sport-frame" aria-hidden="true">
@@ -44,7 +50,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         <div class="sport-brand-track">
           {[...brands, ...brands].map(({ file, name }, index) => (
             <span aria-hidden={index >= brands.length}>
-              <OptimizedImage src={`${base}images/brands/hero/${file}`} alt={index < brands.length ? name : ''} sizes="104px" loading="eager" decoding="async" />
+              <OptimizedImage src={`${base}images/brands/hero/${file}`} alt={index < brands.length ? name : ''} sizes="104px" loading={index < 3 ? 'eager' : 'lazy'} fetchpriority="low" decoding="async" />
             </span>
           ))}
         </div>

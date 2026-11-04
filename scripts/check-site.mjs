@@ -3,7 +3,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { parse } from 'parse5';
 import { htmlFiles, nodes, attr, text } from './finalize-build.mjs';
-import { site, siteUrl } from '../site.config.mjs';
+import { site, siteUrl, publicSiteUrl } from '../site.config.mjs';
 
 const failures = [], titles = new Set(), canonicals = new Set();
 const exists = p => fs.access(p).then(() => true, () => false);
@@ -23,7 +23,7 @@ for (const file of files) {
   require(!elements.some(n => n.tagName === 'html' && (attr(n, 'class') || '').split(/\s+/).includes('is-loading')), 'page must not lock scrolling while WebGL loads');
   require(!elements.some(n => n.attrs?.some(a => a.name === 'data-site-loader')), 'blocking loader must not gate access to the site');
   const canonical = attr(elements.find(n => n.tagName === 'link' && attr(n, 'rel') === 'canonical') || {}, 'href');
-  require(canonical?.startsWith(siteUrl) && !canonical?.includes('?'), 'invalid canonical');
+  require(canonical?.startsWith(publicSiteUrl) && !canonical?.includes('?'), 'invalid canonical');
   require(!canonicals.has(canonical), 'duplicate canonical'); canonicals.add(canonical);
   if (!meta('robots')?.includes('noindex')) require(sitemap.includes(`<loc>${canonical}</loc>`), 'page missing from sitemap');
   require(elements.some(n => attr(n, 'property') === 'og:image'), 'missing social image');
@@ -55,8 +55,9 @@ for (const file of files) {
     for (const ref of refs) {
       require(!/^javascript:|^http:/i.test(ref), `unsafe URL ${ref}`);
       let url;
-      try { url = new URL(ref, canonical || siteUrl); } catch { require(false, `invalid URL ${ref}`); continue; }
+      try { url = new URL(ref, new URL(path.relative('dist',file).replaceAll('\\','/').replace(/index\.html$/,''), siteUrl)); } catch { require(false, `invalid URL ${ref}`); continue; }
       if (url.origin !== site.origin) continue;
+      if (el.tagName === 'link' && attr(el,'rel') === 'sitemap' && url.href === publicSiteUrl+'wp-sitemap.xml') continue;
       require(url.pathname.startsWith(site.base), `URL escapes Pages base ${ref}`);
       if (!url.pathname.startsWith(site.base)) continue;
       const target = path.join('dist', decodeURIComponent(url.pathname.slice(site.base.length)));
@@ -66,7 +67,7 @@ for (const file of files) {
   }
 }
 const llms = await fs.readFile('dist/llms.txt', 'utf8');
-if (!llms.includes(siteUrl) || !llms.includes('stock')) failures.push('llms.txt missing factual catalogue guidance');
+if (!llms.includes(publicSiteUrl) || !llms.includes('stock') || !llms.includes('hola@cylneumaticos.com.ar')) failures.push('llms.txt missing factual catalogue guidance');
 const model = JSON.parse(await fs.readFile('src/generated/model.json', 'utf8'));
 if ((await fs.stat(path.join('dist', model.src))).size > 750000) failures.push('3D model exceeds 750 KB budget');
 console.log(JSON.stringify({ pages: files.length, links, images, schemas, failures }, null, 2));

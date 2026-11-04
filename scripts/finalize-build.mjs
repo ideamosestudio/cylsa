@@ -34,7 +34,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/f
     const policy = [
       "default-src 'self'", `script-src 'self' 'wasm-unsafe-eval' ${[...new Set(hashes)].join(' ')}`,
       "script-src-attr 'none'", "style-src 'self' 'unsafe-inline'", "img-src 'self' data: blob:",
-      "font-src 'self'", "connect-src 'self'", "object-src 'none'", "base-uri 'none'", "form-action 'none'", "frame-src 'none'",
+      "font-src 'self'", "connect-src 'self' https://www.cylneumaticos.com.ar", "object-src 'none'", "base-uri 'none'", "form-action 'none'", "frame-src 'none'",
     ].join('; ');
     html = html.replace(/<meta charset="[^"]+"\s*\/?\s*>/i, m => `${m}<meta http-equiv="Content-Security-Policy" content="${policy}">`);
     html=html.replace('</head>',`<link rel="stylesheet" href="${new URL(siteUrl).pathname}cyl-reading.css?v=${readingVersion}"></head>`);
@@ -46,7 +46,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/f
   }
   const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
   await fs.writeFile('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...new Set(urls)].sort().map(url => `  <url><loc>${escape(url)}</loc></url>`).join('\n')}\n</urlset>\n`);
-  await fs.writeFile('dist/robots.txt', `# A robots.txt is authoritative only at the origin root (/robots.txt).\n# On GitHub project Pages, this copy documents the intended policy.\nUser-agent: *\nAllow: /\n\nSitemap: ${siteUrl}sitemap.xml\n`);
+  await fs.writeFile('dist/robots.txt', `# A robots.txt is authoritative only at the origin root (/robots.txt).\n# On GitHub project Pages, this copy documents the intended policy.\nUser-agent: *\nAllow: /\n\nSitemap: https://www.cylneumaticos.com.ar/wp-sitemap.xml\n`);
   await fs.writeFile('dist/.nojekyll', '');
   console.log(`CSP applied to HTML; sitemap contains ${urls.length} URLs.`);
 }

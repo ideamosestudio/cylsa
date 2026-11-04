@@ -1,4 +1,4 @@
-import { siteUrl, site } from '../../site.config.mjs';
+import { publicSiteUrl as siteUrl, site } from '../../site.config.mjs';
 import { automovilProducts } from '../data/automovil-products';
 import { camionetaProducts } from '../data/camioneta-products';
 import { transporteProducts } from '../data/transporte-products';
@@ -14,11 +14,12 @@ export function GET() {
     `## Empresa y contacto\n\n` +
     `- [Inicio](${siteUrl}): líneas de neumáticos, marcas y asesoramiento.\n` +
     `- [Quiénes somos](${siteUrl}quienes-somos/): información institucional.\n` +
-    `- [Contacto y sucursales](${siteUrl}contacto/): direcciones, teléfonos y horarios de atención.\n` +
+    `- [Contacto y sucursales](${siteUrl}contacto/): direcciones, teléfonos y horarios de atención. Las consultas del formulario llegan a hola@cylneumaticos.com.ar.\n` +
+    `- [Encuesta de satisfacción](${siteUrl}encuesta-de-satisfaccion/): formulario de cuatro pasos. Las respuestas son privadas.\n` +
     `- [Cotización](${siteUrl}cotizacion/): formulario que prepara una consulta por WhatsApp a la sucursal elegida.\n` +
     `- [Política de calidad](${siteUrl}nuestra-politica/): sistema basado en ISO 9001:2015; la página no afirma una certificación vigente.\n` +
     `- [Trabajá con nosotros](${siteUrl}forma-parte-de-nuestro-equipo/): preparación de un correo a Recursos Humanos; el CV se adjunta en la aplicación de correo.\n\n` +
     groups.map(([label, slug, products]) => `## ${label}\n\n- [Ver línea](${siteUrl}${slug}/)\n` + products.map(p => `- [${p.title}](${siteUrl}${p.slug}/): ${p.description}`).join('\n')).join('\n\n') +
-    `\n\n## Alcance de la información\n\nLas fichas describen productos y medidas del catálogo. La compatibilidad, disponibilidad, precios y condiciones deben consultarse con CYL. No se publican valoraciones de clientes ni existencias en tiempo real.\n\n- [Mapa del sitio](${siteUrl}sitemap.xml)\n`;
+    `\n\n## Alcance de la información\n\nLas fichas describen productos y medidas del catálogo. La compatibilidad, disponibilidad, precios y condiciones deben consultarse con CYL. No se publican valoraciones de clientes ni existencias en tiempo real.\n\n- [Mapa del sitio](${siteUrl}wp-sitemap.xml)\n`;
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

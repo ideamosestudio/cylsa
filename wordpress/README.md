@@ -20,7 +20,7 @@ La distribución espera WordPress en la raíz del dominio y el directorio de con
 ## Funcionalidad
 
 - Catálogo informativo, sin precios ni stock en tiempo real.
-- Contacto y cotización preparan mensajes de WhatsApp; empleos prepara un correo.
+- Contacto envía a `hola@cylneumaticos.com.ar` mediante `wp_mail` desde el módulo `cyl-contacto.php`, instalado en `wp-content/mu-plugins`. El servidor recibe los formularios de WordPress y de la demo. Cotización conserva WhatsApp y empleos conserva su correo a RR. HH.
 - La demo de Pages mantiene la encuesta en vista previa. En WordPress, instalar el contenido de `wordpress/build/mu-plugins` en `wp-content/mu-plugins`. El módulo propio guarda los envíos HTTPS en la base local y agrega **Encuestas CYL** para administradores. No se utiliza Forminator.
 - Publicar también `wordpress/build/root/_astro`: las hojas de estilo compiladas buscan allí las fuentes originales.
 

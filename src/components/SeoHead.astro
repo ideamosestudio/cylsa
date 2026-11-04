@@ -1,18 +1,21 @@
 ---
-import { site, siteUrl } from '../../site.config.mjs';
-import headingFont from '../assets/fonts/UPBOLTERS-New-Regular.otf?url';
+import { publicSiteUrl, site, siteUrl } from '../../site.config.mjs';
+import { metadataImage } from '../data/metadata-image';
+import headingFont from '../assets/fonts/UPBOLTERS-New-Regular.woff2?url';
 interface Props { title: string; description: string; image?: string; schema?: Record<string, unknown>[]; noindex?: boolean; }
 const { title, description, image = 'images/product-heroes/automovil.png', schema = [], noindex = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname, site.origin).href;
-const imageUrl = new URL(image.replace(/^\//, ''), siteUrl).href;
+const canonical = new URL(Astro.url.pathname.slice(site.base.length), publicSiteUrl).href;
+const imageUrl = metadataImage(image);
 const pageType = Astro.url.pathname.includes('/contacto/') ? 'ContactPage' : Astro.url.pathname.includes('/quienes-somos/') ? 'AboutPage' : 'WebPage';
 const graph = [
-  { '@type': 'Organization', '@id': `${siteUrl}#organization`, name: site.name, legalName: site.legalName, url: siteUrl, logo: new URL('logos/cyl-logo.png', siteUrl).href, areaServed: ['Neuquén', 'Añelo'], contactPoint: { '@type': 'ContactPoint', contactType: 'Ventas y asesoramiento', telephone: '+5492994082513', availableLanguage: 'es' } },
+  { '@type': 'Organization', '@id': `${siteUrl}#organization`, name: site.name, legalName: site.legalName, url: siteUrl, logo: metadataImage('logos/cyl-logo.png'), areaServed: ['Neuquén', 'Añelo'], contactPoint: { '@type': 'ContactPoint', contactType: 'Ventas y asesoramiento', telephone: '+5492994082513', availableLanguage: 'es' } },
   { '@type': 'WebSite', '@id': `${siteUrl}#website`, name: site.name, url: siteUrl, inLanguage: 'es-AR', publisher: { '@id': `${siteUrl}#organization` } },
   { '@type': pageType, '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: 'es-AR', isPartOf: { '@id': `${siteUrl}#website` }, about: { '@id': `${siteUrl}#organization` } },
   ...schema,
 ];
-const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, (key, value) =>
+  ['@id','url','item'].includes(key) && typeof value === 'string' && value.startsWith(siteUrl)
+    ? publicSiteUrl + value.slice(siteUrl.length) : value).replace(/</g, '\\u003c');
 ---
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,8 +26,8 @@ const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph 
 <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
 <link rel="canonical" href={canonical} />
 <link rel="icon" type="image/svg+xml" href={`${site.base}favicon.svg`} />
-<link rel="preload" as="font" href={headingFont} type="font/otf" crossorigin />
-<link rel="sitemap" type="application/xml" href={`${site.base}sitemap.xml`} />
+<link rel="preload" as="font" href={headingFont} type="font/woff2" crossorigin />
+<link rel="sitemap" type="application/xml" href={`${publicSiteUrl}wp-sitemap.xml`} />
 <link rel="alternate" type="text/plain" title="Información de CYL para asistentes de IA" href={`${site.base}llms.txt`} />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="es_AR" />

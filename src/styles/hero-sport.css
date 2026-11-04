@@ -28,6 +28,7 @@
 .sport-orbit span{position:absolute;top:16%;right:5%;color:rgba(255,255,255,.35);font:500 8px/1 'IBM Plex Mono',monospace;letter-spacing:.15em}
 .sport-visual{position:absolute;z-index:2;top:12%;right:4%;display:block;width:53%;height:84%;pointer-events:none}
 .sport-visual img{width:100%;height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 40px 55px rgba(0,0,0,.42))}
+.sport-visual picture{display:block;width:100%;height:100%}
 .sport-copy{position:absolute;z-index:5;top:50%;left:clamp(28px,6.3vw,102px);width:min(46vw,690px);transform:translateY(-46%)}
 .sport-kicker{display:flex;align-items:center;gap:10px;margin-bottom:22px;color:rgba(255,255,255,.68);font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.19em}
 .sport-kicker span{display:grid;width:26px;height:26px;border:1px solid #ef2234;color:#ef2234;place-items:center}

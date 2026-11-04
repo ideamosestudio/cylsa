@@ -6,3 +6,4 @@ export const site = {
   description: 'Venta de neumáticos para automóvil, camioneta, transporte y agro/vial. Asesoramiento multimarca y tres sucursales en Neuquén y Añelo.',
 };
 export const siteUrl = `${site.origin}${site.base}`;
+export const publicSiteUrl = 'https://www.cylneumaticos.com.ar/';

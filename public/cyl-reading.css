@@ -1,4 +1,9 @@
 /* Shared by both builds. Keep display type; allow real content to wrap. */
+.studio-credit {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:.6rem .875rem;}
+.studio-credit>span {font:500 .8125rem/1.45 'Instrument Sans Variable',sans-serif;color:#c6c6c9;letter-spacing:normal;text-transform:none;}
+.studio-credit>a {display:inline-flex;align-items:center;min-height:44px;padding-inline:.25rem;}
+.studio-credit img {width:112px;height:auto;display:block;}
+@media(max-width:700px){.studio-credit{justify-content:flex-start}}
 body main :is(h1,h2,h3,h4,p,li,dt,dd,fieldset,label),
 body footer :is(h2,p,a) { min-inline-size:0; overflow-wrap:anywhere; }
 body main :is(.product-card__head,.category-product-card__copy,.product-cover__copy,.product-facts__headline,.product-sizes__heading,.internal-hero__copy,.form-side) { min-width:0; }

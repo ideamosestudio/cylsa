@@ -6,7 +6,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   <div class="footer-topline"><span>CYL / PATAGONIA</span><span>NEUQUÉN · AÑELO</span><span>38.95° S / 68.06° W</span></div>
   <div class="footer-main">
     <div class="footer-brand" data-reveal>
-      <OptimizedImage src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" />
+      <OptimizedImage src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" loading="lazy" sizes="150px" />
       <h2>CONFIANZA EN<br /><span class="title-accent">CADA KILÓMETRO.</span></h2>
     </div>
     <div class="footer-nav-group">
@@ -21,5 +21,5 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <a class="footer-action" href={`${base}encuesta-de-satisfaccion/`}><span>Encuesta de satisfacción</span></a>
     </div>
   </div>
-  <div class="footer-bottom footer-bottom--premium"><p>© {new Date().getFullYear()} CYL S.A. Neumáticos</p><a href="#">Volver arriba</a><a href="https://www.ideamos.com.ar/" target="_blank" rel="noreferrer">Diseño y desarrollo / Estudio Ideamos</a></div>
+  <div class="footer-bottom footer-bottom--premium"><p>© {new Date().getFullYear()} CYL S.A. Neumáticos</p><a href="#">Volver arriba</a><div class="studio-credit"><span>Esta web salió del taller de</span><a href="https://ideamos.com.ar/" aria-label="Visitar el sitio de Estudio Ideamos"><OptimizedImage src={`${base}logos/ideamos-light.webp`} alt="Estudio Ideamos" width="870" height="213" loading="lazy" sizes="112px" /></a></div></div>
 </footer>

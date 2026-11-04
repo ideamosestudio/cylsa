@@ -7,6 +7,23 @@ add_action('after_setup_theme', function () {
 remove_action('wp_head','rel_canonical');
 remove_action('wp_head','wp_generator');
 remove_action('wp_head','wp_shortlink_wp_head');
+// The imported pages use the theme's HTML and CSS. Keep WordPress block
+// assets when an editor introduces any native block, or for a signed-in user.
+add_action('wp_enqueue_scripts', function () {
+    if (is_user_logged_in() || !is_singular()) return;
+    $id=get_queried_object_id();
+    if (!get_post_meta($id,'_cyl_layout',true)) return;
+    $blocks=parse_blocks(get_post_field('post_content',$id));
+    foreach ($blocks as $block) {
+        if (!in_array($block['blockName'],array(null,'core/html'),true)) return;
+    }
+    foreach (array('wp-block-library','classic-theme-styles','global-styles','wp-emoji-styles') as $handle) {
+        wp_dequeue_style($handle);
+    }
+    remove_action('wp_head','print_emoji_detection_script',7);
+    remove_action('wp_head','wp_enqueue_emoji_styles',1);
+    remove_action('wp_footer','wp_enqueue_global_styles',1);
+},PHP_INT_MAX);
 // Hash the complete rendered document, including WordPress/plugin inline scripts.
 // This keeps the script policy strict without blocking normal WP integrations.
 add_action('template_redirect', function () {

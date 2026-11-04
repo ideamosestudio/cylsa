@@ -5,8 +5,8 @@
 @font-face{font-family:'Roboto Variable';font-style:normal;font-weight:100 900;font-display:swap;src:url('@fontsource-variable/roboto/files/roboto-latin-wght-normal.woff2') format('woff2')}
 @font-face{font-family:'Space Grotesk Variable';font-style:normal;font-weight:300 700;font-display:swap;src:url('@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2')}
 
-@font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular.otf') format('opentype'); font-style: normal; font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular-Italic.otf') format('opentype'); font-style: italic; font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular.woff2') format('woff2'); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular-Italic.woff2') format('woff2'); font-style: italic; font-weight: 400; font-display: swap; }
 
 :root { --red: #d10f1b; --ink: #060607; --paper: #f4f4f2; --line: rgba(255,255,255,.14); --mobile-page-gutter: 8vw; color-scheme: dark; font-family: 'Instrument Sans Variable',Arial,sans-serif; background: var(--ink); color: var(--paper); }
 * { box-sizing: border-box; }

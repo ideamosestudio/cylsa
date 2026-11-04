@@ -16,7 +16,9 @@ for (const file of await fs.readdir(`${out}/pages`)) {
 await fs.writeFile(`${out}/previous-content.json`,JSON.stringify(prior));
 await fs.cp('wordpress/theme', out, { recursive: true });
 const prefix = '/wp-content/themes/cyl-neumaticos/assets/';
-const asset = value => value.replaceAll('/_astro/', `${prefix}_astro/`).replaceAll('/optimized/', `${prefix}optimized/`).replaceAll('/images/', `${prefix}images/`);
+// CSS loads fonts from /_astro/. Keep preloads at that same URL so the
+// browser reuses one request instead of fetching a second copy from the theme.
+const asset = value => value.replace(/\/_astro\/(?![^/"'\s<>]+\.(?:woff2?|otf|ttf)\b)/g, `${prefix}_astro/`).replaceAll('/optimized/', `${prefix}optimized/`).replaceAll('/images/', `${prefix}images/`);
 const manifest = [];
 for (const file of await htmlFiles('dist')) {
  const all = nodes(parse(await fs.readFile(file, 'utf8'))), head = all.find(n => n.tagName === 'head'), body = all.find(n => n.tagName === 'body');

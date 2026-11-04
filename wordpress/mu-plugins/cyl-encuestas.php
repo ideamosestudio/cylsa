@@ -67,28 +67,21 @@ add_action('admin_post_cyl_enc_delete',function(){
     wp_safe_redirect(admin_url('admin.php?page=cyl-encuestas'));exit;
 });
 add_action('admin_menu',function(){add_menu_page('Encuestas CYL','Encuestas CYL','manage_options','cyl-encuestas','cyl_enc_admin','dashicons-feedback',26);});
+add_action('admin_enqueue_scripts',function($screen){
+    if($screen==='toplevel_page_cyl-encuestas' && !empty($_GET['respuesta'])){
+        wp_enqueue_style('cyl-survey-detail',plugins_url('cyl-encuestas/detail.css',__FILE__),array(),'1.0');
+    }
+});
 function cyl_enc_admin(){
     if(!current_user_can('manage_options') || !is_ssl())wp_die('Se requiere acceso administrativo por HTTPS.');
     global $wpdb;$table=cyl_enc_table();$url=admin_url('admin.php?page=cyl-encuestas');
-    echo '<div class="wrap"><h1>Encuestas CYL</h1>';
     $id=absint($_GET['respuesta']??0);
     if($id){
         $row=$wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE id=%d",$id));
-        echo '<p><a href="'.esc_url($url).'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:middle"><path d="M20 12H5m6-6-6 6 6 6"/></svg> Volver a las respuestas</a></p>';
-        if(!$row){echo '<p>Respuesta no encontrada.</p></div>';return;}
-        $data=json_decode($row->respuestas,true);
-        echo '<h2>Respuesta #'.intval($id).'</h2><p>'.esc_html($row->fecha).'</p>';
-        foreach(cyl_enc_schema()['steps'] as $step){
-            echo '<h3>'.esc_html($step['title']).'</h3><dl>';
-            foreach($step['fields'] as $f){$v=$data[$f['name']]??'';
-                if(isset($f['options']))foreach($f['options'] as $o)if($o['value']===$v){$v=$o['label'];break;}
-                echo '<dt><strong>'.esc_html($f['label']).'</strong></dt><dd>'.nl2br(esc_html($v!==''?$v:'Sin respuesta')).'</dd>';
-            }echo '</dl>';
-        }
-        echo '<form method="post" action="'.esc_url(admin_url('admin-post.php')).'"><input type="hidden" name="action" value="cyl_enc_delete"><input type="hidden" name="id" value="'.intval($id).'">';
-        wp_nonce_field('cyl_enc_delete_'.$id);
-        echo '<label><input type="checkbox" required name="confirmar" value="si"> Confirmo que quiero eliminar esta respuesta.</label> <button class="button">Eliminar respuesta</button></form>';
+        require __DIR__.'/cyl-encuestas/detail.php';
+        return;
     }else{
+        echo '<div class="wrap"><h1>Encuestas CYL</h1>';
         $total=(int)$wpdb->get_var("SELECT COUNT(*) FROM $table");$pages=max(1,(int)ceil($total/25));$p=min($pages,max(1,absint($_GET['paged']??1)));
         echo '<p>Respuestas recibidas: <strong>'.intval($total).'</strong></p><table class="widefat striped"><thead><tr><th>Fecha</th><th>Persona</th><th>Empresa</th><th>Satisfacción</th><th>Detalle</th></tr></thead><tbody>';
         foreach($wpdb->get_results($wpdb->prepare("SELECT * FROM $table ORDER BY id DESC LIMIT 25 OFFSET %d",($p-1)*25)) as $r){

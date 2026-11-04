@@ -30,7 +30,7 @@ add_filter('render_block',function($html){
     $html=str_replace('Vista previa · Podés recorrer la encuesta, pero las respuestas todavía no se envían ni se guardan.','CYL guardará tus respuestas al finalizar la encuesta para evaluar y mejorar la atención.',$html);
     $html=preg_replace('~<form\b[^>]*data-survey-form[^>]*>~i','<form method="post" data-survey-form novalidate data-endpoint="'.esc_url(admin_url('admin-ajax.php','https')).'" data-token="'.esc_attr(wp_create_nonce('cyl_enc_submit')).'">',$html,1);
     $html=str_replace(array('Recorrido completado','Terminaste la vista previa de la encuesta. Tus respuestas no se enviaron ni se guardaron.','Activá JavaScript para recorrer los cuatro pasos de esta vista previa. No se enviará ningún dato.'),array('Respuesta recibida','Gracias por contarnos tu experiencia. Tu respuesta quedó guardada.','Activá JavaScript para completar la encuesta.'),$html);
-    return $html.'<script type="module" src="'.esc_url(plugins_url('cyl-encuestas/form.js',__FILE__)).'?v=1"></script>';
+    return $html.'<script type="module" src="'.esc_url(plugins_url('cyl-encuestas/form.js',__FILE__)).'?v=2"></script>';
 });
 function cyl_enc_error($msg,$code){wp_send_json_error(array('message'=>$msg),$code);}
 function cyl_enc_submit(){
@@ -74,7 +74,7 @@ function cyl_enc_admin(){
     $id=absint($_GET['respuesta']??0);
     if($id){
         $row=$wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE id=%d",$id));
-        echo '<p><a href="'.esc_url($url).'">← Volver a las respuestas</a></p>';
+        echo '<p><a href="'.esc_url($url).'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:middle"><path d="M20 12H5m6-6-6 6 6 6"/></svg> Volver a las respuestas</a></p>';
         if(!$row){echo '<p>Respuesta no encontrada.</p></div>';return;}
         $data=json_decode($row->respuestas,true);
         echo '<h2>Respuesta #'.intval($id).'</h2><p>'.esc_html($row->fecha).'</p>';

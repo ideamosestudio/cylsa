@@ -1,5 +1,6 @@
 ---
 import OptimizedImage from './OptimizedImage.astro';
+import ArrowIcon from './ArrowIcon.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -10,7 +11,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     </a>
     <nav class="site-nav" aria-label="Secciones">
       <div class="site-nav__products">
-        <a href={`${base}nuestros-neumaticos/`}><span>Nuestros neumáticos</span><b aria-hidden="true">⌄</b></a>
+        <a href={`${base}nuestros-neumaticos/`}><span>Nuestros neumáticos</span><b aria-hidden="true"><ArrowIcon chevron /></b></a>
         <div class="site-nav__mega" aria-label="Líneas de neumáticos">
           <div class="site-nav__mega-heading">
             <span>CYL / LÍNEAS DE NEUMÁTICOS</span>
@@ -41,7 +42,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         </div>
       </div>
       <div class="site-nav__about">
-        <button class="site-nav__group-trigger" type="button" aria-haspopup="true"><span>Sobre nosotros</span><b aria-hidden="true">⌄</b></button>
+        <button class="site-nav__group-trigger" type="button" aria-haspopup="true"><span>Sobre nosotros</span><b aria-hidden="true"><ArrowIcon chevron /></b></button>
         <div class="site-nav__submenu" aria-label="Sobre nosotros">
           <a href={`${base}quienes-somos/`}><small>01</small><span>Quiénes somos</span></a>
           <a href={`${base}nuestra-politica/`}><small>02</small><span>Política</span></a>
@@ -49,7 +50,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         </div>
       </div>
       <a href={`${base}contacto/`}><span>Contacto</span></a>
-      <a class="nav-quote" href={`${base}cotizacion/`}><span>Cotización</span><span aria-hidden="true">→</span></a>
+      <a class="nav-quote" href={`${base}cotizacion/`}><span>Cotización</span><ArrowIcon /></a>
     </nav>
     <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation">
       <span>MENÚ</span><i></i><i></i>

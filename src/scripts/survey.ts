@@ -23,7 +23,7 @@ if (form) {
     actions.hidden = false;
     error.hidden = true;
     back.hidden = index === 0;
-    next.textContent = index === steps.length - 1 ? 'Finalizar vista previa' : 'Siguiente →';
+    next.querySelector('[data-next-label]')!.textContent = index === steps.length - 1 ? 'Finalizar vista previa' : 'Siguiente';
     progress.textContent = `Paso ${index + 1} de ${steps.length}`;
     steps[index].querySelector<HTMLElement>('h2')?.focus();
   };

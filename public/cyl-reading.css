@@ -105,6 +105,11 @@ body .footer-action>span {white-space:normal;}
 }
 
 /* The internal layout already clears the navigation above this section. */
+body main .form-side > .page-label {margin:0 0 1.1rem}
+body main .form-side h2 {line-height:1.06}
+.site-nav b[aria-hidden] {display:inline-flex}
+.survey__actions [data-survey-next] {gap:.65rem}
+
 body main .survey {padding-top:clamp(22px,3vw,42px)}
 body main .survey__intro {margin-bottom:clamp(20px,2.4vw,36px)}
 body main .survey__intro h1 {margin:14px 0 16px}

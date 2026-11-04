@@ -2,6 +2,7 @@
 import InternalPageLayout from '../layouts/InternalPageLayout.astro';
 import survey from '../data/survey.json';
 import SurveyRoute from '../components/SurveyRoute.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import '../styles/survey.css';
 const guidance = ['Para empezar, contanos quién sos.', 'Pensá en tu última visita a CYL.', 'Ahora nos interesa cómo te atendió el equipo.', 'Si pudieras cambiar algo de tu visita, ¿qué sería?'];
 const scales: Record<string, [string, string]> = {
@@ -51,7 +52,7 @@ const scales: Record<string, [string, string]> = {
           <p class="survey__error" data-survey-error role="alert" hidden></p>
           <div class="survey__actions" data-survey-actions>
             <button type="button" class="button button--ghost" data-survey-back hidden>Anterior</button>
-            <button type="submit" class="button button--primary" data-survey-next>Siguiente <span aria-hidden="true">→</span></button>
+            <button type="submit" class="button button--primary" data-survey-next><span data-next-label>Siguiente</span><ArrowIcon /></button>
           </div>
           <section class="survey__complete" data-survey-complete hidden aria-labelledby="survey-complete-title">
             <span class="survey__complete-mark" aria-hidden="true">✓</span>

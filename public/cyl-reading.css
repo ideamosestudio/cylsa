@@ -3,7 +3,20 @@
 .studio-credit>span {font:500 .8125rem/1.45 'Instrument Sans Variable',sans-serif;color:#c6c6c9;letter-spacing:normal;text-transform:none;}
 .studio-credit>a {display:inline-flex;align-items:center;min-height:44px;padding-inline:.25rem;}
 .studio-credit img {width:112px;height:auto;display:block;}
-@media(max-width:700px){.studio-credit{justify-content:flex-start}}
+/* Keep the last row out of the floating WhatsApp button's hit area,
+   including while the credit scrolls past it. Preserve the full-width rule. */
+.site-footer .footer-bottom--premium {
+  padding-inline-end:max(1rem,calc(8rem - clamp(22px,6vw,104px)));
+}
+@media(max-width:900px){
+  .site-footer .footer-bottom--premium {padding-inline-end:4.75rem}
+  .studio-credit{justify-content:flex-start}
+}
+body .whatsapp-fab .whatsapp-fab__tooltip {
+  inset:auto 0 calc(100% + .75rem) auto;
+  transform:translateY(.25rem);
+}
+body .whatsapp-fab:is(:hover,:focus-visible) .whatsapp-fab__tooltip {transform:none}
 body main :is(h1,h2,h3,h4,p,li,dt,dd,fieldset,label),
 body footer :is(h2,p,a) { min-inline-size:0; overflow-wrap:anywhere; }
 body main :is(.product-card__head,.category-product-card__copy,.product-cover__copy,.product-facts__headline,.product-sizes__heading,.internal-hero__copy,.form-side) { min-width:0; }

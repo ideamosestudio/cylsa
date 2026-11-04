@@ -6,10 +6,26 @@
 /* Keep the last row out of the floating WhatsApp button's hit area,
    including while the credit scrolls past it. Preserve the full-width rule. */
 .site-footer .footer-bottom--premium {
+  position:relative;grid-template-columns:minmax(0,1fr) auto;gap:1rem 2rem;
+  padding-block:1.25rem .25rem;border-top:1px solid #303034;
   padding-inline-end:max(1rem,calc(8rem - clamp(22px,6vw,104px)));
 }
+.footer-bottom--premium::before {
+  content:"";position:absolute;inset:-1px auto auto 0;width:2rem;height:1px;background:#d7192d;
+}
+.site-footer .footer-bottom--premium>p {color:#aaaab1;letter-spacing:.085em;}
+.site-footer .studio-credit>a {padding-inline-start:.9rem;border-inline-start:1px solid #35353a;}
+.site-footer .studio-credit>a:focus-visible,.footer-return:focus-visible {outline:2px solid #fff;outline-offset:4px;}
+.site-footer .footer-topline {display:grid;grid-template-columns:1fr auto 1fr auto;align-items:center;padding-block:1rem;column-gap:1rem;}
+.footer-topline>span:nth-child(3){justify-self:end;}
+.footer-return {
+  display:grid;place-items:center;width:44px;height:44px;justify-self:end;
+  color:#f2f2f3;border:1px solid #49494e;border-radius:50%;background:#101012;
+}
+.footer-return:hover,.footer-return:focus-visible {color:#fff;border-color:#e42d43;background:#241014;}
+@media(max-width:600px){.site-footer .footer-topline{grid-template-columns:1fr auto;}}
 @media(max-width:900px){
-  .site-footer .footer-bottom--premium {padding-inline-end:4.75rem}
+  .site-footer .footer-bottom--premium {grid-template-columns:minmax(0,1fr);padding-inline-end:4.75rem;gap:.65rem}
   .studio-credit{justify-content:flex-start}
 }
 body .whatsapp-fab .whatsapp-fab__tooltip {

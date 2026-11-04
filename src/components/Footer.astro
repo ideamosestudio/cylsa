@@ -3,7 +3,14 @@ import OptimizedImage from './OptimizedImage.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 <footer class="site-footer site-footer--premium" id="footer">
-  <div class="footer-topline"><span>CYL / PATAGONIA</span><span>NEUQUÉN · AÑELO</span><span>38.95° S / 68.06° W</span></div>
+  <div class="footer-topline">
+    <span>CYL / PATAGONIA</span><span>NEUQUÉN · AÑELO</span><span>38.95° S / 68.06° W</span>
+    <a class="footer-return" href="#" aria-label="Volver al inicio de la página" title="Volver arriba">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 20V5m-7 7 7-7 7 7"/>
+      </svg>
+    </a>
+  </div>
   <div class="footer-main">
     <div class="footer-brand" data-reveal>
       <OptimizedImage src={`${base}logos/cyl-logo.png`} alt="CYL Neumáticos" width="200" height="68" loading="lazy" sizes="150px" />
@@ -21,5 +28,13 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <a class="footer-action" href={`${base}encuesta-de-satisfaccion/`}><span>Encuesta de satisfacción</span></a>
     </div>
   </div>
-  <div class="footer-bottom footer-bottom--premium"><p>© {new Date().getFullYear()} CYL S.A. Neumáticos</p><a href="#">Volver arriba</a><div class="studio-credit"><span>Esta web salió del taller de</span><a href="https://ideamos.com.ar/" aria-label="Visitar el sitio de Estudio Ideamos"><OptimizedImage src={`${base}logos/ideamos-light.webp`} alt="Estudio Ideamos" width="870" height="213" loading="lazy" sizes="112px" /></a></div></div>
+  <div class="footer-bottom footer-bottom--premium">
+    <p>© {new Date().getFullYear()} CYL S.A. Neumáticos</p>
+    <div class="studio-credit">
+      <span>Esta web salió del taller de</span>
+      <a href="https://ideamos.com.ar/" aria-label="Visitar el sitio de Estudio Ideamos">
+        <OptimizedImage src={`${base}logos/ideamos-light.webp`} alt="Estudio Ideamos" width="870" height="213" loading="lazy" sizes="112px" />
+      </a>
+    </div>
+  </div>
 </footer>

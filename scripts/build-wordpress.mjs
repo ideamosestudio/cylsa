@@ -26,6 +26,13 @@ for (const file of await htmlFiles('dist')) {
 await fs.writeFile(`${out}/manifest.json`, JSON.stringify(manifest));
 for (const folder of ['_astro','optimized','images']) await fs.cp(`dist/${folder}`, `${out}/assets/${folder}`, {recursive:true});
 await fs.mkdir('wordpress/build/root/optimized', {recursive:true});
+// Compiled @font-face URLs are absolute, even inside the theme stylesheet.
+await fs.mkdir('wordpress/build/root/_astro', {recursive:true});
+for (const name of await fs.readdir('dist/_astro')) if (/\.(woff2?|otf|ttf)$/i.test(name))
+  await fs.copyFile(`dist/_astro/${name}`, `wordpress/build/root/_astro/${name}`);
+await fs.mkdir('wordpress/build/mu-plugins', {recursive:true});
+await fs.cp('wordpress/mu-plugins','wordpress/build/mu-plugins',{recursive:true});
+await fs.copyFile('src/data/survey.json','wordpress/build/mu-plugins/cyl-encuestas/survey.json');
 for(const name of await fs.readdir('dist/optimized')) if(name.endsWith('.glb')) await fs.copyFile(`dist/optimized/${name}`,`wordpress/build/root/optimized/${name}`);
 for (const name of ['favicon.svg','llms.txt']) {try {await fs.copyFile(`dist/${name}`,`wordpress/build/root/${name}`);} catch(e) {if(e.code!=='ENOENT')throw e;}}
 await fs.writeFile('wordpress/build/root/llms.txt',(await fs.readFile('dist/llms.txt','utf8')).replaceAll('/sitemap.xml','/wp-sitemap.xml'));

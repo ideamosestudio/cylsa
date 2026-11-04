@@ -21,7 +21,12 @@ La distribución espera WordPress en la raíz del dominio y el directorio de con
 
 - Catálogo informativo, sin precios ni stock en tiempo real.
 - Contacto y cotización preparan mensajes de WhatsApp; empleos prepara un correo.
-- Encuesta de cuatro pasos: **vista previa, no guarda ni envía respuestas**. El plugin propio de encuestas sigue pendiente. No se utiliza Forminator.
+- La demo de Pages mantiene la encuesta en vista previa. En WordPress, instalar el contenido de `wordpress/build/mu-plugins` en `wp-content/mu-plugins`. El módulo propio guarda los envíos HTTPS en la base local y agrega **Encuestas CYL** para administradores. No se utiliza Forminator.
+- Publicar también `wordpress/build/root/_astro`: las hojas de estilo compiladas buscan allí las fuentes originales.
+
+## Cambios en ambos sitios
+
+Editar el diseño compartido en Astro. Compilar por separado para la raíz del dominio de CYL y para la base de Pages. Publicar en da6 únicamente los archivos afectados; cuando cambie el contenido principal, actualizar las páginas nativas correspondientes conservando ediciones hechas en WordPress. Publicar el código fuente en GitHub, verificar el workflow de Pages y probar ambas URLs. El push a GitHub no despliega WordPress. No subir accesos, respaldos ni respuestas al repositorio.
 - SEO conserva los metadatos del diseño y usa el sitemap nativo de WordPress.
 
 ## Migración del 22/10/2026

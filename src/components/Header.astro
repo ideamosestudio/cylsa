@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     </a>
     <nav class="site-nav" aria-label="Secciones">
       <div class="site-nav__products">
-        <a href={`${base}nuestros-neumaticos/`}><small>01</small><span>Nuestros neumáticos</span><b aria-hidden="true">⌄</b></a>
+        <a href={`${base}nuestros-neumaticos/`}><span>Nuestros neumáticos</span><b aria-hidden="true">⌄</b></a>
         <div class="site-nav__mega" aria-label="Líneas de neumáticos">
           <div class="site-nav__mega-heading">
             <span>CYL / LÍNEAS DE NEUMÁTICOS</span>
@@ -41,23 +41,21 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         </div>
       </div>
       <div class="site-nav__about">
-        <button class="site-nav__group-trigger" type="button" aria-haspopup="true"><small>02</small><span>Sobre nosotros</span><b aria-hidden="true">⌄</b></button>
+        <button class="site-nav__group-trigger" type="button" aria-haspopup="true"><span>Sobre nosotros</span><b aria-hidden="true">⌄</b></button>
         <div class="site-nav__submenu" aria-label="Sobre nosotros">
           <a href={`${base}quienes-somos/`}><small>01</small><span>Quiénes somos</span></a>
           <a href={`${base}nuestra-politica/`}><small>02</small><span>Política</span></a>
           <a href={`${base}forma-parte-de-nuestro-equipo/`}><small>03</small><span>Equipo</span></a>
         </div>
       </div>
-      <a href={`${base}contacto/`}><small>03</small><span>Contacto</span></a>
-      <a class="nav-quote" href={`${base}cotizacion/`}><small>04</small><span>Cotización</span></a>
+      <a href={`${base}contacto/`}><span>Contacto</span></a>
+      <a class="nav-quote" href={`${base}cotizacion/`}><span>Cotización</span><span aria-hidden="true">→</span></a>
     </nav>
-    <span class="header-index" aria-hidden="true"><i></i><span>NQN</span><b>38.95° S</b></span>
     <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation">
       <span>MENÚ</span><i></i><i></i>
     </button>
   </div>
   <nav class="site-mobile-nav" id="mobile-navigation" aria-label="Navegación móvil" aria-hidden="true" inert>
-    <span class="site-mobile-nav__meta">CYL / NQN / 38.95° S</span>
     <div class="site-mobile-nav__group">
       <a class="site-mobile-nav__heading" href={`${base}nuestros-neumaticos/`}><small>01</small><span>Nuestros neumáticos</span></a>
       <div class="site-mobile-nav__subnav">

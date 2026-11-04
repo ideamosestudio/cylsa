@@ -28,7 +28,7 @@ function cyl_page_data($slug) {
 add_action('admin_menu', function () {
     add_theme_page('Preparar sitio CYL','Preparar sitio CYL','manage_options','cyl-setup',function () {
         if (!current_user_can('manage_options')) return;
-        echo '<div class="wrap"><h1>Preparar sitio CYL</h1><p>Crea las páginas del diseño y conserva las ya importadas. La encuesta todavía es una vista previa.</p>';
+        echo '<div class="wrap"><h1>Preparar sitio CYL</h1><p>Crea páginas nuevas y actualiza el diseño de las páginas que siguen iguales a la edición anterior. Conserva el contenido editado en WordPress.</p>';
         echo '<form method="post" action="'.esc_url(admin_url('admin-post.php')).'"><input type="hidden" name="action" value="cyl_import">';
         wp_nonce_field('cyl_import'); submit_button('Crear páginas CYL'); echo '</form></div>';
     });
@@ -44,7 +44,21 @@ add_action('admin_post_cyl_import', function () {
     $pages=json_decode(file_get_contents(get_template_directory().'/manifest.json'),true);
     foreach ($pages as $page) {
         $existing=get_page_by_path($page['slug']);
-        if ($existing) { $id=$existing->ID; }
+        if ($existing) {
+            $id=$existing->ID;
+            static $prior=null;
+            if ($prior===null) {
+                $file=get_template_directory().'/previous-content.json';
+                $prior=is_file($file)?json_decode(file_get_contents($file),true):array();
+            }
+            if (get_post_meta($id,'_cyl_layout',true)===$page['slug'] && isset($prior[$page['slug']]) && hash_equals($prior[$page['slug']],hash('sha256',$existing->post_content))) {
+                $updated='<!-- wp:html -->'.cyl_page_data($page['slug'])['content'].'<!-- /wp:html -->';
+                if ($updated!==$existing->post_content) {
+                    $result=wp_update_post(wp_slash(array('ID'=>$id,'post_content'=>$updated)),true);
+                    if(is_wp_error($result))wp_die(esc_html($result->get_error_message()));
+                }
+            }
+        }
         else {
             $data=cyl_page_data($page['slug']);
             $id=wp_insert_post(wp_slash(array('post_type'=>'page','post_status'=>'publish','post_name'=>$page['slug'],'post_title'=>$page['title'],'post_content'=>'<!-- wp:html -->'.$data['content'].'<!-- /wp:html -->','comment_status'=>'closed','ping_status'=>'closed')),true);

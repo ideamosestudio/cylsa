@@ -1,0 +1,34 @@
+/* Shared by both builds. Keep display type; allow real content to wrap. */
+body main :is(h1,h2,h3,h4,p,li,dt,dd,fieldset,label),
+body footer :is(h2,p,a) { min-inline-size:0; overflow-wrap:anywhere; }
+body main :is(.product-card__head,.category-product-card__copy,.product-cover__copy,.product-facts__headline,.product-sizes__heading,.internal-hero__copy,.form-side) { min-width:0; }
+body main .sport-copy>p { width:auto; max-width:42ch; white-space:normal; }
+body :is(.product-card__head>p,.product-section__label,.internal-kicker,.page-label,.product-selector__eyebrow,.premium-kicker,.product-breadcrumb,.category-product-card__meta>span,.product-gallery figcaption,.product-sizes__list small,.product-gallery__top>p,.contact-hours span,.footer-nav-group>span,.survey__steps li,.survey__facts) { font-size:.75rem; line-height:1.45; letter-spacing:.07em; }
+body :is(.product-card__meta,.product-card__meta small,.product-card__meta strong,.product-facts__micro,.product-cover__specs small,.product-cover__specs strong,.internal-product-specs small,.internal-product-specs strong,.footer-bottom--premium p,.footer-bottom--premium a) { font-size:.6875rem; line-height:1.4; white-space:normal; }
+body main :is(.button,.product-inline-cta,.internal-form button,.premium-form button),body footer .button { font-size:.8125rem; line-height:1.25; white-space:normal; text-align:center; max-width:100%; }
+body main :is(.internal-form label,.premium-form label>span,.survey__field>label,.survey__hint,.form-legal,.internal-form__note) { font-size:.875rem; line-height:1.5; letter-spacing:.035em; }
+body main :is(.internal-form,.premium-form,.survey) :is(input:not([type=radio]),select,textarea) { font-size:1rem; max-width:100%; min-width:0; }
+body main :is(.product-facts li,.product-care li p,.category-product-card__copy p,.product-facts__summary>p:not(.product-facts__claim),.product-selector__intro) { font-size:1rem; line-height:1.55; }
+body main :is(.contact-location a,.location-card a,.form-direct a) { font-size:.9375rem; line-height:1.5; overflow-wrap:anywhere; }
+body .product-card__head>p {color:#55595d}
+body :is(.product-facts li,.internal-form label,.premium-form label>span,.form-legal,.internal-form__note) {color:#c6c6c9}
+body .product-facts__micro {color:#b7b7bc}
+body .product-card__head h3 {line-height:.98;}
+html body {min-width:0;}
+body :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary) {
+ font-size:.8125rem!important; line-height:1.25!important; letter-spacing:.07em!important;
+ white-space:normal; overflow-wrap:anywhere; padding-block:.65rem;
+}
+body .footer-nav-group .footer-action {min-width:0;padding-inline:.75rem;}
+body .footer-action>span {white-space:normal;}
+@media(max-width:600px) {
+ body main .product-cover h1 {font-size:clamp(2.95rem,14.5vw,5.3rem);line-height:.94;}
+}
+@media(max-width:700px){
+ body main :is(h1,h2,h3) { hyphens:manual; }
+ body main :is(.product-facts__intro h2,.product-sizes__heading h2,.product-care h2,.form-side h2) { font-size:clamp(2.4rem,9.6vw,4.25rem);line-height:.98; }
+ body main :is(.product-cover__specs,.internal-product-specs) { max-width:100%; }
+ body :is(.internal-form__top,.survey__facts,.survey__progress) { flex-wrap:wrap;gap:.5rem 1rem; }
+ body .product-card__head>p {margin-bottom:12px}
+ body main :is(.product-grid,.internal-form,.survey__fields)>* {min-width:0}
+}

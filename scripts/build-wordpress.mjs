@@ -1,11 +1,19 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { parse, serialize, serializeOuter } from 'parse5';
 import { htmlFiles, nodes, attr, text } from './finalize-build.mjs';
 import { site } from '../site.config.mjs';
 if (site.base !== '/') throw new Error('Build with DEPLOY_TARGET=hosting first.');
 const out = 'wordpress/build/cyl-neumaticos';
 await fs.mkdir(`${out}/pages`, { recursive: true });
+const prior = {};
+for (const file of await fs.readdir(`${out}/pages`)) {
+ if (!file.endsWith('.json')) continue;
+ const old=JSON.parse(await fs.readFile(`${out}/pages/${file}`,'utf8'));
+ prior[old.slug]=createHash('sha256').update('<!-- wp:html -->'+old.content+'<!-- /wp:html -->').digest('hex');
+}
+await fs.writeFile(`${out}/previous-content.json`,JSON.stringify(prior));
 await fs.cp('wordpress/theme', out, { recursive: true });
 const prefix = '/wp-content/themes/cyl-neumaticos/assets/';
 const asset = value => value.replaceAll('/_astro/', `${prefix}_astro/`).replaceAll('/optimized/', `${prefix}optimized/`).replaceAll('/images/', `${prefix}images/`);
@@ -26,6 +34,7 @@ for (const file of await htmlFiles('dist')) {
 await fs.writeFile(`${out}/manifest.json`, JSON.stringify(manifest));
 for (const folder of ['_astro','optimized','images']) await fs.cp(`dist/${folder}`, `${out}/assets/${folder}`, {recursive:true});
 await fs.mkdir('wordpress/build/root/optimized', {recursive:true});
+await fs.cp('dist/models','wordpress/build/root/models',{recursive:true});
 // Compiled @font-face URLs are absolute, even inside the theme stylesheet.
 await fs.mkdir('wordpress/build/root/_astro', {recursive:true});
 for (const name of await fs.readdir('dist/_astro')) if (/\.(woff2?|otf|ttf)$/i.test(name))
@@ -34,6 +43,6 @@ await fs.mkdir('wordpress/build/mu-plugins', {recursive:true});
 await fs.cp('wordpress/mu-plugins','wordpress/build/mu-plugins',{recursive:true});
 await fs.copyFile('src/data/survey.json','wordpress/build/mu-plugins/cyl-encuestas/survey.json');
 for(const name of await fs.readdir('dist/optimized')) if(name.endsWith('.glb')) await fs.copyFile(`dist/optimized/${name}`,`wordpress/build/root/optimized/${name}`);
-for (const name of ['favicon.svg','llms.txt']) {try {await fs.copyFile(`dist/${name}`,`wordpress/build/root/${name}`);} catch(e) {if(e.code!=='ENOENT')throw e;}}
+for (const name of ['favicon.svg','llms.txt','cyl-reading.css']) {try {await fs.copyFile(`dist/${name}`,`wordpress/build/root/${name}`);} catch(e) {if(e.code!=='ENOENT')throw e;}}
 await fs.writeFile('wordpress/build/root/llms.txt',(await fs.readFile('dist/llms.txt','utf8')).replaceAll('/sitemap.xml','/wp-sitemap.xml'));
 console.log(`WordPress theme prepared: ${manifest.length} pages + 404.`);

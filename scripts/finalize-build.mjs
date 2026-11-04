@@ -23,6 +23,7 @@ export const text = node => (node.childNodes || []).map(c => c.value || text(c))
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/finalize-build.mjs')) {
   const urls = [];
+  const readingVersion=createHash('sha256').update(await fs.readFile('dist/cyl-reading.css')).digest('hex').slice(0,12);
   for (const file of await htmlFiles('dist')) {
     let html = await fs.readFile(file, 'utf8');
     const elements = nodes(parse(html));
@@ -36,6 +37,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/f
       "font-src 'self'", "connect-src 'self'", "object-src 'none'", "base-uri 'none'", "form-action 'none'", "frame-src 'none'",
     ].join('; ');
     html = html.replace(/<meta charset="[^"]+"\s*\/?\s*>/i, m => `${m}<meta http-equiv="Content-Security-Policy" content="${policy}">`);
+    html=html.replace('</head>',`<link rel="stylesheet" href="${new URL(siteUrl).pathname}cyl-reading.css?v=${readingVersion}"></head>`);
     await fs.writeFile(file, html);
     if (!elements.some(n => attr(n, 'name') === 'robots' && attr(n, 'content')?.includes('noindex'))) {
       const canonical = elements.find(n => n.tagName === 'link' && attr(n, 'rel') === 'canonical');

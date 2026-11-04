@@ -15,6 +15,14 @@ body :is(.product-facts li,.internal-form label,.premium-form label>span,.form-l
 body .product-facts__micro {color:#b7b7bc}
 body .product-card__head h3 {line-height:.98;}
 html body {min-width:0;}
+/* Keep navigation, opening hours and instructions readable; small numeric
+   markers and decorative orbit codes do not carry these labels. */
+body .site-nav-toggle>span,body .site-nav :is(a,button)>span:not([aria-hidden]),
+body main :is(.product-brand span,.product-facts__title-eyebrow,.product-gallery__top>p:last-child,.product-sizes__heading>.product-section__label,.form-intro span,.contact-location>span,.internal-form__top,.location-card>span,.survey__progress,.advisory-eyebrow,.advisory-copy strong,.statement-card>span),
+body .whatsapp-fab__tooltip,body .footer-bottom--premium :is(p,a) {
+ font-size:.75rem!important; line-height:1.4!important;
+}
+body main .location-card small {font-size:.8125rem;line-height:1.5}
 body :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary) {
  font-size:.8125rem!important; line-height:1.25!important; letter-spacing:.07em!important;
  white-space:normal; overflow-wrap:anywhere; padding-block:.65rem;

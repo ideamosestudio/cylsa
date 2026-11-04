@@ -34,3 +34,7 @@ Editar el diseño compartido en Astro. Compilar por separado para la raíz del d
 Destino: da6.toservers.com, 200.80.43.216. WordPress limpio con una base independiente. El original quedó fuera de la carpeta pública y se descargaron respaldo de archivos y exportación SQL. Credenciales y respaldos se guardan solo en `.qa`, excluido de Git.
 
 El dominio público aún apuntaba al servidor anterior al realizar la instalación. La delegación DNS y renovación automática SSL requieren coordinación con la titular y Towebs. No se modificaron DNS ni registros de correo.
+
+## Estado comprobado el 4/11/2026
+
+El dominio definitivo sirve WordPress en da6 con HTTPS válido. GitHub Pages sigue siendo la demo estática. La encuesta de producción ya guarda respuestas; la demo no recoge datos. En el primer control de lectura se midieron 77 rutas a 320, 390, 768, 1024 y 1366 px. Se corrigieron el botón de encuesta del pie, nombres de productos largos en móviles, tamaños de instrucciones y etiquetas, y el ancho mínimo del documento. Las fuentes se sirven desde el propio hosting.

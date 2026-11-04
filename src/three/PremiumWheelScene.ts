@@ -40,7 +40,11 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
-  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 700 ? 1.15 : 1.55));
+  // A full-viewport WebGL canvas gets expensive very quickly at high DPR. The
+  // small cap is visually indistinguishable in motion, while cutting the
+  // number of shaded pixels substantially on Retina/high-density displays.
+  const renderPixelRatio = () => Math.min(devicePixelRatio, innerWidth < 700 ? 1.1 : 1.3);
+  renderer.setPixelRatio(renderPixelRatio());
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
@@ -101,6 +105,8 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
   let readyAnnounced = false;
   let visible = true;
   let frame = 0;
+  let activeStage = -1;
+  const storyOpacity = new WeakMap<HTMLElement, number>();
 
   const requestRender = () => {
     if (!visible || frame) return;
@@ -111,11 +117,31 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const model = gltf.scene;
     model.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
-      const tire = /tire|rubber/i.test(`${object.name} ${object.material?.name ?? ''}`);
+      const sourceName = Array.isArray(object.material)
+        ? object.material.map(material => material.name).join(' ')
+        : object.material?.name ?? '';
+      const identity = `${object.name} ${sourceName}`;
+      const tire = /tire|rubber/i.test(identity) && !/rim/i.test(identity);
+      const caliper = /caliper/i.test(identity);
+      const rotor = /brake|rotor/i.test(identity);
+      const emblem = /logo|emblem/i.test(identity);
       const material = tire
-        ? new THREE.MeshPhysicalMaterial({ color: 0x020304, roughness: .64, metalness: .01, clearcoat: .06, clearcoatRoughness: .82, envMapIntensity: .3 })
-        : new THREE.MeshPhysicalMaterial({ color: 0x101318, roughness: .16, metalness: .96, clearcoat: .48, clearcoatRoughness: .16, envMapIntensity: 1.75 });
-      material.name = tire ? 'CYL_RUBBER_WEB' : 'CYL_METAL_WEB';
+        ? new THREE.MeshPhysicalMaterial({ color: 0x010203, roughness: .78, metalness: 0, clearcoat: .02, clearcoatRoughness: .92, envMapIntensity: .16 })
+        : caliper
+          ? new THREE.MeshPhysicalMaterial({ color: 0x850814, roughness: .26, metalness: .68, clearcoat: .58, clearcoatRoughness: .14, envMapIntensity: 1.38 })
+          : rotor
+            ? new THREE.MeshPhysicalMaterial({ color: 0x24272c, roughness: .34, metalness: .88, clearcoat: .12, clearcoatRoughness: .3, envMapIntensity: 1.28 })
+            : emblem
+              ? new THREE.MeshPhysicalMaterial({ color: 0xc7cbd1, roughness: .14, metalness: .98, clearcoat: .55, clearcoatRoughness: .12, envMapIntensity: 1.95 })
+              : new THREE.MeshPhysicalMaterial({ color: 0x15191f, roughness: .15, metalness: .96, clearcoat: .5, clearcoatRoughness: .14, envMapIntensity: 1.82 });
+      material.name = tire ? 'CYL_RUBBER_WEB' : caliper ? 'CYL_CALIPER_WEB' : rotor ? 'CYL_ROTOR_WEB' : emblem ? 'CYL_EMBLEM_WEB' : 'CYL_METAL_WEB';
+      material.transparent = false;
+      material.opacity = 1;
+      material.alphaTest = 0;
+      material.depthTest = true;
+      material.depthWrite = true;
+      material.side = THREE.FrontSide;
+      material.blending = THREE.NormalBlending;
       const originals = Array.isArray(object.material) ? object.material : [object.material];
       originals.forEach(original => original.dispose());
       object.material = material;
@@ -126,9 +152,15 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const bounds = new THREE.Box3().setFromObject(model);
     const size = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
+    const normalizedModel = new THREE.Group();
     model.position.copy(center).multiplyScalar(-1);
-    model.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
-    wheel.add(model);
+    normalizedModel.add(model);
+    // The supplied FBX uses X as its axle. Adapt only the model's local axes;
+    // the hero's positions, rotations, camera path and timing remain untouched.
+    if (size.x < size.y && size.x < size.z) normalizedModel.rotation.y = Math.PI / 2;
+    else if (size.y < size.x && size.y < size.z) normalizedModel.rotation.x = Math.PI / 2;
+    normalizedModel.scale.setScalar(5.45 / Math.max(size.x, size.y, size.z));
+    wheel.add(normalizedModel);
     modelReady = true;
     // Keep the poster visible while the GPU prepares the first frame.
     track.classList.add('scene-enabled');
@@ -152,8 +184,13 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const copyOut = ease(range(progress, .1, .19));
     const stage = progress < .16 ? 0 : progress < .30 ? 1 : progress < .43 ? 2 : progress < .56 ? 3 : progress < .69 ? 4 : progress < .82 ? 5 : 6;
 
-    if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 06`;
-    if (stepName) stepName.textContent = acts[stage];
+    // Text updates cause layout work. They only need to happen when the active
+    // chapter changes, not on every animation frame.
+    if (stage !== activeStage) {
+      activeStage = stage;
+      if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 06`;
+      if (stepName) stepName.textContent = acts[stage];
+    }
     if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
     if (copy) {
       copy.style.opacity = String(1 - copyOut);
@@ -167,8 +204,15 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
       const fade = Math.min(.035, (end - start) * .28);
       const opacity = ease(range(progress, start, start + fade)) * (1 - ease(range(progress, end - fade, end)));
       const travel = mix(18, -12, ease(range(progress, start, end)));
+      const previousOpacity = storyOpacity.get(element) ?? -1;
+      if (opacity < .001) {
+        if (previousOpacity !== 0) element.style.opacity = '0';
+        storyOpacity.set(element, 0);
+        return;
+      }
       element.style.opacity = String(opacity);
       element.style.setProperty('--story-travel', `${travel}px`);
+      storyOpacity.set(element, opacity);
     });
     if (flare) {
       flare.style.opacity = String((.64 + journey * .13 + macro * .16) * (1 - exit * .7));
@@ -254,7 +298,7 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const height = canvas.clientHeight;
     if (!width || !height) return;
     renderer.setSize(width, height, false);
-    renderer.setPixelRatio(Math.min(devicePixelRatio, width < 700 ? 1.15 : 1.55));
+    renderer.setPixelRatio(renderPixelRatio());
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     apply(currentProgress);

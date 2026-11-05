@@ -129,3 +129,35 @@ body main .survey__facts {margin-top:16px}
  body main .survey__steps {grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
  body main .survey__steps li {align-items:center;flex-direction:row;gap:8px;padding:9px 0;overflow-wrap:normal;letter-spacing:normal}
 }
+.admin-bar .site-header {top:var(--wp-admin--admin-bar--height,32px)}
+@media(max-width:600px){body.admin-bar #wpadminbar{position:fixed}}
+.footer-nav-group .footer-service {display:inline-flex;align-items:center;gap:.65rem;min-height:30px}
+.footer-survey {border-top:1px solid #484046;padding-top:16px}
+.footer-survey p {margin:0 0 8px;color:#fff;font-size:16px}
+.site-footer .footer-survey a {display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;min-height:44px;color:#f3e8ea;text-decoration:none;border-bottom:1px solid #86545d}
+.footer-survey a svg {flex:none}
+.site-footer .footer-nav-group {gap:10px}
+.site-footer .footer-nav-group > span {font:600 13px/1.5 'Instrument Sans Variable',sans-serif;letter-spacing:.035em;color:#fa7d8c;margin-bottom:16px}
+.site-footer .footer-brand h2 {font-size:clamp(52px,6.3vw,106px)}
+body .whatsapp-fab-shell.whatsapp-fab-shell {width:61px;height:61px}
+body .whatsapp-fab.whatsapp-fab::before {animation:none;box-shadow:0 0 12px rgba(235,18,46,.18);background:rgba(235,18,46,.18)}
+@media(max-width:900px){.site-footer .footer-brand h2 {font-size:clamp(30px,8.2vw,38px)}}
+@media(max-width:600px){body .whatsapp-fab-shell.whatsapp-fab-shell {width:52px;height:52px}}
+#sucursales {scroll-margin-top:120px}
+
+body [data-contact-status][data-state="success"] {
+  display:flex;align-items:flex-start;gap:18px;grid-column:1/-1;
+  margin:20px 0 0;padding:24px;border:1px solid #45695b;border-radius:12px;
+  background:linear-gradient(120deg,#14241f,#111817);color:#e9f4ef;
+  font:400 16px/1.55 'Instrument Sans Variable',sans-serif;letter-spacing:normal;text-transform:none;
+  scroll-margin:130px 0 28px;animation:contactConfirmationIn .3s ease-out;
+}
+.contact-confirmation__icon {flex:none;color:#9ce1bb}
+.contact-confirmation__copy {display:grid;gap:8px;min-width:0}
+.contact-confirmation__copy strong {font:600 clamp(20px,2vw,25px)/1.2 'Instrument Sans Variable',sans-serif;color:#fff}
+.contact-confirmation__copy > span {color:#c9d9d1}
+body [data-contact-status][data-state="success"]:focus-visible {outline:2px solid #9ce1bb;outline-offset:4px}
+body [data-contact-status][data-state="error"] {color:#ffb2bc}
+@keyframes contactConfirmationIn {from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:600px){body [data-contact-status][data-state="success"] {padding:20px;gap:12px}.contact-confirmation__icon {width:32px;height:32px}}
+@media(prefers-reduced-motion:reduce){body [data-contact-status][data-state="success"] {animation:none}}

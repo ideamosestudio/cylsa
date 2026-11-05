@@ -66,14 +66,14 @@ add_action('admin_post_cyl_enc_delete',function(){
     global $wpdb;$wpdb->delete(cyl_enc_table(),array('id'=>$id),array('%d'));
     wp_safe_redirect(admin_url('admin.php?page=cyl-encuestas'));exit;
 });
-add_action('admin_menu',function(){add_menu_page('Encuestas CYL','Encuestas CYL','manage_options','cyl-encuestas','cyl_enc_admin','dashicons-feedback',26);});
+add_action('admin_menu',function(){add_menu_page('Encuestas CYL','Encuestas CYL',current_user_can('manage_options')?'manage_options':'cyl_ver_encuestas','cyl-encuestas','cyl_enc_admin','dashicons-feedback',26);});
 add_action('admin_enqueue_scripts',function($screen){
     if($screen==='toplevel_page_cyl-encuestas'){
         wp_enqueue_style('cyl-survey-detail',plugins_url('cyl-encuestas/detail.css',__FILE__),array(),'1.1');
     }
 });
 function cyl_enc_admin(){
-    if(!current_user_can('manage_options') || !is_ssl())wp_die('Se requiere acceso administrativo por HTTPS.');
+    if(!(current_user_can('manage_options') || current_user_can('cyl_ver_encuestas')) || !is_ssl())wp_die('Se requiere acceso autorizado por HTTPS.');
     global $wpdb;$table=cyl_enc_table();$url=admin_url('admin.php?page=cyl-encuestas');
     $id=absint($_GET['respuesta']??0);
     if($id){

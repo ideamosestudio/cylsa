@@ -53,7 +53,7 @@ defined('ABSPATH') || exit;
             </section>
         <?php endforeach; ?>
         </div>
-        <details class="cyl-record__manage">
+        <?php if(current_user_can('manage_options')): ?><details class="cyl-record__manage">
             <summary>Eliminar esta respuesta</summary>
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <input type="hidden" name="action" value="cyl_enc_delete">
@@ -62,6 +62,6 @@ defined('ABSPATH') || exit;
                 <label><input type="checkbox" required name="confirmar" value="si"> Confirmo que quiero eliminar esta respuesta.</label>
                 <button class="button">Eliminar respuesta</button>
             </form>
-        </details>
+        </details><?php endif; ?>
     <?php endif; ?>
 </div>

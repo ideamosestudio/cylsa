@@ -27,6 +27,13 @@ defined('ABSPATH') || exit;
                 <?php else: ?><b>Sin respuesta</b><?php endif; ?>
             </div>
         </header>
+        <?php $notice=get_option('cyl_enc_mail_'.$id); if($notice): ?>
+            <p style="padding:12px 16px;background:#fff;border-left:3px solid #bd102b">
+                <?php echo esc_html($notice['status']==='sent'
+                    ? 'Aviso a hola@cylneumaticos.com.ar: aceptado por el servidor de correo.'
+                    : ($notice['attempts']<3 ? 'Aviso por correo pendiente. Se reintentará automáticamente.' : 'El servidor no pudo enviar el aviso por correo. La encuesta está guardada; contactá al administrador.')); ?>
+            </p>
+        <?php endif; ?>
         <div class="cyl-record__sections">
         <?php foreach(cyl_enc_schema()['steps'] as $index=>$step): ?>
             <section class="cyl-record__section">

@@ -5,6 +5,7 @@ Description: Encuesta de satisfacción y bandeja privada de respuestas.
 Version: 1.0.0
 */
 defined('ABSPATH') || exit;
+require_once __DIR__.'/cyl-encuestas/notification.php';
 function cyl_enc_table(){global $wpdb;return $wpdb->prefix.'cyl_encuestas';}
 function cyl_enc_schema(){return json_decode(file_get_contents(__DIR__.'/cyl-encuestas/survey.json'),true);}
 add_action('init',function(){
@@ -54,7 +55,11 @@ function cyl_enc_submit(){
     $count=(int)get_transient($key);if($count>=25)cyl_enc_error('Hubo muchos envíos. Intentá más tarde.',429);
     if(!$wpdb->insert($table,array('fecha'=>current_time('mysql'),'ticket'=>$ticket,'respuestas'=>wp_json_encode($data,JSON_UNESCAPED_UNICODE)))){
         if(!$wpdb->get_var($wpdb->prepare("SELECT id FROM $table WHERE ticket=%s",$ticket)))cyl_enc_error('No pudimos guardar tu respuesta. Intentá de nuevo.',503);
-    }else set_transient($key,$count+1,HOUR_IN_SECONDS);
+    }else {
+        $id=(int)$wpdb->insert_id;
+        set_transient($key,$count+1,HOUR_IN_SECONDS);
+        cyl_enc_queue_notice($id);
+    }
     wp_send_json_success();
 }
 add_action('wp_ajax_cyl_enc_submit','cyl_enc_submit');
@@ -64,6 +69,8 @@ add_action('admin_post_cyl_enc_delete',function(){
     $id=absint($_POST['id']??0);check_admin_referer('cyl_enc_delete_'.$id);
     if(($_POST['confirmar']??'')!=='si')wp_die('Confirmá la eliminación antes de continuar.');
     global $wpdb;$wpdb->delete(cyl_enc_table(),array('id'=>$id),array('%d'));
+    wp_clear_scheduled_hook('cyl_enc_send_notice',array($id));
+    delete_option('cyl_enc_mail_'.$id);
     wp_safe_redirect(admin_url('admin.php?page=cyl-encuestas'));exit;
 });
 add_action('admin_menu',function(){add_menu_page('Encuestas CYL','Encuestas CYL',current_user_can('manage_options')?'manage_options':'cyl_ver_encuestas','cyl-encuestas','cyl_enc_admin','dashicons-feedback',26);});

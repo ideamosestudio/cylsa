@@ -68,8 +68,8 @@ add_action('admin_post_cyl_enc_delete',function(){
 });
 add_action('admin_menu',function(){add_menu_page('Encuestas CYL','Encuestas CYL','manage_options','cyl-encuestas','cyl_enc_admin','dashicons-feedback',26);});
 add_action('admin_enqueue_scripts',function($screen){
-    if($screen==='toplevel_page_cyl-encuestas' && !empty($_GET['respuesta'])){
-        wp_enqueue_style('cyl-survey-detail',plugins_url('cyl-encuestas/detail.css',__FILE__),array(),'1.0');
+    if($screen==='toplevel_page_cyl-encuestas'){
+        wp_enqueue_style('cyl-survey-detail',plugins_url('cyl-encuestas/detail.css',__FILE__),array(),'1.1');
     }
 });
 function cyl_enc_admin(){
@@ -81,14 +81,8 @@ function cyl_enc_admin(){
         require __DIR__.'/cyl-encuestas/detail.php';
         return;
     }else{
-        echo '<div class="wrap"><h1>Encuestas CYL</h1>';
         $total=(int)$wpdb->get_var("SELECT COUNT(*) FROM $table");$pages=max(1,(int)ceil($total/25));$p=min($pages,max(1,absint($_GET['paged']??1)));
-        echo '<p>Respuestas recibidas: <strong>'.intval($total).'</strong></p><table class="widefat striped"><thead><tr><th>Fecha</th><th>Persona</th><th>Empresa</th><th>Satisfacción</th><th>Detalle</th></tr></thead><tbody>';
-        foreach($wpdb->get_results($wpdb->prepare("SELECT * FROM $table ORDER BY id DESC LIMIT 25 OFFSET %d",($p-1)*25)) as $r){
-            $d=json_decode($r->respuestas,true);
-            echo '<tr><td>'.esc_html($r->fecha).'</td><td>'.esc_html($d['first_name'].' '.$d['last_name']).'</td><td>'.esc_html($d['company']).'</td><td>'.esc_html($d['service_satisfaction']).' / 5</td><td><a href="'.esc_url(add_query_arg('respuesta',$r->id,$url)).'">Ver respuesta</a></td></tr>';
-        }
-        if(!$total)echo '<tr><td colspan="5">Todavía no se recibieron respuestas.</td></tr>';
-        echo '</tbody></table>'.wp_kses_post(paginate_links(array('base'=>add_query_arg('paged','%#%',$url),'format'=>'','current'=>$p,'total'=>$pages)));
-    }echo '</div>';
+        $rows=$wpdb->get_results($wpdb->prepare("SELECT id,fecha,respuestas FROM $table ORDER BY id DESC LIMIT 25 OFFSET %d",($p-1)*25));
+        require __DIR__.'/cyl-encuestas/list.php';
+    }
 }

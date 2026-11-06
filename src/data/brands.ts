@@ -1,5 +1,6 @@
 export const brands = [
   { name: 'Dunlop', file: 'dunlop.png', width: 235, x: -0.24, y: -0.24 },
+  { name: 'Continental', file: 'continental.png', width: 225, x: 0, y: 0 },
   { name: 'Pirelli', file: 'pirelli.png', width: 185, x: -0.36, y: -1.36 },
   { name: 'Corven', file: 'corven.png', width: 235, x: 0, y: 0 },
   { name: 'Chaoyang', file: 'chaoyang.png', width: 235, x: 0, y: 0 },

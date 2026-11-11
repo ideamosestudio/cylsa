@@ -24,10 +24,7 @@ const posterSizes = '(max-width:600px) 100vw, (max-width:900px) 80vw, 50vw';
       <span>CYL / MOTION SYSTEM</span>
     </div>
 
-    <canvas id="tire-canvas" class="sport-canvas" aria-label="Rueda deportiva 3D CYL"></canvas>
-    <div class="sport-fallback" data-webgl-fallback hidden>VISUALIZACIÓN 3D NO DISPONIBLE</div>
-
-    <div class="sport-visual" aria-hidden="true">
+    <div class="sport-visual">
       <picture>
         <source type="image/avif" sizes={posterSizes} srcset={poster.avif.map(v=>`${base}${v.src} ${v.width}w`).join(', ')} />
         <OptimizedImage src={`${base}images/product-heroes/automovil.png`} alt="Neumático para automóvil con iluminación roja" width="1280" height="1280" sizes={posterSizes} fetchpriority="high" />

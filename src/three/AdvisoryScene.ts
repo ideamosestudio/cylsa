@@ -141,7 +141,7 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     car.position.y = mix(-1.92, -1.82, reveal);
     car.position.z = mix(2.05, 1.35, reveal) + travel * .08;
     car.rotation.x = pointerY * .006;
-    car.rotation.y = mix(Math.PI - .22, Math.PI - .88, reveal) - travel * .05 + pointerX * .018;
+    car.rotation.y = mix(Math.PI - .48, Math.PI - 1.28, reveal) - travel * .04 + pointerX * .018;
     car.rotation.z = mix(-.018, 0, reveal) - pointerX * .004;
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;

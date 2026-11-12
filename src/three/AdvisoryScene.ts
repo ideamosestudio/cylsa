@@ -15,19 +15,16 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   renderer.toneMappingExposure = 1.05;
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.35));
   renderer.setClearColor(0x030406, 1);
+  renderer.autoClear = false;
 
+  const backgroundScene = new THREE.Scene();
+  backgroundScene.background = new THREE.Color(0x030406);
+  backgroundScene.fog = new THREE.FogExp2(0x030406, .021);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x030406);
-  scene.fog = new THREE.FogExp2(0x030406, .032);
+  scene.fog = new THREE.FogExp2(0x030406, .026);
   const camera = new THREE.PerspectiveCamera(34, 1, .1, 100);
   const factory = new THREE.Group();
   const car = new THREE.Group();
-  const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(30, 32),
-    new THREE.MeshStandardMaterial({ color: 0x121316, roughness: .96, metalness: .02, envMapIntensity: .18 }),
-  );
-  ground.rotation.x = -Math.PI / 2;
-  ground.position.set(2, -2.84, -3.5);
   const shadowCanvas = document.createElement('canvas');
   shadowCanvas.width = 256;
   shadowCanvas.height = 128;
@@ -47,10 +44,13 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   );
   contactShadow.rotation.x = -Math.PI / 2;
   contactShadow.position.set(3.9, -2.79, 1.7);
-  scene.add(ground, factory, contactShadow, car);
+  backgroundScene.add(factory);
+  scene.add(contactShadow, car);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+  const environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+  scene.environment = environment;
+  backgroundScene.environment = environment;
   pmrem.dispose();
   scene.add(new THREE.HemisphereLight(0xb9c2cf, 0x180104, 1.25));
   const key = new THREE.DirectionalLight(0xffffff, 4.4);
@@ -63,6 +63,13 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   rim.position.set(-5, 4, -1);
   rim.target.position.set(3, 0, 1);
   scene.add(rim, rim.target);
+  backgroundScene.add(new THREE.HemisphereLight(0x768296, 0x090103, .72));
+  const factoryKey = new THREE.DirectionalLight(0xb8c3d2, 1.8);
+  factoryKey.position.set(-4, 8, 9);
+  backgroundScene.add(factoryKey);
+  const factoryRed = new THREE.PointLight(0xff1028, 34, 28, 1.6);
+  factoryRed.position.set(7, -1, 7);
+  backgroundScene.add(factoryRed);
 
   let targetProgress = 0;
   let currentProgress = 0;
@@ -85,6 +92,8 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
         const materials = Array.isArray(object.material) ? object.material : [object.material];
         materials.forEach((material) => {
           if ('envMapIntensity' in material) material.envMapIntensity = target === car ? 1.25 : .55;
+          if (target === factory && 'roughness' in material) material.roughness = Math.max(Number(material.roughness), .62);
+          if (target === factory && 'color' in material && material.color instanceof THREE.Color) material.color.multiplyScalar(.58);
         });
       });
       const bounds = new THREE.Box3().setFromObject(model);
@@ -102,9 +111,9 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     }, undefined, (error) => console.error(`Failed to load ${url}`, error));
   };
 
-  addNormalized('models/advisory-old-factory.glb', factory, 27, () => {
-    factory.position.set(2.5, .8, -17);
-    factory.rotation.y = -.08;
+  addNormalized('models/advisory-old-factory.glb', factory, 40, () => {
+    factory.position.set(2.2, 2.7, -5);
+    factory.rotation.y = -.035;
   });
   addNormalized('models/advisory-mercedes-amg-gt3.glb', car, 7.2, () => {
     car.position.set(3.9, -1.82, 1.7);
@@ -133,10 +142,10 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;
     (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
-    factory.position.x = 2.5 - travel * .34;
-    factory.rotation.y = -.08 + travel * .035;
-    camera.position.set(.45 + travel * .18 + pointerX * .22, 2.25 + travel * .08 - pointerY * .14, 13.7 - travel * .38);
-    camera.lookAt(1.35 + pointerX * .12, -.9 - pointerY * .08, -.25);
+    factory.position.x = 2.2 - travel * .18 - pointerX * .1;
+    factory.rotation.y = -.035 + travel * .018 + pointerX * .006;
+    camera.position.set(.45 + travel * .18 + pointerX * .58, 2.25 + travel * .08 - pointerY * .2, 13.7 - travel * .52);
+    camera.lookAt(1.35 + pointerX * .72, -.9 - pointerY * .12, -.45 - Math.abs(pointerX) * .12);
   };
 
   const render = () => {
@@ -145,6 +154,9 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     pointerX += (pointerTargetX - pointerX) * .075;
     pointerY += (pointerTargetY - pointerY) * .075;
     apply(currentProgress);
+    renderer.clear(true, true, true);
+    renderer.render(backgroundScene, camera);
+    renderer.clearDepth();
     renderer.render(scene, camera);
     if (
       Math.abs(targetProgress - currentProgress) > .0005 ||

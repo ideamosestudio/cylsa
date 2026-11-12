@@ -8,7 +8,6 @@
   const smooth = (value: number) => value * value * (3 - 2 * value);
 
   export function initAdvisory(section: HTMLElement) {
-    const canvas = section.querySelector<HTMLCanvasElement>('[data-advisory-webgl]');
     const bg = section.querySelector<HTMLElement>('[data-advisory-bg]');
     const car = section.querySelector<HTMLElement>('[data-advisory-car]');
     const carMotion = section.querySelector<HTMLElement>('[data-advisory-car-motion]');
@@ -19,15 +18,6 @@
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let revealedProgress = reduced ? 0.45 : 0;
     let carPulsePlayed = reduced;
-    let updateScene: ((progress: number) => void) | null = null;
-
-    if (canvas && window.innerWidth >= 901) {
-      import('../three/AdvisoryScene').then(({ initAdvisoryScene }) => {
-        const scene = initAdvisoryScene(canvas, section);
-        updateScene = scene.setProgress;
-        updateScene(revealedProgress);
-      }).catch((error) => console.error('CYL advisory 3D scene failed', error));
-    }
 
     const apply = (p: number) => {
       revealedProgress = Math.max(revealedProgress, p);
@@ -35,8 +25,6 @@
       const mobile = window.innerWidth < 700;
       const enter = smooth(range(reveal, 0.02, mobile ? 0.3 : 0.24));
       const copyIn = smooth(range(reveal, 0.05, 0.22));
-
-      updateScene?.(p);
 
       if (bg) bg.style.transform = `translate3d(${p * -0.55}%,${p * -0.8}%,0) scale(${1.035 + p * 0.012})`;
       if (car) {

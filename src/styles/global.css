@@ -4,6 +4,7 @@
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2') format('woff2')}
 @font-face{font-family:'Roboto Variable';font-style:normal;font-weight:100 900;font-display:swap;src:url('@fontsource-variable/roboto/files/roboto-latin-wght-normal.woff2') format('woff2')}
 @font-face{font-family:'Space Grotesk Variable';font-style:normal;font-weight:300 700;font-display:swap;src:url('@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2')}
+@font-face{font-family:'Poppins CTA';font-style:normal;font-weight:600;font-display:swap;src:url('../assets/fonts/Poppins-600.woff2') format('woff2')}
 
 @font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular.woff2') format('woff2'); font-style: normal; font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Upbolters'; src: url('../assets/fonts/UPBOLTERS-New-Regular-Italic.woff2') format('woff2'); font-style: italic; font-weight: 400; font-display: swap; }

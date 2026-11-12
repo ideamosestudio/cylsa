@@ -18,12 +18,12 @@
   background:var(--cyl-button-bg)!important;
   box-shadow:0 9px 24px rgba(74,0,10,.22),inset 0 0 28px rgba(39,0,7,.42),inset 0 1px rgba(255,255,255,.11)!important;
   color:var(--cyl-button-color)!important;
-  font-family:'Instrument Sans Variable',sans-serif!important;
-  font-size:10px!important;
+  font-family:'Poppins CTA',Arial,sans-serif!important;
+  font-size:11px!important;
   font-style:normal!important;
-  font-weight:700!important;
+  font-weight:600!important;
   line-height:1!important;
-  letter-spacing:.12em!important;
+  letter-spacing:1px!important;
   text-align:center!important;
   text-decoration:none!important;
   text-indent:0!important;
@@ -110,7 +110,26 @@
 .site-mobile-nav .site-mobile-nav__primary{display:flex;width:100%;min-height:52px;padding:0 34px}
 .site-mobile-nav__primary small{position:absolute;left:18px}
 
-/* Header quote remains legible in every state. */
+/* Desktop navigation matches the typography and sizing used on ideamos.com.ar. */
+@media(min-width:901px){
+  :is(.site-nav > a:not(.nav-quote),.site-nav__products > a,.site-nav__group-trigger){
+    font-family:Arial,Helvetica,sans-serif!important;
+    font-size:12.5px!important;
+    font-weight:700!important;
+    line-height:15px!important;
+    letter-spacing:normal!important;
+  }
+}
+
+/* Header quote remains legible and uses the same CTA treatment. */
+.site-nav .nav-quote{
+  font-family:'Poppins CTA',Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:600!important;
+  line-height:1!important;
+  letter-spacing:1px!important;
+  text-transform:uppercase!important;
+}
 .site-nav .nav-quote,.site-nav .nav-quote:is(:hover,:focus-visible),.site-nav .nav-quote > span,.site-nav .nav-quote:is(:hover,:focus-visible) > span{color:#fff!important;transform:none!important}
 
 /* Older component rules and magnetic JS may never move a CTA. */

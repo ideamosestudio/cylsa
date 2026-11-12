@@ -66,6 +66,10 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
 
   let targetProgress = 0;
   let currentProgress = 0;
+  let pointerTargetX = 0;
+  let pointerTargetY = 0;
+  let pointerX = 0;
+  let pointerY = 0;
   let frame = 0;
   let visible = true;
   let modelsReady = 0;
@@ -123,23 +127,30 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     car.position.x = mix(4.85, 3.9, reveal) - travel * .12;
     car.position.y = mix(-1.92, -1.82, reveal);
     car.position.z = mix(2.25, 1.7, reveal) + travel * .12;
-    car.rotation.y = mix(-.06, -.52, reveal) - travel * .08;
-    car.rotation.z = mix(-.018, 0, reveal);
+    car.rotation.x = pointerY * .018;
+    car.rotation.y = mix(-.06, -.52, reveal) - travel * .08 + pointerX * .075;
+    car.rotation.z = mix(-.018, 0, reveal) - pointerX * .008;
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;
     (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
     factory.position.x = 2.5 - travel * .34;
     factory.rotation.y = -.08 + travel * .035;
-    camera.position.set(.45 + travel * .18, 2.25 + travel * .08, 13.7 - travel * .38);
-    camera.lookAt(1.35, -.9, -.25);
+    camera.position.set(.45 + travel * .18 + pointerX * .22, 2.25 + travel * .08 - pointerY * .14, 13.7 - travel * .38);
+    camera.lookAt(1.35 + pointerX * .12, -.9 - pointerY * .08, -.25);
   };
 
   const render = () => {
     frame = 0;
     currentProgress += (targetProgress - currentProgress) * .085;
+    pointerX += (pointerTargetX - pointerX) * .075;
+    pointerY += (pointerTargetY - pointerY) * .075;
     apply(currentProgress);
     renderer.render(scene, camera);
-    if (Math.abs(targetProgress - currentProgress) > .0005) requestRender();
+    if (
+      Math.abs(targetProgress - currentProgress) > .0005 ||
+      Math.abs(pointerTargetX - pointerX) > .001 ||
+      Math.abs(pointerTargetY - pointerY) > .001
+    ) requestRender();
   };
   const requestRender = () => {
     if (!visible || frame || modelsReady < 2) return;
@@ -157,6 +168,19 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     if (visible) requestRender();
   }, { rootMargin: '150px' });
   visibilityObserver.observe(section);
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    section.addEventListener('pointermove', (event) => {
+      const bounds = section.getBoundingClientRect();
+      pointerTargetX = clamp((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+      pointerTargetY = clamp((event.clientY - bounds.top) / bounds.height) * 2 - 1;
+      requestRender();
+    }, { passive: true });
+    section.addEventListener('pointerleave', () => {
+      pointerTargetX = 0;
+      pointerTargetY = 0;
+      requestRender();
+    }, { passive: true });
+  }
   resize();
   apply(0);
 

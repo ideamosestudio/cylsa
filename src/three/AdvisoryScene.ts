@@ -22,6 +22,12 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   const camera = new THREE.PerspectiveCamera(34, 1, .1, 100);
   const factory = new THREE.Group();
   const car = new THREE.Group();
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(30, 32),
+    new THREE.MeshStandardMaterial({ color: 0x121316, roughness: .96, metalness: .02, envMapIntensity: .18 }),
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.set(2, -2.84, -3.5);
   const shadowCanvas = document.createElement('canvas');
   shadowCanvas.width = 256;
   shadowCanvas.height = 128;
@@ -41,7 +47,7 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   );
   contactShadow.rotation.x = -Math.PI / 2;
   contactShadow.position.set(3.9, -2.79, 1.7);
-  scene.add(factory, contactShadow, car);
+  scene.add(ground, factory, contactShadow, car);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
@@ -114,10 +120,10 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   const apply = (progress: number) => {
     const reveal = ease(clamp(progress / .34));
     const travel = ease(clamp((progress - .12) / .88));
-    car.position.x = mix(7.2, 3.9, reveal) - travel * .22;
-    car.position.y = mix(-2.02, -1.82, reveal);
-    car.position.z = mix(2.7, 1.7, reveal) + travel * .16;
-    car.rotation.y = mix(-.22, -.48, reveal) - travel * .08;
+    car.position.x = mix(4.85, 3.9, reveal) - travel * .12;
+    car.position.y = mix(-1.92, -1.82, reveal);
+    car.position.z = mix(2.25, 1.7, reveal) + travel * .12;
+    car.rotation.y = mix(-.06, -.52, reveal) - travel * .08;
     car.rotation.z = mix(-.018, 0, reveal);
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;

@@ -133,19 +133,23 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   const apply = (progress: number) => {
     const reveal = ease(clamp(progress / .34));
     const travel = ease(clamp((progress - .12) / .88));
+    // The camera travels laterally through the factory while the framing keeps
+    // the Mercedes planted on the right. Pointer movement adds a smaller,
+    // independent orbit so the scene feels spatial instead of composited.
+    const cameraOrbitX = mix(-.9, 1.15, travel) + pointerX * .82;
     car.position.x = mix(4.85, 3.9, reveal) - travel * .12;
     car.position.y = mix(-1.92, -1.82, reveal);
     car.position.z = mix(2.25, 1.7, reveal) + travel * .12;
-    car.rotation.x = pointerY * .018;
-    car.rotation.y = mix(-.06, -.52, reveal) - travel * .08 + pointerX * .075;
-    car.rotation.z = mix(-.018, 0, reveal) - pointerX * .008;
+    car.rotation.x = pointerY * .01;
+    car.rotation.y = mix(-.08, -.48, reveal) - travel * .08 + pointerX * .025;
+    car.rotation.z = mix(-.018, 0, reveal) - pointerX * .004;
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;
     (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
-    factory.position.x = 2.2 - travel * .18 - pointerX * .1;
-    factory.rotation.y = -.035 + travel * .018 + pointerX * .006;
-    camera.position.set(.45 + travel * .18 + pointerX * .58, 2.25 + travel * .08 - pointerY * .2, 13.7 - travel * .52);
-    camera.lookAt(1.35 + pointerX * .72, -.9 - pointerY * .12, -.45 - Math.abs(pointerX) * .12);
+    factory.position.x = 2.2 - cameraOrbitX * .22;
+    factory.rotation.y = -.035 + cameraOrbitX * .018;
+    camera.position.set(cameraOrbitX, 2.22 + travel * .12 - pointerY * .32, 13.85 - travel * .72 - Math.abs(pointerX) * .16);
+    camera.lookAt(1.22 + cameraOrbitX * .3, -.92 - pointerY * .16, -.5 - Math.abs(cameraOrbitX) * .08);
   };
 
   const render = () => {

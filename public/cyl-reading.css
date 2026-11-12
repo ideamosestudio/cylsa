@@ -96,9 +96,9 @@ body .footer-action>span {white-space:normal;}
    light Roboto treatment for the application value. */
 @media(min-width:901px) {
  body .product-grid .product-card:hover {
-  transform:perspective(1400px) translateY(-10px) scale(1.015) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
-  border-color:rgba(215,25,39,.62);
-  box-shadow:0 42px 96px rgba(22,24,27,.25),0 0 0 1px rgba(215,25,39,.2);
+  transform:perspective(1400px) translateY(-3px) scale(1.004) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+  border-color:rgba(215,25,39,.36);
+  box-shadow:0 28px 72px rgba(22,24,27,.16),0 0 0 1px rgba(215,25,39,.1);
  }
  body .product-card .product-card__image-shell {top:-20px;bottom:auto;}
  body .product-card .product-card__meta {

@@ -5,6 +5,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
 <section class="advisory-drive" id="asesoramiento" data-advisory-drive aria-labelledby="advisory-title">
   <div class="advisory-stage">
+    <canvas class="advisory-webgl" data-advisory-webgl aria-hidden="true"></canvas>
     <div class="advisory-bg" data-advisory-bg aria-hidden="true"><OptimizedImage src={`${base}images/advisory/cyl-garage-bg-v2.jpg`} alt="" sizes="100vw" loading="lazy" /></div>
     <div class="advisory-shade"></div>
     <div class="advisory-speed" data-advisory-speed aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
@@ -40,8 +41,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 </section>
 
 <script>
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced && matchMedia('(min-width: 901px) and (pointer: fine)').matches) {
+  if (matchMedia('(min-width: 901px)').matches) {
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) if (entry.isIntersecting) {
         observer.unobserve(entry.target);

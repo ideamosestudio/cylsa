@@ -152,3 +152,18 @@
 /* Global CTA count rule. */
 @media(min-width:601px){:is(.hero-actions,.sport-actions,.product-cover__actions,.internal-hero__actions,.section-actions,.page-cta__actions)>:nth-child(n+3){display:none!important}}
 @media(max-width:600px){:is(.hero-actions,.sport-actions,.product-cover__actions,.internal-hero__actions,.section-actions,.page-cta__actions)>:nth-child(n+2){display:none!important}}
+
+/* Final typography lock: identical CTA metrics to ideamos.com.ar. */
+:is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary){
+  font:600 11px/1 'Poppins CTA',Arial,sans-serif!important;
+  letter-spacing:1px!important;
+}
+
+/* Keep the home introduction on one line only on desktop. */
+@media(min-width:901px){
+  .sport-copy>p{
+    width:max-content!important;
+    max-width:none!important;
+    white-space:nowrap!important;
+  }
+}

@@ -112,7 +112,7 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   };
 
   addNormalized('models/advisory-old-factory.glb', factory, 40, () => {
-    factory.position.set(2.2, 2.7, -5);
+    factory.position.set(2.2, -.45, -5);
     factory.rotation.y = -.035;
   });
   addNormalized('models/advisory-mercedes-amg-gt3.glb', car, 7.2, () => {
@@ -141,15 +141,15 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     car.position.y = mix(-1.92, -1.82, reveal);
     car.position.z = mix(2.05, 1.35, reveal) + travel * .08;
     car.rotation.x = pointerY * .006;
-    car.rotation.y = mix(Math.PI - .08, Math.PI - .48, reveal) - travel * .06 + pointerX * .018;
+    car.rotation.y = mix(Math.PI - .22, Math.PI - .88, reveal) - travel * .05 + pointerX * .018;
     car.rotation.z = mix(-.018, 0, reveal) - pointerX * .004;
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;
     (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
     factory.position.x = 2.2 - cameraOrbitX * .18;
     factory.rotation.y = -.035 + cameraOrbitX * .016;
-    camera.position.set(cameraOrbitX, -.2 + travel * .1 - pointerY * .14, 12.45 - travel * .62 - Math.abs(pointerX) * .1);
-    camera.lookAt(1.62 + cameraOrbitX * .34, -1.18 - pointerY * .08, .12 - Math.abs(cameraOrbitX) * .04);
+    camera.position.set(cameraOrbitX, .12 + travel * .08 - pointerY * .14, 12.45 - travel * .62 - Math.abs(pointerX) * .1);
+    camera.lookAt(1.62 + cameraOrbitX * .34, -1.22 - pointerY * .08, .12 - Math.abs(cameraOrbitX) * .04);
   };
 
   const render = () => {

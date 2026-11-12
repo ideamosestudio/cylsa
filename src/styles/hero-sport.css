@@ -49,7 +49,6 @@
 .sport-story__step h2 em{color:#ef2032;font-style:normal}
 .sport-story__step small{display:block;max-width:380px;margin-top:23px;color:rgba(255,255,255,.72);font:300 15px/1.5 'Roboto Variable',sans-serif}
 .sport-story__step--right small{margin-left:auto}
-.sport-story__step--closing h2{font-size:clamp(70px,8.5vw,142px)}
 .sport-story__step--final{--story-x:-50%;left:50%;top:52%;width:min(92vw,1180px);text-align:center}
 .sport-story__step--final p{justify-content:center}
 .sport-story__step--final h2{font-size:clamp(76px,10vw,164px)}

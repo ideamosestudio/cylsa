@@ -235,9 +235,9 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const xFactor = mobile ? .22 : tablet ? .5 : 1;
     // Four deliberate A→B compositions. Each title holds on the model's
     // detailed three-quarter face; movement happens only between chapters.
-    const x = keyMix(progress, [[0, 2.85], [.14, 2.85], [.24, -1.65], [.42, -1.65], [.51, 1.95], [.68, 1.95], [.77, -1.45], [.94, -1.45]]) * xFactor;
+    const x = keyMix(progress, [[0, 2.85], [.14, 2.85], [.24, -1.65], [.42, -1.65], [.51, 1.95], [.68, 1.95], [.77, 0], [.94, 0]]) * xFactor;
     const y = keyMix(progress, [[0, -.05], [.14, -.05], [.24, .05], [.42, .05], [.51, -.07], [.68, -.07], [.77, .03], [.94, .03]]) + (mobile ? -1.25 : tablet ? -.58 : 0);
-    let scale = (mobile ? .53 : tablet ? .64 : .82) * keyMix(progress, [[0, 1], [.14, 1], [.24, .82], [.42, .82], [.51, .9], [.68, .9], [.77, .8], [.94, .8]]);
+    let scale = (mobile ? .53 : tablet ? .64 : .82) * keyMix(progress, [[0, 1], [.14, 1], [.24, .82], [.42, .82], [.51, .9], [.68, .9], [.77, .78], [.94, .78]]);
     scale *= 1 + exit * 1.75;
 
     const pointerLife = 1 - journey * .52;

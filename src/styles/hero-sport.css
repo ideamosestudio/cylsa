@@ -52,6 +52,7 @@
 .sport-story__step--final{--story-x:-50%;left:50%;top:52%;width:min(92vw,1180px);text-align:center}
 .sport-story__step--final p{justify-content:center}
 .sport-story__step--final h2{font-size:clamp(76px,10vw,164px)}
+.sport-story__step--final h2 em{display:block;margin-top:.1em}
 .sport-brand-strip{width:min(46vw,650px);margin-top:30px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent)}
 .sport-brand-track{display:flex;width:max-content;align-items:center;animation:sportBrandFlow 34s linear infinite}
 .sport-brand-track>span{display:grid;width:130px;height:42px;flex:0 0 130px;padding:6px 14px;border-right:1px solid rgba(255,255,255,.16);place-items:center}

@@ -22,7 +22,7 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   backgroundScene.fog = new THREE.FogExp2(0x030406, .021);
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x030406, .026);
-  const camera = new THREE.PerspectiveCamera(34, 1, .1, 100);
+  const camera = new THREE.PerspectiveCamera(29, 1, .1, 100);
   const factory = new THREE.Group();
   const car = new THREE.Group();
   const shadowCanvas = document.createElement('canvas');
@@ -136,20 +136,20 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     // The camera travels laterally through the factory while the framing keeps
     // the Mercedes planted on the right. Pointer movement adds a smaller,
     // independent orbit so the scene feels spatial instead of composited.
-    const cameraOrbitX = mix(-.9, 1.15, travel) + pointerX * .82;
-    car.position.x = mix(4.85, 3.9, reveal) - travel * .12;
+    const cameraOrbitX = mix(-.55, .75, travel) + pointerX * .48;
+    car.position.x = mix(5.35, 4.45, reveal) - travel * .08;
     car.position.y = mix(-1.92, -1.82, reveal);
-    car.position.z = mix(2.25, 1.7, reveal) + travel * .12;
-    car.rotation.x = pointerY * .01;
-    car.rotation.y = mix(-.08, -.48, reveal) - travel * .08 + pointerX * .025;
+    car.position.z = mix(2.05, 1.35, reveal) + travel * .08;
+    car.rotation.x = pointerY * .006;
+    car.rotation.y = mix(Math.PI - .08, Math.PI - .48, reveal) - travel * .06 + pointerX * .018;
     car.rotation.z = mix(-.018, 0, reveal) - pointerX * .004;
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;
     (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
-    factory.position.x = 2.2 - cameraOrbitX * .22;
-    factory.rotation.y = -.035 + cameraOrbitX * .018;
-    camera.position.set(cameraOrbitX, 2.22 + travel * .12 - pointerY * .32, 13.85 - travel * .72 - Math.abs(pointerX) * .16);
-    camera.lookAt(1.22 + cameraOrbitX * .3, -.92 - pointerY * .16, -.5 - Math.abs(cameraOrbitX) * .08);
+    factory.position.x = 2.2 - cameraOrbitX * .18;
+    factory.rotation.y = -.035 + cameraOrbitX * .016;
+    camera.position.set(cameraOrbitX, -.2 + travel * .1 - pointerY * .14, 12.45 - travel * .62 - Math.abs(pointerX) * .1);
+    camera.lookAt(1.62 + cameraOrbitX * .34, -1.18 - pointerY * .08, .12 - Math.abs(cameraOrbitX) * .04);
   };
 
   const render = () => {

@@ -14,7 +14,7 @@ const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, v
 const range = (value: number, start: number, end: number) => clamp((value - start) / (end - start));
 const ease = (value: number) => value * value * (3 - 2 * value);
 const mix = (a: number, b: number, value: number) => a + (b - a) * value;
-const acts = ['PORTADA', 'CAMINOS', 'PRECISIÓN', 'TRACCIÓN', 'RESISTENCIA', 'POTENCIA', 'EXPLORAR'];
+const acts = ['PORTADA', 'CAMINOS', 'UNIVERSOS', 'EXPLORAR'];
 
 const keyMix = (progress: number, points: Array<[number, number]>) => {
   if (progress <= points[0][0]) return points[0][1];
@@ -179,16 +179,16 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     const mobile = innerWidth < 650;
     const tablet = innerWidth < 960;
     const journey = ease(range(progress, .12, .88));
-    const macro = ease(range(progress, .44, .59)) * (1 - ease(range(progress, .62, .72)));
+    const macro = ease(range(progress, .42, .54)) * (1 - ease(range(progress, .64, .72)));
     const exit = ease(range(progress, .94, 1));
     const copyOut = ease(range(progress, .1, .19));
-    const stage = progress < .16 ? 0 : progress < .30 ? 1 : progress < .43 ? 2 : progress < .56 ? 3 : progress < .69 ? 4 : progress < .82 ? 5 : 6;
+    const stage = progress < .19 ? 0 : progress < .46 ? 1 : progress < .73 ? 2 : 3;
 
     // Text updates cause layout work. They only need to happen when the active
     // chapter changes, not on every animation frame.
     if (stage !== activeStage) {
       activeStage = stage;
-      if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 06`;
+      if (stepIndex) stepIndex.textContent = `${String(stage).padStart(2, '0')} / 03`;
       if (stepName) stepName.textContent = acts[stage];
     }
     if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
@@ -228,14 +228,16 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
       orbitGraphic.style.transform = `rotate(${progress * 118}deg) scale(${1 + macro * .16})`;
     }
     if (note) {
-      note.style.opacity = String(ease(range(progress, .16, .26)) * (1 - ease(range(progress, .78, .88))));
+      note.style.opacity = String(ease(range(progress, .08, .12)) * (1 - ease(range(progress, .16, .20))));
       note.style.transform = `translate3d(${(1 - journey) * 22}px,0,0)`;
     }
 
     const xFactor = mobile ? .22 : tablet ? .5 : 1;
-    const x = keyMix(progress, [[0, 2.85], [.18, 1.95], [.31, -1.5], [.44, 1.55], [.57, -1.38], [.70, 1.35], [.83, .18], [.94, 0]]) * xFactor;
-    const y = keyMix(progress, [[0, -.05], [.18, -.02], [.31, .04], [.44, -.08], [.57, .03], [.70, -.06], [.83, .02], [.94, 0]]) + (mobile ? -1.25 : tablet ? -.58 : 0);
-    let scale = (mobile ? .53 : tablet ? .64 : .82) * keyMix(progress, [[0, 1], [.31, .88], [.44, .98], [.57, 1.06], [.70, .92], [.83, .84], [.94, .9]]);
+    // Four deliberate A→B compositions. Each title holds on the model's
+    // detailed three-quarter face; movement happens only between chapters.
+    const x = keyMix(progress, [[0, 2.85], [.14, 2.85], [.24, -1.65], [.42, -1.65], [.51, 1.95], [.68, 1.95], [.77, -1.45], [.94, -1.45]]) * xFactor;
+    const y = keyMix(progress, [[0, -.05], [.14, -.05], [.24, .05], [.42, .05], [.51, -.07], [.68, -.07], [.77, .03], [.94, .03]]) + (mobile ? -1.25 : tablet ? -.58 : 0);
+    let scale = (mobile ? .53 : tablet ? .64 : .82) * keyMix(progress, [[0, 1], [.14, 1], [.24, .82], [.42, .82], [.51, .9], [.68, .9], [.77, .8], [.94, .8]]);
     scale *= 1 + exit * 1.75;
 
     const pointerLife = 1 - journey * .52;
@@ -243,13 +245,13 @@ export function initTireScene(canvas: HTMLCanvasElement, track: HTMLElement, pro
     root.position.set(x + pointerX * pointerStrength * pointerLife, y - pointerY * pointerStrength * .45 * pointerLife, 0);
     root.scale.setScalar(scale);
     root.rotation.set(
-      keyMix(progress, [[0, -.12], [.31, .08], [.44, -.04], [.57, .14], [.70, -.08], [.83, .03]]) + pointerY * (mobile ? .04 : .105) * pointerLife,
-      keyMix(progress, [[0, .66], [.31, -.25], [.44, .42], [.57, -.38], [.70, .28], [.83, -.04], [.94, .12]]) + pointerX * (mobile ? .05 : .13) * pointerLife,
-      keyMix(progress, [[0, -.08], [.31, .035], [.44, -.025], [.57, .04], [.70, -.035], [.83, 0]]) - pointerX * pointerY * .025,
+      keyMix(progress, [[0, -.12], [.14, -.12], [.24, .07], [.42, .07], [.51, -.05], [.68, -.05], [.77, .05], [.94, .05]]) + pointerY * (mobile ? .04 : .105) * pointerLife,
+      keyMix(progress, [[0, .66], [.14, .66], [.24, .58], [.42, .58], [.51, .72], [.68, .72], [.77, .62], [.94, .62]]) + pointerX * (mobile ? .05 : .13) * pointerLife,
+      keyMix(progress, [[0, -.08], [.14, -.08], [.24, .035], [.42, .035], [.51, -.035], [.68, -.035], [.77, .025], [.94, .025]]) - pointerX * pointerY * .025,
     );
-    wheel.rotation.z = -.08 - keyMix(progress, [[0, 0], [.31, .62], [.44, .92], [.57, 1.22], [.70, 1.52], [.83, 1.72], [1, 1.98]]) * Math.PI;
+    wheel.rotation.z = -.08 - keyMix(progress, [[0, 0], [.14, 0], [.24, 1], [.42, 1], [.51, 2], [.68, 2], [.77, 3], [.94, 3], [1, 3.18]]) * Math.PI;
 
-    const cameraAngle = keyMix(progress, [[0, -.08], [.31, .10], [.44, -.08], [.57, .13], [.70, -.10], [.83, .02]]) + macro * .08;
+    const cameraAngle = keyMix(progress, [[0, -.08], [.14, -.08], [.24, .06], [.42, .06], [.51, -.07], [.68, -.07], [.77, .05], [.94, .05]]) + macro * .06;
     const distance = 10.2 - journey * .12 - macro * .28 + exit * .55;
     camera.position.set(Math.sin(cameraAngle + pointerX * .022 * pointerLife) * distance, .08 + macro * .26 - pointerY * .04 * pointerLife, Math.cos(cameraAngle + pointerX * .022 * pointerLife) * distance);
     camera.lookAt(mobile ? .05 : .7, mobile ? -.62 : 0, 0);

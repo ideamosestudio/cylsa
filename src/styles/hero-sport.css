@@ -1,4 +1,4 @@
-.sport-hero{position:relative;height:430vh;min-height:2700px;background:#120306}
+.sport-hero{position:relative;height:320vh;min-height:2100px;background:#120306}
 .sport-stage{position:sticky;top:0;isolation:isolate;contain:layout paint style;width:100%;height:100svh;min-height:620px;overflow:hidden;background:#130306;color:#fff}
 .sport-bg,.sport-canvas,.sport-fallback,.sport-frame{position:absolute;inset:0}
 .sport-bg{z-index:0;background:radial-gradient(ellipse 115% 105% at 78% 50%,#35070c 0%,#1c0407 35%,#0d0204 69%,#070103 100%)}
@@ -49,6 +49,7 @@
 .sport-story__step h2 em{color:#ef2032;font-style:normal}
 .sport-story__step small{display:block;max-width:380px;margin-top:23px;color:rgba(255,255,255,.72);font:300 15px/1.5 'Roboto Variable',sans-serif}
 .sport-story__step--right small{margin-left:auto}
+.sport-story__step--closing h2{font-size:clamp(70px,8.5vw,142px)}
 .sport-story__step--final{--story-x:-50%;left:50%;top:52%;width:min(92vw,1180px);text-align:center}
 .sport-story__step--final p{justify-content:center}
 .sport-story__step--final h2{font-size:clamp(76px,10vw,164px)}

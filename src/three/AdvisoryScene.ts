@@ -74,11 +74,11 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   };
 
   addNormalized('models/advisory-old-factory.glb', factory, 24, () => {
-    factory.position.set(0, -.5, -4.5);
+    factory.position.set(0, -.5, -15.5);
     factory.rotation.y = -.08;
   });
-  addNormalized('models/advisory-mercedes-amg-gt3.glb', car, 6.8, () => {
-    car.position.set(3.35, -1.72, 1.7);
+  addNormalized('models/advisory-mercedes-amg-gt3.glb', car, 7.2, () => {
+    car.position.set(3.9, -1.72, 1.7);
     car.rotation.y = -.48;
   });
 
@@ -95,7 +95,7 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   const apply = (progress: number) => {
     const reveal = ease(clamp(progress / .34));
     const travel = ease(clamp((progress - .12) / .88));
-    car.position.x = mix(6.4, 3.35, reveal) - travel * .22;
+    car.position.x = mix(7.2, 3.9, reveal) - travel * .22;
     car.position.y = mix(-1.9, -1.72, reveal);
     car.position.z = mix(2.7, 1.7, reveal) + travel * .16;
     car.rotation.y = mix(-.22, -.48, reveal) - travel * .08;

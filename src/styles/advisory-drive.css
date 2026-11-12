@@ -142,6 +142,11 @@
   margin-top: 34px;
 }
 
+.advisory-actions .button {
+  min-width: 190px;
+  white-space: nowrap;
+}
+
 .advisory-actions p {
   margin: 0;
   font-family: 'IBM Plex Mono', monospace;

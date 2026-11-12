@@ -34,7 +34,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/f
     const policy = [
       "default-src 'self'", `script-src 'self' 'wasm-unsafe-eval' ${[...new Set(hashes)].join(' ')}`,
       "script-src-attr 'none'", "style-src 'self' 'unsafe-inline'", "img-src 'self' data: blob:",
-      "font-src 'self'", "connect-src 'self' https://www.cylneumaticos.com.ar", "object-src 'none'", "base-uri 'none'", "form-action 'none'", "frame-src 'none'",
+      "font-src 'self'", "connect-src 'self' blob: https://www.cylneumaticos.com.ar", "object-src 'none'", "base-uri 'none'", "form-action 'none'", "frame-src 'none'",
     ].join('; ');
     html = html.replace(/<meta charset="[^"]+"\s*\/?\s*>/i, m => `${m}<meta http-equiv="Content-Security-Policy" content="${policy}">`);
     html=html.replace('</head>',`<link rel="stylesheet" href="${new URL(siteUrl).pathname}cyl-reading.css?v=${readingVersion}"></head>`);

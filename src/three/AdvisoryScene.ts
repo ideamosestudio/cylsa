@@ -22,7 +22,26 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   const camera = new THREE.PerspectiveCamera(34, 1, .1, 100);
   const factory = new THREE.Group();
   const car = new THREE.Group();
-  scene.add(factory, car);
+  const shadowCanvas = document.createElement('canvas');
+  shadowCanvas.width = 256;
+  shadowCanvas.height = 128;
+  const shadowContext = shadowCanvas.getContext('2d');
+  const shadowGradient = shadowContext?.createRadialGradient(128, 64, 5, 128, 64, 122);
+  shadowGradient?.addColorStop(0, 'rgba(0,0,0,.78)');
+  shadowGradient?.addColorStop(.48, 'rgba(0,0,0,.5)');
+  shadowGradient?.addColorStop(1, 'rgba(0,0,0,0)');
+  if (shadowContext && shadowGradient) {
+    shadowContext.fillStyle = shadowGradient;
+    shadowContext.fillRect(0, 0, 256, 128);
+  }
+  const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
+  const contactShadow = new THREE.Mesh(
+    new THREE.PlaneGeometry(6.8, 3.1),
+    new THREE.MeshBasicMaterial({ map: shadowTexture, transparent: true, depthWrite: false, opacity: .72 }),
+  );
+  contactShadow.rotation.x = -Math.PI / 2;
+  contactShadow.position.set(3.9, -2.79, 1.7);
+  scene.add(factory, contactShadow, car);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
@@ -74,11 +93,11 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
   };
 
   addNormalized('models/advisory-old-factory.glb', factory, 24, () => {
-    factory.position.set(0, -.5, -15.5);
+    factory.position.set(0, .5, -15.5);
     factory.rotation.y = -.08;
   });
   addNormalized('models/advisory-mercedes-amg-gt3.glb', car, 7.2, () => {
-    car.position.set(3.9, -1.72, 1.7);
+    car.position.set(3.9, -1.82, 1.7);
     car.rotation.y = -.48;
   });
 
@@ -96,14 +115,17 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     const reveal = ease(clamp(progress / .34));
     const travel = ease(clamp((progress - .12) / .88));
     car.position.x = mix(7.2, 3.9, reveal) - travel * .22;
-    car.position.y = mix(-1.9, -1.72, reveal);
+    car.position.y = mix(-2.02, -1.82, reveal);
     car.position.z = mix(2.7, 1.7, reveal) + travel * .16;
     car.rotation.y = mix(-.22, -.48, reveal) - travel * .08;
     car.rotation.z = mix(-.018, 0, reveal);
+    contactShadow.position.x = car.position.x;
+    contactShadow.position.z = car.position.z;
+    (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
     factory.position.x = travel * -.42;
     factory.rotation.y = -.08 + travel * .035;
     camera.position.set(.45 + travel * .18, 2.25 + travel * .08, 13.7 - travel * .38);
-    camera.lookAt(1.25, -.15, -.25);
+    camera.lookAt(1.35, -.9, -.25);
   };
 
   const render = () => {

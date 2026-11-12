@@ -156,14 +156,27 @@
 /* Final typography lock: identical CTA metrics to ideamos.com.ar. */
 :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary){
   min-height:52px;
-  font:600 9.3px/1 'Poppins CTA',Arial,sans-serif!important;
-  letter-spacing:1.1px!important;
+  font-family:'Poppins CTA',Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:600!important;
+  line-height:1!important;
+  letter-spacing:1px!important;
 }
 
 .site-nav .nav-quote{
   min-height:52px;
-  font-size:9.3px!important;
-  letter-spacing:1.1px!important;
+  font-size:11px!important;
+  letter-spacing:1px!important;
+}
+
+/* Component-level selectors are more specific in Astro's bundled CSS. */
+.sport-actions>a.button,
+.hero-actions>a.button{
+  font-family:'Poppins CTA',Arial,sans-serif!important;
+  font-size:11px!important;
+  font-weight:600!important;
+  line-height:1!important;
+  letter-spacing:1px!important;
 }
 
 /* Keep the home introduction on one line only on desktop. */

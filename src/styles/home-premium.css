@@ -4,6 +4,7 @@
 @keyframes buttonSheen { 0% { transform: translateX(-140%) skewX(-18deg); } 45%,100% { transform: translateX(240%) skewX(-18deg); } }
 
 .animated-title,.title-accent { color: transparent!important; background: linear-gradient(105deg,#fff 4%,#fff 30%,#ff263c 47%,#ff7350 58%,#fff 76%); background-size: 240% 100%; background-clip: text; -webkit-background-clip: text; animation: titleFlow 8s ease-in-out infinite; }
+.animated-title--red { background-image: linear-gradient(105deg,#82000e 3%,#d70d25 27%,#ff263c 46%,#ff7350 58%,#d70d25 77%,#82000e 100%); }
 .animated-title--light { background-image: linear-gradient(105deg,#111318 6%,#111318 32%,#d31020 49%,#ff4c35 58%,#111318 78%); }
 .title-accent { display: inline-block; }
 .title-accent--light { background-image: linear-gradient(105deg,#111318 6%,#111318 32%,#d31020 49%,#ff4c35 58%,#111318 78%); }

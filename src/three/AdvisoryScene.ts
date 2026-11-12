@@ -92,8 +92,8 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     }, undefined, (error) => console.error(`Failed to load ${url}`, error));
   };
 
-  addNormalized('models/advisory-old-factory.glb', factory, 24, () => {
-    factory.position.set(0, .5, -15.5);
+  addNormalized('models/advisory-old-factory.glb', factory, 27, () => {
+    factory.position.set(2.5, .8, -17);
     factory.rotation.y = -.08;
   });
   addNormalized('models/advisory-mercedes-amg-gt3.glb', car, 7.2, () => {
@@ -122,7 +122,7 @@ export function initAdvisoryScene(canvas: HTMLCanvasElement, section: HTMLElemen
     contactShadow.position.x = car.position.x;
     contactShadow.position.z = car.position.z;
     (contactShadow.material as THREE.MeshBasicMaterial).opacity = reveal * .72;
-    factory.position.x = travel * -.42;
+    factory.position.x = 2.5 - travel * .34;
     factory.rotation.y = -.08 + travel * .035;
     camera.position.set(.45 + travel * .18, 2.25 + travel * .08, 13.7 - travel * .38);
     camera.lookAt(1.35, -.9, -.25);

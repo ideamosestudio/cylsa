@@ -155,8 +155,15 @@
 
 /* Final typography lock: identical CTA metrics to ideamos.com.ar. */
 :is(.button,.product-inline-cta,.product-care a,.page-cta a,.footer-action,.product-card__cta,.premium-form button,.internal-form button,.site-mobile-nav__primary){
-  font:600 11px/1 'Poppins CTA',Arial,sans-serif!important;
-  letter-spacing:1px!important;
+  min-height:52px;
+  font:600 9.3px/1 'Poppins CTA',Arial,sans-serif!important;
+  letter-spacing:1.1px!important;
+}
+
+.site-nav .nav-quote{
+  min-height:52px;
+  font-size:9.3px!important;
+  letter-spacing:1.1px!important;
 }
 
 /* Keep the home introduction on one line only on desktop. */

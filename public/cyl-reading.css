@@ -179,3 +179,15 @@ body [data-contact-status][data-state="error"] {color:#ffb2bc}
 @keyframes contactConfirmationIn {from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media(max-width:600px){body [data-contact-status][data-state="success"] {padding:20px;gap:12px}.contact-confirmation__icon {width:32px;height:32px}}
 @media(prefers-reduced-motion:reduce){body [data-contact-status][data-state="success"] {animation:none}}
+
+/* Keep mobile advisory copy readable over the moving car. */
+@media(max-width:900px){
+  .advisory-stage .advisory-copy {isolation:isolate;background:none}
+  .advisory-stage .advisory-copy::before {
+    content:"";position:absolute;inset:-16px -20px -32px;z-index:-1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(3,4,6,.96) 0%,rgba(3,4,6,.92) 75%,rgba(3,4,6,.86) 90%,rgba(3,4,6,0) 100%);
+  }
+  .advisory-stage .advisory-lead {color:#f2f2f3;font-size:16px;line-height:1.6;font-weight:400}
+  .advisory-stage .advisory-eyebrow,.advisory-stage .advisory-actions strong {color:#dedee2}
+  .advisory-stage .advisory-actions p > span {color:#ff8394}
+}

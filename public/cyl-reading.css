@@ -232,3 +232,23 @@ body [data-contact-status][data-state="error"] {color:#ffb2bc}
   .site-footer .studio-credit {justify-content:center;align-items:center;text-align:center;width:100%;flex-direction:column;gap:8px}
   .site-footer .studio-credit > a {border:0;padding-inline:0}
 }
+
+/* Refined interior for the mobile About accordion. */
+@media(max-width:600px){
+  .site-footer .footer-about[open] {border-color:#58404a}
+  .site-footer .footer-about[open] summary {color:#ffb0bd}
+  .site-footer .footer-about__links {gap:8px;padding:4px 10px 18px}
+  .site-footer .footer-about__links a {
+    position:relative;box-sizing:border-box;min-height:50px;padding:14px 38px;
+    border:1px solid #332a30;border-radius:9px;
+    background:linear-gradient(120deg,#1a1418,#101013);color:#eee8eb;
+    font-size:14px;font-weight:500;line-height:1.4;transform:none;
+    transition:background .2s ease,border-color .2s ease,color .2s ease;
+  }
+  .site-footer .footer-about__links a::after {
+    content:"";position:absolute;right:14px;top:50%;width:16px;height:16px;transform:translateY(-50%);
+    background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dd9aa9' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14m-6-6 6 6-6 6'/%3E%3C/svg%3E");
+  }
+  .site-footer .footer-about__links a:hover,.site-footer .footer-about__links a:focus-visible {color:#fff;border-color:#a44b61;background:#281920;transform:none}
+  .site-footer .footer-about__links a:focus-visible {outline:2px solid #fa7d8c;outline-offset:2px}
+}

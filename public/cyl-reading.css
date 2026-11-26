@@ -191,3 +191,44 @@ body [data-contact-status][data-state="error"] {color:#ffb2bc}
   .advisory-stage .advisory-eyebrow,.advisory-stage .advisory-actions strong {color:#dedee2}
   .advisory-stage .advisory-actions p > span {color:#ff8394}
 }
+
+/* Mobile footer navigation and customer service. */
+.site-footer .footer-about {display:block}
+.footer-about summary {display:flex;align-items:center;justify-content:space-between;list-style:none;font:600 13px/1.5 'Instrument Sans Variable',sans-serif;letter-spacing:.035em;color:#fa7d8c;margin-bottom:26px}
+.footer-about summary::-webkit-details-marker {display:none}
+.footer-about summary svg {display:none}
+.footer-about__links {display:grid;gap:10px}
+@media(max-width:600px){
+  .site-footer .footer-main {row-gap:28px}
+  .site-footer .footer-about {border-block:1px solid #343035}
+  .footer-about summary {min-height:60px;margin:0;cursor:pointer;color:#f4f4f2}
+  .footer-about summary svg {display:block;transition:transform .2s ease}
+  .footer-about[open] summary svg {transform:rotate(180deg)}
+  .footer-about__links {padding:0 0 18px;gap:0}
+  .site-footer .footer-about__links a {display:flex;align-items:center;min-height:44px;width:100%}
+  .site-footer .footer-customer {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:22px 18px;border:1px solid #3d3035;border-radius:16px;background:linear-gradient(135deg,#191316,#0c0c0e)}
+  .site-footer .footer-customer > span,.site-footer .footer-customer .footer-action,.footer-customer .footer-survey {grid-column:1/-1}
+  .site-footer .footer-customer > span {margin:0 0 6px;color:#ded5d8;font-size:12px}
+  .site-footer .footer-customer .footer-action {width:100%;border-radius:6px;min-height:54px}
+  .site-footer .footer-customer .footer-service {width:100%;min-height:64px;box-sizing:border-box;flex-direction:column;justify-content:center;gap:8px;border:1px solid #393137;border-radius:8px;background:#ffffff04;font-size:13px;color:#f3eff1;transform:none}
+  .footer-customer .footer-service svg {color:#fa7d8c}
+  .footer-customer .footer-survey {margin-top:6px;padding-top:18px;border-color:#393137}
+  .footer-customer .footer-survey p {font-size:14px;color:#c6bec2}
+  .site-footer .footer-customer .footer-survey a {font-size:14px;border:0;color:#fff}
+  .footer-about summary:focus-visible {outline:2px solid #fa7d8c;outline-offset:3px}
+}
+
+/* Center the mobile footer. */
+@media(max-width:600px){
+  .site-footer {text-align:center}
+  .site-footer .footer-brand img {margin-inline:auto}
+  .site-footer .footer-about summary {position:relative;justify-content:center;padding-inline:30px}
+  .site-footer .footer-about summary svg {position:absolute;right:0}
+  .site-footer .footer-about__links a {justify-content:center}
+  .site-footer .footer-customer {text-align:center}
+  .site-footer .footer-customer .footer-survey a {position:relative;justify-content:center;padding-inline:22px;box-sizing:border-box}
+  .site-footer .footer-customer .footer-survey a svg {position:absolute;right:0}
+  .site-footer .footer-bottom--premium {align-items:center;justify-content:center;text-align:center;padding-inline:0;padding-bottom:64px}
+  .site-footer .studio-credit {justify-content:center;align-items:center;text-align:center;width:100%;flex-direction:column;gap:8px}
+  .site-footer .studio-credit > a {border:0;padding-inline:0}
+}
